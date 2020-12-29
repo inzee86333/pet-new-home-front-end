@@ -63,6 +63,7 @@ export default function Home() {
         .container {
           min-height: 100vh;
           padding: 0 0.5rem;
+          margin: auto  ;
           display: flex;
           flex-direction: column;
           justify-content: center;
