@@ -4,3 +4,7 @@
 .primarycolor {
     background-color: #5AA879;
 }
+
+textarea {
+    resize: none;
+}
