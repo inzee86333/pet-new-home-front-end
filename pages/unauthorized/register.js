@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { TextInput, PasswordInput, PhoneNumberInput, EmailInput, TextAreaInput } from '../../components/input'
-import { PrimaryButton } from '../../components/button'
+import { PrimaryButton,SecondaryButton } from '../../components/button'
 import ImageUploading from 'react-images-uploading';
 
 export default function Register() {
@@ -52,8 +52,7 @@ export default function Register() {
                                     <div key={index} className="image-item">
                                         <img src={image['data_url']} alt="" className="rounded-full object-cover h-48 w-48 shadow border-2  border-green-300" />
                                         <div className="image-item__btn-wrapper flex">
-                                            <button className="mx-auto uppercase px-4 py-2 my-2 rounded-full border border-green-600 text-green-600 max-w-max shadow-sm hover:shadow-md"
-                                                onClick={() => onImageUpdate(index)}>เพิ่มรูปประจำตัว</button>
+                                            <SecondaryButton onClick={() => onImageUpdate(index)} label="เพิ่มรูปประจำตัว"></SecondaryButton>
                                         </div>
                                     </div>
                                 ))}
