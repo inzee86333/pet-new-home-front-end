@@ -34,7 +34,7 @@ export default function App() {
                     <div className="upload__image-wrapper">
 
                         <button
-                            style={isDragging ? { color: 'red' } : undefined}
+                            style={isDragging ? { color: 'black' } : undefined}
                             onClick={onImageUpload}
                             {...dragProps}
                         >
