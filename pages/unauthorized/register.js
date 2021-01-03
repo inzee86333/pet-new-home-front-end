@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { TextInput, PasswordInput, PhoneNumberInput, EmailInput, TextAreaInput } from '../../components/input'
-import { PrimaryButton,SecondaryButton } from '../../components/button'
+import { PrimaryButton, SecondaryButton } from '../../components/button'
 import ImageUploading from 'react-images-uploading';
 
 export default function Register() {
@@ -30,6 +30,9 @@ export default function Register() {
     return (
         <div className="flex h-max my-8">
             <div className="box-content w-auto min-w-min max-w-max m-auto p-8 shadow-md ">
+                <a href="/" className="flex-row"><svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                </svg></a>
                 <div>
                     <ImageUploading
                         value={images}
@@ -85,11 +88,11 @@ export default function Register() {
                         </div>
                         <div className="-mx-3 md:flex">
                             <div className="md:w-1/2 px-3 mb-6 md:mb-0">
-                                <TextInput id="first-name" label="ชื่อจริง (ภาษาไทย)" placeholder="ชื่อจริงของท่าน" value={firstName}
+                                <TextInput id="first-name" label="ชื่อจริง" placeholder="ชื่อจริงของท่าน" value={firstName}
                                     onChange={e => setFirstName(e.target.value)} />
                             </div>
                             <div className="md:w-1/2 px-3 mb-6 md:mb-0">
-                                <TextInput id="last-name" label="นามสกุล (ภาษาไทย)" placeholder="นามสกุลของท่าน" value={lastName}
+                                <TextInput id="last-name" label="นามสกุล" placeholder="นามสกุลของท่าน" value={lastName}
                                     onChange={e => setLastName(e.target.value)} />
                             </div>
                         </div>
