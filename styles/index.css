@@ -8,3 +8,16 @@
 textarea {
     resize: none;
 }
+
+.bganimal {
+    /* The image used */
+    background-image: url("/bg2.jfif");
+  
+    /* Full height */
+    height: 100%;
+  
+    /* Center and scale the image nicely */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
