@@ -1,7 +1,7 @@
 import { useState } from 'react'
+import ImageUploading from 'react-images-uploading';
 import { TextInput, PasswordInput, PhoneNumberInput, EmailInput, TextAreaInput } from '../../components/input'
 import { PrimaryButton, SecondaryButton } from '../../components/button'
-import ImageUploading from 'react-images-uploading';
 
 export default function Register() {
     const [username, setUsername] = useState('')
@@ -17,11 +17,11 @@ export default function Register() {
 
     const onChange = (imageList, addUpdateIndex) => {
         // data for submit
-        console.log(imageList, addUpdateIndex);
+        //console.log(imageList, addUpdateIndex);
         setImages(imageList);
     };
 
-    const subscribe = async (e) => {
+    const submit = async (e) => {
         e.preventDefault() // prevents page reload
         console.log(username, password, confirmPassword, firstName, lastName, phoneNumber, email, address)
         console.log(images)
@@ -29,8 +29,8 @@ export default function Register() {
 
     return (
         <div className="flex h-max bganimal">
-            <div className="box-content w-auto min-w-min max-w-max m-auto p-8 shadow-2xl my-8 bg-gray-50">
-                <a href="/" className="flex-row"><svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <div className="box-content w-auto min-w-max max-w-max m-auto p-8 shadow-2xl my-8 bg-gray-50">
+                <a href="/unauthorized/login" className="flex-row"><svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
                 </svg></a>
                 <div>
@@ -70,13 +70,13 @@ export default function Register() {
 
                     </ImageUploading>
                     <form>
-                        <div className="-mx-3 md:flex">
+                        <div className="mx-3 md:flex">
                             <div className="md:w-1/2 px-3 mb-6 md:mb-0">
                                 <TextInput id="username" label="ชื่อผู้ใช้" placeholder="ชื่อผู้ใช้ของท่าน" value={username}
                                     onChange={e => setUsername(e.target.value)} />
                             </div>
                         </div>
-                        <div className="-mx-3 md:flex">
+                        <div className="mx-3 md:flex">
                             <div className="md:w-1/2 px-3 mb-6 md:mb-0">
                                 <PasswordInput id="password" label="รหัสผ่าน" placeholder="รหัสผ่านของท่าน" value={password}
                                     onChange={e => setPassword(e.target.value)} />
@@ -86,7 +86,7 @@ export default function Register() {
                                     onChange={e => setConfirmPassword(e.target.value)} />
                             </div>
                         </div>
-                        <div className="-mx-3 md:flex">
+                        <div className="mx-3 md:flex">
                             <div className="md:w-1/2 px-3 mb-6 md:mb-0">
                                 <TextInput id="first-name" label="ชื่อจริง" placeholder="ชื่อจริงของท่าน" value={firstName}
                                     onChange={e => setFirstName(e.target.value)} />
@@ -96,24 +96,24 @@ export default function Register() {
                                     onChange={e => setLastName(e.target.value)} />
                             </div>
                         </div>
-                        <div className="-mx-3 md:flex">
+                        <div className="mx-3 md:flex">
                             <div className="md:w-1/2 px-3 mb-6 md:mb-0">
                                 <PhoneNumberInput id="phone-number" label="หมายเลขโทรศัพท์" placeholder="หมายเลขโทรศัพท์ของท่าน" value={phoneNumber}
                                     onChange={e => setPhoneNumber(e.target.value)} />
                             </div>
                         </div>
-                        <div className="-mx-3 md:flex">
+                        <div className="mx-3 md:flex">
                             <div className="md:w-1/2 px-3 mb-6 md:mb-0">
                                 <EmailInput id="email" label="อีเมล" placeholder="อีเมลของท่าน" value={email}
                                     onChange={e => setEmail(e.target.value)} />
                             </div>
                         </div>
-                        <div className="-mx-3 md:flex">
+                        <div className="mx-3 md:flex">
                             <TextAreaInput id="address" label="ที่อยู่ปัจจุบัน" placeholder="ที่อยู่ปัจจุบันของท่าน เช่น 95/1 หมู่1 ตำบลแม่กา อำเภอเมือง จังหวัดพะเยา" value={address}
                                 onChange={e => setAddress(e.target.value)}></TextAreaInput>
                         </div>
-                        <div className="-mx-3 flex py-2">
-                            <PrimaryButton label="สมัครสมาชิก" type="submit" onClick={subscribe}></PrimaryButton>
+                        <div className="mx-3 flex py-2">
+                            <PrimaryButton label="สมัครสมาชิก" type="submit" onClick={submit}></PrimaryButton>
                         </div>
                     </form>
                 </div>
