@@ -1,5 +1,5 @@
-import Head from 'next/head'
-import Login from './unauthorized/login'
+// import Head from 'next/head'
+import Login from './unauthenticated/login'
 
 export default function Home() {
   return (

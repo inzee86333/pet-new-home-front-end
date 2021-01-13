@@ -3,6 +3,7 @@ import ImageUploading from 'react-images-uploading';
 import { TextInput, PasswordInput, PhoneNumberInput, EmailInput, TextAreaInput } from '../../components/input'
 import { PrimaryButton, SecondaryButton } from '../../components/button'
 import { ArrowBack } from '../../components/icon-button'
+import { urlLogin } from '../urls'
 
 export default function Register() {
     const [username, setUsername] = useState('')
@@ -16,6 +17,10 @@ export default function Register() {
     const [images, setImages] = useState([{ data_url: "/user.png" }]);
     const maxImages = 1;
 
+    const validate = () => {
+        (username != '') ? alert("1") : alert("2");
+    }
+
     const onChange = (imageList, addUpdateIndex) => {
         // data for submit
         //console.log(imageList, addUpdateIndex);
@@ -24,6 +29,7 @@ export default function Register() {
 
     const submit = async (e) => {
         e.preventDefault() // prevents page reload
+        validate();
         console.log(username, password, confirmPassword, firstName, lastName, phoneNumber, email, address)
         console.log(images)
     }
@@ -31,7 +37,7 @@ export default function Register() {
     return (
         <div className="flex h-max bganimal">
             <div className="box-content w-auto min-w-max max-w-max m-auto p-8 shadow-2xl my-8 bg-gray-50">
-                <ArrowBack href="/unauthorized/login"></ArrowBack>
+                <ArrowBack href={urlLogin}></ArrowBack>
                 <div>
                     <ImageUploading
                         value={images}
@@ -58,12 +64,12 @@ export default function Register() {
                                         </div>
                                     </div>
                                 ))}
-                                {/* {errors && <div>
-                                        {errors.maxNumber && <span>Number of selected images exceed maxNumber</span>}
-                                        {errors.acceptType && <span>Your selected file type is not allow</span>}
-                                        {errors.maxFileSize && <span>Selected file size exceed maxFileSize</span>}
-                                        {errors.resolution && <span>Selected file is not match your desired resolution</span>}
-                                    </div>} */}
+                                {errors && <div>
+                                        {/* {errors.maxNumber && alert("Number of selected images exceed maxNumber")} */}
+                                        {errors.acceptType && alert("Your selected file type is not allow")}
+                                        {errors.maxFileSize && alert("Selected file size exceed maxFileSize")}
+                                        {errors.resolution && alert("Selected file is not match your desired resolution")}
+                                    </div>}
                             </div>
                         )}
 

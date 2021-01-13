@@ -1,14 +1,18 @@
 import { useState } from 'react'
+import { useRouter } from 'next/router'
 import { TextInput, PasswordInput } from '../../components/input'
 import { PrimaryButton, TextButton } from '../../components/button'
+import { urlRegister, urlForgetPassword, urlSelectUserType } from '../urls'
 
 export default function Login() {
+    const router = useRouter()
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
 
     const submit = async (e) => {
         e.preventDefault() // prevents page reload
         alert("เข้าสู่ระบบ")
+        router.push(urlSelectUserType)
     }
 
     return (
@@ -27,7 +31,7 @@ export default function Login() {
                     <PrimaryButton label="เข้าสู่ระบบ" type="submit" onClick={submit}></PrimaryButton>
                 </div>
                 <div className="flax-row pb-1 pt-12 mx-auto w-max">
-                    <TextButton label="สมัครสมาชิก" href="/unauthorized/register"></TextButton> หรือ <TextButton label="ลืมรหัสผ่าน?" href="/unauthorized/forget-password"></TextButton>
+                    <TextButton label="สมัครสมาชิก" href={urlRegister}></TextButton> หรือ <TextButton label="ลืมรหัสผ่าน?" href={urlForgetPassword}></TextButton>
                 </div>
             </div>
         </div>
