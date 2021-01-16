@@ -19,7 +19,7 @@ export default function ForgetPassword() {
                 <h1 style={{ fontSize: 28 }} className="mx-auto h-min w-max mb-5">ลืมรหัสผ่าน?</h1>
                 <div className="mx-3 md:flex">
                     <TextInput id="inputForgetPassword" label="กรุณากรอกชื่อผู้ใช้หรืออีเมลเพื่อส่งรหัส" placeholder="ชื่อผู้ใช้หรืออีเมล" value={inputForgetPassword}
-                        onChange={e => setinputForgetPassword(e.target.value)} />
+                        onChange={e => setinputForgetPassword(e.target.value)} required={true}/>
                 </div>
                 <div className="mx-3 flex py-2">
                     <PrimaryButton label="ส่งรหัสผ่าน" type="submit" onClick={submit}></PrimaryButton>
