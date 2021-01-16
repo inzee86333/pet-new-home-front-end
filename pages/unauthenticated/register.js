@@ -6,7 +6,6 @@ import { ArrowBack } from '../../components/icon-button'
 import { urlLogin } from '../urls'
 
 export default function Register() {
-    const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
     const [confirmPassword, setConfirmPassword] = useState('')
     const [firstName, setFirstName] = useState('')
@@ -25,7 +24,7 @@ export default function Register() {
 
     const submit = async (e) => {
         e.preventDefault() // prevents page reload
-        console.log(username, password, confirmPassword, firstName, lastName, phoneNumber, email, address)
+        console.log(email, password, confirmPassword, firstName, lastName, phoneNumber, address)
         console.log(images)
     }
 
@@ -60,11 +59,11 @@ export default function Register() {
                                     </div>
                                 ))}
                                 {errors && <div>
-                                        {/* {errors.maxNumber && alert("Number of selected images exceed maxNumber")} */}
-                                        {errors.acceptType && alert("Your selected file type is not allow")}
-                                        {errors.maxFileSize && alert("Selected file size exceed maxFileSize")}
-                                        {errors.resolution && alert("Selected file is not match your desired resolution")}
-                                    </div>}
+                                    {/* {errors.maxNumber && alert("Number of selected images exceed maxNumber")} */}
+                                    {errors.acceptType && alert("Your selected file type is not allow")}
+                                    {errors.maxFileSize && alert("Selected file size exceed maxFileSize")}
+                                    {errors.resolution && alert("Selected file is not match your desired resolution")}
+                                </div>}
                             </div>
                         )}
 
@@ -72,8 +71,8 @@ export default function Register() {
                     <form>
                         <div className="mx-3 md:flex">
                             <div className="md:w-1/2 px-3 mb-6 md:mb-0">
-                                <TextInput id="username" label="ชื่อผู้ใช้" placeholder="ชื่อผู้ใช้ของท่าน" value={username}
-                                    onChange={e => setUsername(e.target.value)} />
+                                <EmailInput id="email" label="อีเมล" placeholder="อีเมลของท่าน" value={email}
+                                    onChange={e => setEmail(e.target.value)} />
                             </div>
                         </div>
                         <div className="mx-3 md:flex">
@@ -100,12 +99,6 @@ export default function Register() {
                             <div className="md:w-1/2 px-3 mb-6 md:mb-0">
                                 <PhoneNumberInput id="phone-number" label="หมายเลขโทรศัพท์" placeholder="หมายเลขโทรศัพท์ของท่าน" value={phoneNumber}
                                     onChange={e => setPhoneNumber(e.target.value)} />
-                            </div>
-                        </div>
-                        <div className="mx-3 md:flex">
-                            <div className="md:w-1/2 px-3 mb-6 md:mb-0">
-                                <EmailInput id="email" label="อีเมล" placeholder="อีเมลของท่าน" value={email}
-                                    onChange={e => setEmail(e.target.value)} />
                             </div>
                         </div>
                         <div className="mx-3 md:flex">
