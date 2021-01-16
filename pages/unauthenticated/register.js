@@ -4,7 +4,7 @@ import { TextInput, TextAreaInput } from '../../components/input'
 import { PrimaryButton, SecondaryButton } from '../../components/button'
 import { ArrowBack } from '../../components/icon-button'
 import { urlLogin } from '../urls'
-import { required } from '../../functions/validations'
+import { required, requiredMatch } from '../../functions/validations'
 
 export default function Register() {
     const [email, setEmail] = useState('');
@@ -15,7 +15,6 @@ export default function Register() {
     const [phoneNumber, setPhoneNumber] = useState('');
     const [address, setAddress] = useState('');
     const [images, setImages] = useState([{ data_url: "/user.png" }]);
-    const [alert, setAlert] = useState({});
     const maxImages = 1;
 
     const onChangeImage = (imageList, addUpdateIndex) => {
@@ -23,23 +22,24 @@ export default function Register() {
     };
 
     const validation = () => {
-        var validate = false
-        setAlert({
-            'email': (required(email)) ? validate = true : "#ต้องการ",
-            'password': (required(password)) ? validate = true : "#ต้องการ",
-            'confirmPassword': (required(confirmPassword)) ? validate = true : "#ต้องการ",
-            'firstName': (required(firstName)) ? validate = true : "#ต้องการ",
-            'lastName': (required(lastName)) ? validate = true : "#ต้องการ",
-            'phoneNumber': (required(phoneNumber)) ? validate = true : "#ต้องการ",
-            'address': (required(address)) ? validate = true : "#ต้องการ"
-        })
+        let validate;
+        validate = (required(email)&&
+        required(password)&&
+        required(confirmPassword)&&
+        required(firstName)&&
+        required(lastName)&&
+        required(phoneNumber)&&
+        requiredMatch(password,confirmPassword));
+        if(!requiredMatch(password,confirmPassword)){
+            alert("กรุณากรอกรหัสผ่านให้ตรงกัน")
+        }
         return validate;
     }
-
+    
     const submit = async (e) => {
         e.preventDefault();
         if(validation()){
-            console.log(email, password, confirmPassword, firstName, lastName, phoneNumber, address);
+            console.log(email, password, firstName, lastName, phoneNumber, address);
             console.log(images);
         }
     }
@@ -88,38 +88,38 @@ export default function Register() {
                         <div className="mx-3 md:flex">
                             <div className="md:w-1/2 px-3 mb-6 md:mb-0">
                                 <TextInput id="email" label="อีเมล" placeholder="อีเมลของท่าน" value={email} type="email"
-                                    onChange={e => setEmail(e.target.value)} alertError={alert['email']} />
+                                    onChange={e => setEmail(e.target.value)} required={true} />
                             </div>
                         </div>
                         <div className="mx-3 md:flex">
                             <div className="md:w-1/2 px-3 mb-6 md:mb-0">
                                 <TextInput id="password" label="รหัสผ่าน" placeholder="รหัสผ่านของท่าน" value={password}
-                                    type="password" onChange={e => setPassword(e.target.value)} alertError={alert['password']} />
+                                    type="password" onChange={e => setPassword(e.target.value)} required={true} />
                             </div>
                             <div className="md:w-1/2 px-3 mb-6 md:mb-0">
                                 <TextInput id="confirm-password" label="ยืนยันรหัสผ่าน" placeholder="ยืนยันรหัสผ่านของท่าน" value={confirmPassword}
-                                    type="password" onChange={e => setConfirmPassword(e.target.value)} alertError={alert['confirmPassword']} />
+                                    type="password" onChange={e => setConfirmPassword(e.target.value)} required={true} />
                             </div>
                         </div>
                         <div className="mx-3 md:flex">
                             <div className="md:w-1/2 px-3 mb-6 md:mb-0">
                                 <TextInput id="first-name" label="ชื่อจริง" placeholder="ชื่อจริงของท่าน" value={firstName}
-                                    onChange={e => setFirstName(e.target.value)} alertError={alert['firstName']} />
+                                    onChange={e => setFirstName(e.target.value)} required={true} />
                             </div>
                             <div className="md:w-1/2 px-3 mb-6 md:mb-0">
                                 <TextInput id="last-name" label="นามสกุล" placeholder="นามสกุลของท่าน" value={lastName}
-                                    onChange={e => setLastName(e.target.value)} alertError={alert['lastName']} />
+                                    onChange={e => setLastName(e.target.value)} required={true} />
                             </div>
                         </div>
                         <div className="mx-3 md:flex">
                             <div className="md:w-1/2 px-3 mb-6 md:mb-0">
                                 <TextInput id="phone-number" label="หมายเลขโทรศัพท์" placeholder="หมายเลขโทรศัพท์ของท่าน" value={phoneNumber}
-                                    maxLength="10" onChange={e => setPhoneNumber(e.target.value)} alertError={alert['phoneNumber']} />
+                                    maxLength="10" onChange={e => setPhoneNumber(e.target.value)} required={true} />
                             </div>
                         </div>
                         <div className="mx-3 md:flex">
                             <TextAreaInput id="address" label="ที่อยู่ปัจจุบัน" placeholder="ที่อยู่ปัจจุบันของท่าน เช่น 95/1 หมู่1 ตำบลแม่กา อำเภอเมือง จังหวัดพะเยา" value={address}
-                                onChange={e => setAddress(e.target.value)} alertError={alert['address']}></TextAreaInput>
+                                onChange={e => setAddress(e.target.value)}></TextAreaInput>
                         </div>
                         <div className="mx-3 flex py-2">
                             <PrimaryButton label="สมัครสมาชิก" type="submit" onClick={submit}></PrimaryButton>
