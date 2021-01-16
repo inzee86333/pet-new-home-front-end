@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useRouter } from 'next/router'
-import { TextInput, PasswordInput } from '../../components/input'
+import { TextInput } from '../../components/input'
 import { PrimaryButton, TextButton } from '../../components/button'
 import { urlRegister, urlForgetPassword, urlSelectUserType } from '../urls'
 
@@ -24,8 +24,8 @@ export default function Login() {
                         onChange={e => setUsername(e.target.value)} />
                 </div>
                 <div className="mx-3 md:flex">
-                    <PasswordInput id="password" label="รหัสผ่าน" placeholder="รหัสผ่านของท่าน" value={password}
-                        onChange={e => setPassword(e.target.value)} />
+                    <TextInput id="password" label="รหัสผ่าน" placeholder="รหัสผ่านของท่าน" value={password}
+                        type="password" onChange={e => setPassword(e.target.value)} />
                 </div>
                 <div className="mx-3 flex py-2">
                     <PrimaryButton label="เข้าสู่ระบบ" type="submit" onClick={submit}></PrimaryButton>

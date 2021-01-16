@@ -1,31 +1,47 @@
 import { useState } from 'react'
 import ImageUploading from 'react-images-uploading';
-import { TextInput, PasswordInput, PhoneNumberInput, EmailInput, TextAreaInput } from '../../components/input'
+import { TextInput, TextAreaInput } from '../../components/input'
 import { PrimaryButton, SecondaryButton } from '../../components/button'
 import { ArrowBack } from '../../components/icon-button'
 import { urlLogin } from '../urls'
+import { required } from '../../functions/validations'
 
 export default function Register() {
-    const [password, setPassword] = useState('')
-    const [confirmPassword, setConfirmPassword] = useState('')
-    const [firstName, setFirstName] = useState('')
-    const [lastName, setLastName] = useState('')
-    const [phoneNumber, setPhoneNumber] = useState('')
-    const [email, setEmail] = useState('')
-    const [address, setAddress] = useState('')
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
+    const [phoneNumber, setPhoneNumber] = useState('');
+    const [address, setAddress] = useState('');
     const [images, setImages] = useState([{ data_url: "/user.png" }]);
+    const [alert, setAlert] = useState({});
     const maxImages = 1;
 
-    const onChange = (imageList, addUpdateIndex) => {
-        // data for submit
-        //console.log(imageList, addUpdateIndex);
+    const onChangeImage = (imageList, addUpdateIndex) => {
         setImages(imageList);
     };
 
+    const validation = () => {
+        var validate = false
+        setAlert({
+            'email': (required(email)) ? validate = true : "#ต้องการ",
+            'password': (required(password)) ? validate = true : "#ต้องการ",
+            'confirmPassword': (required(confirmPassword)) ? validate = true : "#ต้องการ",
+            'firstName': (required(firstName)) ? validate = true : "#ต้องการ",
+            'lastName': (required(lastName)) ? validate = true : "#ต้องการ",
+            'phoneNumber': (required(phoneNumber)) ? validate = true : "#ต้องการ",
+            'address': (required(address)) ? validate = true : "#ต้องการ"
+        })
+        return validate;
+    }
+
     const submit = async (e) => {
-        e.preventDefault() // prevents page reload
-        console.log(email, password, confirmPassword, firstName, lastName, phoneNumber, address)
-        console.log(images)
+        e.preventDefault();
+        if(validation()){
+            console.log(email, password, confirmPassword, firstName, lastName, phoneNumber, address);
+            console.log(images);
+        }
     }
 
     return (
@@ -35,7 +51,7 @@ export default function Register() {
                 <div>
                     <ImageUploading
                         value={images}
-                        onChange={onChange}
+                        onChange={onChangeImage}
                         maxNumber={maxImages}
                         dataURLKey="data_url"
                     >
@@ -71,39 +87,39 @@ export default function Register() {
                     <form>
                         <div className="mx-3 md:flex">
                             <div className="md:w-1/2 px-3 mb-6 md:mb-0">
-                                <EmailInput id="email" label="อีเมล" placeholder="อีเมลของท่าน" value={email}
-                                    onChange={e => setEmail(e.target.value)} />
+                                <TextInput id="email" label="อีเมล" placeholder="อีเมลของท่าน" value={email} type="email"
+                                    onChange={e => setEmail(e.target.value)} alertError={alert['email']} />
                             </div>
                         </div>
                         <div className="mx-3 md:flex">
                             <div className="md:w-1/2 px-3 mb-6 md:mb-0">
-                                <PasswordInput id="password" label="รหัสผ่าน" placeholder="รหัสผ่านของท่าน" value={password}
-                                    onChange={e => setPassword(e.target.value)} />
+                                <TextInput id="password" label="รหัสผ่าน" placeholder="รหัสผ่านของท่าน" value={password}
+                                    type="password" onChange={e => setPassword(e.target.value)} alertError={alert['password']} />
                             </div>
                             <div className="md:w-1/2 px-3 mb-6 md:mb-0">
-                                <PasswordInput id="confirm-password" label="ยืนยันรหัสผ่าน" placeholder="ยืนยันรหัสผ่านของท่าน" value={confirmPassword}
-                                    onChange={e => setConfirmPassword(e.target.value)} />
+                                <TextInput id="confirm-password" label="ยืนยันรหัสผ่าน" placeholder="ยืนยันรหัสผ่านของท่าน" value={confirmPassword}
+                                    type="password" onChange={e => setConfirmPassword(e.target.value)} alertError={alert['confirmPassword']} />
                             </div>
                         </div>
                         <div className="mx-3 md:flex">
                             <div className="md:w-1/2 px-3 mb-6 md:mb-0">
                                 <TextInput id="first-name" label="ชื่อจริง" placeholder="ชื่อจริงของท่าน" value={firstName}
-                                    onChange={e => setFirstName(e.target.value)} />
+                                    onChange={e => setFirstName(e.target.value)} alertError={alert['firstName']} />
                             </div>
                             <div className="md:w-1/2 px-3 mb-6 md:mb-0">
                                 <TextInput id="last-name" label="นามสกุล" placeholder="นามสกุลของท่าน" value={lastName}
-                                    onChange={e => setLastName(e.target.value)} />
+                                    onChange={e => setLastName(e.target.value)} alertError={alert['lastName']} />
                             </div>
                         </div>
                         <div className="mx-3 md:flex">
                             <div className="md:w-1/2 px-3 mb-6 md:mb-0">
-                                <PhoneNumberInput id="phone-number" label="หมายเลขโทรศัพท์" placeholder="หมายเลขโทรศัพท์ของท่าน" value={phoneNumber}
-                                    onChange={e => setPhoneNumber(e.target.value)} />
+                                <TextInput id="phone-number" label="หมายเลขโทรศัพท์" placeholder="หมายเลขโทรศัพท์ของท่าน" value={phoneNumber}
+                                    maxLength="10" onChange={e => setPhoneNumber(e.target.value)} alertError={alert['phoneNumber']} />
                             </div>
                         </div>
                         <div className="mx-3 md:flex">
                             <TextAreaInput id="address" label="ที่อยู่ปัจจุบัน" placeholder="ที่อยู่ปัจจุบันของท่าน เช่น 95/1 หมู่1 ตำบลแม่กา อำเภอเมือง จังหวัดพะเยา" value={address}
-                                onChange={e => setAddress(e.target.value)}></TextAreaInput>
+                                onChange={e => setAddress(e.target.value)} alertError={alert['address']}></TextAreaInput>
                         </div>
                         <div className="mx-3 flex py-2">
                             <PrimaryButton label="สมัครสมาชิก" type="submit" onClick={submit}></PrimaryButton>

@@ -32,7 +32,6 @@ export default function App() {
                 }) => (
                     // write your building UI
                     <div className="upload__image-wrapper">
-
                         <button
                             style={isDragging ? { color: 'black' } : undefined}
                             onClick={onImageUpload}
