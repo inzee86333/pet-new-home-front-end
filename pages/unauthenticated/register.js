@@ -17,10 +17,6 @@ export default function Register() {
     const [images, setImages] = useState([{ data_url: "/user.png" }]);
     const maxImages = 1;
 
-    const validate = () => {
-        (username != '') ? alert("1") : alert("2");
-    }
-
     const onChange = (imageList, addUpdateIndex) => {
         // data for submit
         //console.log(imageList, addUpdateIndex);
@@ -29,7 +25,6 @@ export default function Register() {
 
     const submit = async (e) => {
         e.preventDefault() // prevents page reload
-        validate();
         console.log(username, password, confirmPassword, firstName, lastName, phoneNumber, email, address)
         console.log(images)
     }
