@@ -68,7 +68,7 @@ export default function Register() {
                                 &nbsp;
                                 {imageList.map((image, index) => (
                                     <div key={index} className="image-item">
-                                        <img src={image['data_url']} alt="" className="rounded-full object-cover h-48 w-48 shadow border-2  border-green-300" />
+                                        <img src={image['data_url']} alt="" className="rounded-full object-cover h-48 w-48 shadow border-2 border-green-300" />
                                         <div className="image-item__btn-wrapper flex">
                                             <SecondaryButton onClick={() => onImageUpdate(index)} label="เพิ่มรูปประจำตัว"></SecondaryButton>
                                         </div>

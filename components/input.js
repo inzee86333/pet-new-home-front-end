@@ -16,7 +16,7 @@ export function TextInput({ id, label, placeholder, value, onChange, type, maxLe
     )
 }
 
-export function TextSelectInput({ id, label, placeholder, value, onChange, options, required }) {
+export function TextSelectInput({ id, label, placeholder, value, onChange, options, required, className }) {
     let alert = '';
     if (required) {
         alert = (value === null) ? '*ต้องการ' : '';
@@ -27,6 +27,7 @@ export function TextSelectInput({ id, label, placeholder, value, onChange, optio
                 {label} <a className="text-red-500">{alert}</a>
             </label>
             <Select
+                className={className}
                 instanceId={id}
                 options={options}
                 onChange={onChange}
