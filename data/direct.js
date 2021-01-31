@@ -4,22 +4,22 @@ export const provinceList = [
     { value: 'p03', label: 'กาญจนบุรี' },
 ];
 
-export const animalType = [
+export const animalTypeList = [
     { value: 'dog', label: 'หมา' },
     { value: 'cat', label: 'แมว' },
 ];
 
-export const birthYear = [
+export const birthYearList = [
     { value: '2021', label: '2021' },
     { value: '2020', label: '2020' },
 ];
 
-export const speciess = [
+export const speciesList = [
     { value: 'dog', label: 'หมา' },
     { value: 'cat', label: 'แมว' },
 ]
 
-export const animalSex = [
+export const animalSexList = [
     { value: 'f', label: 'เมีย' },
     { value: 'm', label: 'ผู้' },
     { value: 'n', label: 'อื่นๆ' },

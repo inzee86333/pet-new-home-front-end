@@ -1,0 +1,1 @@
+export const contrinerCardInput="border p-5 rounded-sm shadow-sm mb-1"
