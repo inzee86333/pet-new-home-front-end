@@ -38,7 +38,7 @@ export default function Login() {
                         type="password" onChange={e => setPassword(e.target.value)} required={true}/>
                 </div>
                 <div className="mx-3 flex py-2">
-                    <PrimaryButton label="เข้าสู่ระบบ" type="submit" onClick={submit}></PrimaryButton>
+                    <PrimaryButton className="mx-auto" label="เข้าสู่ระบบ" type="submit" onClick={submit}></PrimaryButton>
                 </div>
                 <div className="flax-row pb-1 pt-12 mx-auto w-max">
                     <TextButton label="สมัครสมาชิก" href={urlRegister}></TextButton> หรือ <TextButton label="ลืมรหัสผ่าน?" href={urlForgetPassword}></TextButton>

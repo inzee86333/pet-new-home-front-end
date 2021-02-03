@@ -21,3 +21,9 @@ textarea {
     background-repeat: no-repeat;
     background-size: cover;
 }
+
+h1 {
+    font-size: 28px;
+    margin-left: 12px;
+    margin-bottom: 6px;
+}

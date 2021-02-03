@@ -22,7 +22,7 @@ export default function ForgetPassword() {
                         onChange={e => setinputForgetPassword(e.target.value)} required={true}/>
                 </div>
                 <div className="mx-3 flex py-2">
-                    <PrimaryButton label="ส่งรหัสผ่าน" type="submit" onClick={submit}></PrimaryButton>
+                    <PrimaryButton className="mx-auto" label="ส่งรหัสผ่าน" type="submit" onClick={submit}></PrimaryButton>
                 </div>
             </div>
         </div>

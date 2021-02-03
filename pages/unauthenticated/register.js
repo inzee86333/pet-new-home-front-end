@@ -70,7 +70,7 @@ export default function Register() {
                                     <div key={index} className="image-item">
                                         <img src={image['data_url']} alt="" className="rounded-full object-cover h-48 w-48 shadow border-2 border-green-300" />
                                         <div className="image-item__btn-wrapper flex">
-                                            <SecondaryButton onClick={() => onImageUpdate(index)} label="เพิ่มรูปประจำตัว"></SecondaryButton>
+                                            <SecondaryButton className="mx-auto" onClick={() => onImageUpdate(index)} label="เพิ่มรูปประจำตัว"></SecondaryButton>
                                         </div>
                                     </div>
                                 ))}
@@ -122,7 +122,7 @@ export default function Register() {
                                 onChange={e => setAddress(e.target.value)}></TextAreaInput>
                         </div>
                         <div className="mx-3 flex py-2">
-                            <PrimaryButton label="สมัครสมาชิก" type="submit" onClick={submit}></PrimaryButton>
+                            <PrimaryButton className="mx-auto" label="สมัครสมาชิก" type="submit" onClick={submit}></PrimaryButton>
                         </div>
                     </form>
                 </div>

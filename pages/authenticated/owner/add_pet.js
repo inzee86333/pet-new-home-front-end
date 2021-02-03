@@ -1,11 +1,14 @@
 import { useState } from 'react'
+import { useRouter } from 'next/router'
 import ImageUploading from 'react-images-uploading';
-import { TextAreaInput, TextInput, TextSelectInput } from '../../../components/input'
+import { TextInput, TextSelectInput } from '../../../components/input'
 import { PrimaryButton } from '../../../components/button'
 import { provinceList, animalTypeList, speciesList, birthYearList, animalSexList } from '../../../data/direct'
-import { contrinerCardInput } from '../../../components/tailwindClass'
+import { contrinerCard, contrinerMain } from '../../../components/tailwindClass'
+import { urlListPetOwner } from '../../urls'
 
 export default function AddPet() {
+    const router = useRouter()
     const [images, setImages] = useState([]);
     const [animalType, setAnimalType] = useState(null);
     const [species, setSpeciess] = useState(null);
@@ -24,14 +27,14 @@ export default function AddPet() {
 
     const addPet = async (e) => {
         e.preventDefault() // prevents page reload
-        console.log(province)
+        router.push(urlListPetOwner)
     }
 
     return (
         <div>
-            <div className='w-auto min-w-max xl:w-1/2 my-2 md:w-3/4 md:px-24 p-8 m-auto shadow-2xl bg-gray-50'>
-                <h1 style={{ fontSize: 28 }} className="ml-6 h-min w-max mb-4">รายละเอียดสัตว์เลี้ยง</h1>
-                <div className={contrinerCardInput}>
+            <div className={ contrinerMain }>
+                <h1>รายละเอียดสัตว์เลี้ยง</h1>
+                <div className={contrinerCard}>
                     <ImageUploading
                         multiple
                         value={images}
@@ -83,7 +86,7 @@ export default function AddPet() {
                         )}
                     </ImageUploading>
                 </div>
-                <div className={contrinerCardInput}>
+                <div className={contrinerCard}>
                     <h3 className="mb-2">ข้อมูลสัตว์เลี้ยง</h3>
                     <div className="mx-3 md:flex">
                         <div className="md:w-1/2 px-3 mb-6 md:mb-0">
@@ -107,7 +110,7 @@ export default function AddPet() {
                         </div>
                     </div>
                 </div>
-                <div className={contrinerCardInput}>
+                <div className={contrinerCard}>
                     <h3 className="mb-2">ที่อยู่สัตวเลี้ยง</h3>
                     <div className="mx-3 md:flex">
                         <div className="md:w-1/2 px-3 mb-6 md:mb-0">
@@ -119,7 +122,7 @@ export default function AddPet() {
                     </div>
                 </div>
                 <div className="mx-3 flex py-2">
-                    <PrimaryButton label="เพิ่มสัตว์เลี้ยง" onClick={addPet}></PrimaryButton>
+                    <PrimaryButton className="mx-auto" label="เพิ่มสัตว์เลี้ยง" onClick={addPet}></PrimaryButton>
                 </div>
             </div>
         </div>
