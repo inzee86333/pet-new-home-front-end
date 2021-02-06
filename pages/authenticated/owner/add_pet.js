@@ -11,7 +11,7 @@ export default function AddPet() {
     const router = useRouter()
     const [images, setImages] = useState([]);
     const [animalType, setAnimalType] = useState(null);
-    const [species, setSpeciess] = useState(null);
+    const [species, setSpecies] = useState(null);
     const [birthYear, setBirthYear] = useState(null);
     const [animalSex, setAnimalSex] = useState(null);
     const [disease, setDisease] = useState('');
@@ -93,7 +93,7 @@ export default function AddPet() {
                             <TextSelectInput id="animal_type" label="ประเภท" options={animalTypeList} value={animalType} onChange={e => setAnimalType(e)} placeholder="เลือกประเภท" required={true}></TextSelectInput>
                         </div>
                         <div className="md:w-1/2 px-3 mb-6 md:mb-0">
-                            <TextSelectInput id="species" label="สายพันธุ์" options={speciesList} value={species} onChange={e => setSpeciess(e)} placeholder="เลือกสายพันธุ์"></TextSelectInput>
+                            <TextSelectInput id="species" label="สายพันธุ์" options={speciesList} value={species} onChange={e => setSpecies(e)} placeholder="เลือกสายพันธุ์"></TextSelectInput>
                         </div>
                     </div>
                     <div className="mx-3 md:flex">

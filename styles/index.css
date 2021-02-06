@@ -26,4 +26,16 @@ h1 {
     font-size: 28px;
     margin-left: 12px;
     margin-bottom: 6px;
+    font-weight: bold;
+}
+
+.htax {
+    font-size: 22px;
+    text-align: left;
+    font-weight: bold;
+}
+
+.ptax {
+    font-size: 18px;
+    text-align: left;
 }

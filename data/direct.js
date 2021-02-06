@@ -24,3 +24,8 @@ export const animalSexList = [
     { value: 'm', label: 'ผู้' },
     { value: 'n', label: 'อื่นๆ' },
 ];
+
+export const animalOwner = [
+    { id: '0001', type: 'แมว', age: '2', species: 'เปอร์เซีย', sex: 'ผู้', interested: 150, message : 3},
+    { id: '0002', type: 'หมา', age: '3', species: 'โกลเด้น รีทรีฟเวอร์', sex: 'ผู้', interested: 1006, message : 83},
+];
