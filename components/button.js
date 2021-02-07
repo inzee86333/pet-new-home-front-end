@@ -1,6 +1,6 @@
 export function PrimaryButton({ label, onClick, type, className }) {
     return (
-        <button className={`py-2 min-w-max w-36 px-4 bg-green-500 text-white font-semibold rounded-lg shadow-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-75 ${className}`}
+        <button className={`px-4 py-2 my-2 bg-green-500 text-white font-semibold rounded-lg shadow-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-75 ${className}`}
             type={type} onClick={onClick}>
             {label}
         </button>
@@ -9,7 +9,7 @@ export function PrimaryButton({ label, onClick, type, className }) {
 
 export function SecondaryButton({ label, onClick, type, className }) {
     return (
-        <button className={`uppercase px-4 py-2 my-2 rounded-full border border-green-600 text-green-600 max-w-max shadow-sm hover:bg-green-600 hover:text-white ${className}`}
+        <button className={`px-4 py-2 my-2 rounded-full border border-green-600 text-green-600 max-w-max shadow-sm hover:bg-green-600 hover:text-white ${className}`}
             type={type} onClick={onClick}>
             {label}
         </button>
@@ -22,7 +22,7 @@ export function TextButton({ label, href, type }) {
     );
 }
 
-export function CardInfoButton({ id, type, age, species, sex, interested, message }) {
+export function CardInfoPetOwnerButton({ id, photo, type, age, species, sex, interested, message }) {
     return (
         <button className="w-full bg-white rounded-xl shadow border mb-2">
             <div className="flex flex-row py-3 px-6 justify-between">
@@ -64,6 +64,16 @@ export function CardInfoButton({ id, type, age, species, sex, interested, messag
                     <h5 className="ptax py-1 font-semibold text-green-500 font-bold">{message} ข้อความ</h5>
                     <div>&nbsp;</div>
                 </div>
+            </div>
+        </button>
+    );
+}
+
+export function CardInfoPetFinderButton({ id, photo, type, age, species, sex, interested }) {
+    return (
+        <button className="w-full bg-white rounded-xl shadow border mb-2">
+            <div className="flex mx-auto w-max m-3">
+                <img src={"/cat.jpg"} alt="" className="rounded-xl object-cover h-28 w-28 shadow border" />
             </div>
         </button>
     );
