@@ -71,9 +71,14 @@ export function CardInfoPetOwnerButton({ id, photo, type, age, species, sex, int
 
 export function CardInfoPetFinderButton({ id, photo, type, age, species, sex, interested }) {
     return (
-        <button className="w-full bg-white rounded-xl shadow border mb-2">
-            <div className="flex mx-auto w-max m-3">
-                <img src={"/cat.jpg"} alt="" className="rounded-xl object-cover h-28 w-28 shadow border" />
+        <button className="w-max bg-white rounded-xl shadow border p-2 m-1">
+            <div className="flex flex-col mx-auto w-max">
+                <img src={"/cat.jpg"} alt="" className="rounded-xl object-cover h-36 w-36 shadow border" />
+                <div>
+                    <p className="ptax px-1 font-semibold">{type}</p>
+                    <p className="ptax px-1 font-semibold">{species}</p>
+                    <p className="ptax px-1 font-semibold">อายุ{age}ปี</p>
+                </div>
             </div>
         </button>
     );

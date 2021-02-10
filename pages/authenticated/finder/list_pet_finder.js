@@ -13,8 +13,19 @@ export default function list_pet_finder() {
                 </div>
             </div>
             <div className={contrinerCard}>
-                <div className="grid grid-cols-5">
-                    <CardInfoPetFinderButton></CardInfoPetFinderButton>
+                <div className="grid md:grid-cols-5  grid-cols-3">
+                    {animalOwner.map(json => (
+                        <CardInfoPetFinderButton key={json.id}
+                            id={json.id}
+                            type={json.type}
+                            age={json.age}
+                            species={json.species}
+                            sex={json.sex}
+                            interested={json.interested}
+                            message={json.message}
+                        />
+                    ))}
+
                 </div>
             </div>
         </div>
