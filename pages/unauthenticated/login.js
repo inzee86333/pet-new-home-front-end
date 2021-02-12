@@ -30,7 +30,7 @@ export default function Login() {
             <div className="w-auto min-w-max max-w-max md:px-24 p-8 m-auto shadow-2xl bg-gray-50">
                 <h1 style={{ fontSize: 28 }} className="mx-auto h-min w-max mb-5">ลงชื่อเข้าใช้</h1>
                 <div className="mx-3 md:flex">
-                    <TextInput id="email" label="ชื่อผู้ใช้" placeholder="ชื่อผู้ใช้ของท่าน" value={email}
+                    <TextInput id="email" label="อีเมล" placeholder="อีเมลของท่าน" value={email}
                         onChange={e => setEmail(e.target.value)} required={true}/>
                 </div>
                 <div className="mx-3 md:flex">

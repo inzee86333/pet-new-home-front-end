@@ -2,8 +2,6 @@ import { useState } from 'react'
 import ImageUploading from 'react-images-uploading';
 import { TextInput, TextAreaInput } from '../../components/input'
 import { PrimaryButton, SecondaryButton } from '../../components/button'
-import { ArrowBack } from '../../components/icon-button'
-import { urlLogin } from '../urls'
 import { required, requiredMatch } from '../../functions/validations'
 
 export default function Register() {
@@ -47,7 +45,6 @@ export default function Register() {
     return (
         <div className="flex h-max bganimal">
             <div className="box-content w-auto min-w-max max-w-max m-auto p-8 shadow-2xl my-8 bg-gray-50">
-                <ArrowBack href={urlLogin}></ArrowBack>
                 <div>
                     <ImageUploading
                         value={images}

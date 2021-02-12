@@ -6,6 +6,7 @@ import { PrimaryButton } from '../../../components/button'
 import { provinceList, animalTypeList, speciesList, birthYearList, animalSexList } from '../../../data/direct'
 import { contrinerCard, contrinerMain } from '../../../components/tailwindClass'
 import { urlListPetOwner } from '../../urls'
+import { Navber } from '../../../components/navbar'
 
 export default function AddPet() {
     const router = useRouter()
@@ -32,6 +33,7 @@ export default function AddPet() {
 
     return (
         <div>
+            <Navber/>
             <div className={ contrinerMain }>
                 <h1>รายละเอียดสัตว์เลี้ยง</h1>
                 <div className={contrinerCard}>
