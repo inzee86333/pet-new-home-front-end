@@ -26,6 +26,7 @@ export default function list_pet_owner() {
                         {animalOwner.map(json => (
                             <CardInfoPetOwnerButton key={json.id}
                                 id={json.id}
+                                photo={json.photoPet}
                                 type={json.type}
                                 age={json.age}
                                 species={json.species}

@@ -31,9 +31,9 @@ export function TextMenuButton({ label, href, type, className }) {
 export function CardInfoPetOwnerButton({ id, photo, type, age, species, sex, interested, message }) {
     return (
         <button className="w-full bg-white rounded-xl shadow border mb-2">
-            <div className="flex flex-row py-3 px-6 justify-between">
+            <div className="flex flex-row py-3 px-4 justify-between">
                 <div className="flex flex-row">
-                    <img src={"/cat.jpg"} alt="" className="rounded-xl object-cover h-24 w-24 shadow border" />
+                    <img src={photo} alt="" className="rounded-xl object-cover h-24 w-24 shadow border" />
                     <div className="px-4">
                         <div className="flex flex-row">
                             <div className="grid grid-cols-2">
@@ -79,7 +79,7 @@ export function CardInfoPetFinderButton({ id, photo, type, age, species, sex, in
     return (
         <button className="w-max bg-white rounded-xl shadow border p-2 m-1">
             <div className="flex flex-col mx-auto w-max">
-                <img src={"/cat.jpg"} alt="" className="rounded-xl object-cover h-36 w-36 shadow border" />
+                <img src={photo} alt="" className="rounded-xl object-cover h-36 w-36 shadow border" />
                 <div>
                     <p className="ptax px-1 font-semibold">{type}</p>
                     <p className="ptax px-1 font-semibold">{species}</p>

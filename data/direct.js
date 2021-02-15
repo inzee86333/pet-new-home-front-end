@@ -25,11 +25,24 @@ export const animalSexList = [
     { value: 'n', label: 'อื่นๆ' },
 ];
 
+const photoCat = [
+    "/1.jpg",
+    "/2.jpg",
+    "/3.jfif",
+    "/4.jpg",
+    "/5.jfif",
+    "/6.jfif",
+    "/7.jpg",
+    "/8.jpg",
+    "/9.jpg",
+    "/10.jpg",
+]
+
 export const animalOwner = [
-    { id: '0001', type: 'แมว', age: '2', species: 'เปอร์เซีย', sex: 'ผู้', interested: 150, message : 3, province: "พะเยา", district: "เมือง"},
-    { id: '0002', type: 'หมา', age: '3', species: 'โกลเด้น รีทรีฟเวอร์', sex: 'ผู้', interested: 1006, message : 83, province: "เชียงใหม่", district: "แม่ริม"},
-    { id: '0003', type: 'หมา', age: '3', species: 'โกลเด้น รีทรีฟเวอร์', sex: 'ผู้', interested: 1006, message : 83, province: "เชียงใหม่", district: "แม่ริม"},
-    { id: '0004', type: 'หมา', age: '3', species: 'โกลเด้น รีทรีฟเวอร์', sex: 'ผู้', interested: 1006, message : 83, province: "เชียงใหม่", district: "แม่ริม"},
-    { id: '0005', type: 'หมา', age: '3', species: 'โกลเด้น รีทรีฟเวอร์', sex: 'ผู้', interested: 1006, message : 83, province: "เชียงใหม่", district: "แม่ริม"},
-    { id: '0006', type: 'หมา', age: '3', species: 'โกลเด้น รีทรีฟเวอร์', sex: 'ผู้', interested: 1006, message : 83, province: "เชียงใหม่", district: "แม่ริม"},
+    { photoPet: photoCat[0], id: '0001', type: 'แมว', age: '2', species: 'เปอร์เซีย', sex: 'ผู้', interested: 150, message : 3, province: "พะเยา", district: "เมือง"},
+    { photoPet: photoCat[1], id: '0002', type: 'หมา', age: '3', species: 'โกลเด้น รีทรีฟเวอร์', sex: 'ผู้', interested: 1006, message : 83, province: "เชียงใหม่", district: "แม่ริม"},
+    { photoPet: photoCat[2], id: '0003', type: 'หมา', age: '3', species: 'โกลเด้น รีทรีฟเวอร์', sex: 'ผู้', interested: 1006, message : 83, province: "เชียงใหม่", district: "แม่ริม"},
+    { photoPet: photoCat[3], id: '0004', type: 'หมา', age: '3', species: 'โกลเด้น รีทรีฟเวอร์', sex: 'ผู้', interested: 1006, message : 83, province: "เชียงใหม่", district: "แม่ริม"},
+    { photoPet: photoCat[4], id: '0005', type: 'หมา', age: '3', species: 'โกลเด้น รีทรีฟเวอร์', sex: 'ผู้', interested: 1006, message : 83, province: "เชียงใหม่", district: "แม่ริม"},
+    { photoPet: photoCat[5], id: '0006', type: 'หมา', age: '3', species: 'โกลเด้น รีทรีฟเวอร์', sex: 'ผู้', interested: 1006, message : 83, province: "เชียงใหม่", district: "แม่ริม"},
 ];

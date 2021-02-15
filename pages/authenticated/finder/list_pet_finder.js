@@ -20,6 +20,7 @@ export default function list_pet_finder() {
                         {animalOwner.map(json => (
                             <CardInfoPetFinderButton key={json.id}
                                 id={json.id}
+                                photo={json.photoPet}
                                 type={json.type}
                                 age={json.age}
                                 species={json.species}
