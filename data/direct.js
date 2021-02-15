@@ -26,6 +26,10 @@ export const animalSexList = [
 ];
 
 export const animalOwner = [
-    { id: '0001', type: 'แมว', age: '2', species: 'เปอร์เซีย', sex: 'ผู้', interested: 150, message : 3},
-    { id: '0002', type: 'หมา', age: '3', species: 'โกลเด้น รีทรีฟเวอร์', sex: 'ผู้', interested: 1006, message : 83},
+    { id: '0001', type: 'แมว', age: '2', species: 'เปอร์เซีย', sex: 'ผู้', interested: 150, message : 3, province: "พะเยา", district: "เมือง"},
+    { id: '0002', type: 'หมา', age: '3', species: 'โกลเด้น รีทรีฟเวอร์', sex: 'ผู้', interested: 1006, message : 83, province: "เชียงใหม่", district: "แม่ริม"},
+    { id: '0003', type: 'หมา', age: '3', species: 'โกลเด้น รีทรีฟเวอร์', sex: 'ผู้', interested: 1006, message : 83, province: "เชียงใหม่", district: "แม่ริม"},
+    { id: '0004', type: 'หมา', age: '3', species: 'โกลเด้น รีทรีฟเวอร์', sex: 'ผู้', interested: 1006, message : 83, province: "เชียงใหม่", district: "แม่ริม"},
+    { id: '0005', type: 'หมา', age: '3', species: 'โกลเด้น รีทรีฟเวอร์', sex: 'ผู้', interested: 1006, message : 83, province: "เชียงใหม่", district: "แม่ริม"},
+    { id: '0006', type: 'หมา', age: '3', species: 'โกลเด้น รีทรีฟเวอร์', sex: 'ผู้', interested: 1006, message : 83, province: "เชียงใหม่", district: "แม่ริม"},
 ];

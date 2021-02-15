@@ -3,7 +3,7 @@ import { contrinerCard, contrinerMain } from '../../../components/tailwindClass'
 import { SecondaryButton, CardInfoPetOwnerButton } from '../../../components/button'
 import { urlAddPet } from '../../urls'
 import { animalOwner } from '../../../data/direct'
-import { Navber } from '../../../components/navbar'
+import { Nav } from '../../../components/navbar'
 
 export default function list_pet_owner() {
     const router = useRouter()
@@ -15,7 +15,7 @@ export default function list_pet_owner() {
 
     return (
         <div>
-            <Navber/>
+            <Nav/>
             <div className={contrinerMain}>
                 <div className="flex justify-between">
                     <h1 className="py-1">รายการหาบ้านของฉัน</h1>
@@ -34,7 +34,6 @@ export default function list_pet_owner() {
                                 message={json.message}
                             />
                         ))}
-
                     </div>
                 </div>
             </div>

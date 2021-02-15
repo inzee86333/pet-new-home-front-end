@@ -1,6 +1,6 @@
 export function PrimaryButton({ label, onClick, type, className }) {
     return (
-        <button className={`px-4 py-2 my-2 bg-green-500 text-white font-semibold rounded-lg shadow-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-75 ${className}`}
+        <button className={`px-4 py-2 my-1 bg-green-500 text-white font-semibold rounded-lg shadow-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-75 ${className}`}
             type={type} onClick={onClick}>
             {label}
         </button>
@@ -9,7 +9,7 @@ export function PrimaryButton({ label, onClick, type, className }) {
 
 export function SecondaryButton({ label, onClick, type, className }) {
     return (
-        <button className={`px-4 py-2 my-2 rounded-full border border-green-600 text-green-600 max-w-max shadow-sm hover:bg-green-600 hover:text-white ${className}`}
+        <button className={`px-4 py-2 my-1 rounded-full border border-green-600 text-green-600 max-w-max shadow-sm hover:bg-green-600 hover:text-white ${className}`}
             type={type} onClick={onClick}>
             {label}
         </button>
@@ -22,12 +22,18 @@ export function TextButton({ label, href, type }) {
     );
 }
 
+export function TextMenuButton({ label, href, type, className }) {
+    return (
+        <a style={{fontSize: 18}} className={`text-white font-black hover:text-gray-200 ${className}`} href={href} type={type}>{label}</a>
+    );
+}
+
 export function CardInfoPetOwnerButton({ id, photo, type, age, species, sex, interested, message }) {
     return (
         <button className="w-full bg-white rounded-xl shadow border mb-2">
             <div className="flex flex-row py-3 px-6 justify-between">
                 <div className="flex flex-row">
-                    <img src={"/cat.jpg"} alt="" className="rounded-xl object-cover h-28 w-28 shadow border" />
+                    <img src={"/cat.jpg"} alt="" className="rounded-xl object-cover h-24 w-24 shadow border" />
                     <div className="px-4">
                         <div className="flex flex-row">
                             <div className="grid grid-cols-2">
@@ -69,7 +75,7 @@ export function CardInfoPetOwnerButton({ id, photo, type, age, species, sex, int
     );
 }
 
-export function CardInfoPetFinderButton({ id, photo, type, age, species, sex, interested }) {
+export function CardInfoPetFinderButton({ id, photo, type, age, species, sex, interested, province, district }) {
     return (
         <button className="w-max bg-white rounded-xl shadow border p-2 m-1">
             <div className="flex flex-col mx-auto w-max">
@@ -78,6 +84,7 @@ export function CardInfoPetFinderButton({ id, photo, type, age, species, sex, in
                     <p className="ptax px-1 font-semibold">{type}</p>
                     <p className="ptax px-1 font-semibold">{species}</p>
                     <p className="ptax px-1 font-semibold">อายุ{age}ปี</p>
+                    <p className="ptax px-1 font-semibold text-green-500 font-bold">{province} {district}</p>
                 </div>
             </div>
         </button>

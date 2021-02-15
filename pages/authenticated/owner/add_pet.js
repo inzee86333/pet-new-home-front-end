@@ -6,7 +6,7 @@ import { PrimaryButton } from '../../../components/button'
 import { provinceList, animalTypeList, speciesList, birthYearList, animalSexList } from '../../../data/direct'
 import { contrinerCard, contrinerMain } from '../../../components/tailwindClass'
 import { urlListPetOwner } from '../../urls'
-import { Navber } from '../../../components/navbar'
+import { Nav } from '../../../components/navbar'
 
 export default function AddPet() {
     const router = useRouter()
@@ -33,7 +33,7 @@ export default function AddPet() {
 
     return (
         <div>
-            <Navber/>
+            <Nav/>
             <div className={ contrinerMain }>
                 <h1>รายละเอียดสัตว์เลี้ยง</h1>
                 <div className={contrinerCard}>
@@ -77,7 +77,7 @@ export default function AddPet() {
                                 <div className="flex">
                                     {imageList.map((image, index) => (
                                         <div key={index} className="image-item">
-                                            <img src={image['data_url']} alt="" className="object-cover mx-1 h-28 w-28 shadow border-2" />
+                                            <img src={image['data_url']} alt="" className="object-cover ml-1 h-28 w-28 shadow rounded-md border-2" />
                                             <div className="image-item__btn-wrapper flex">
                                                 <button className="mx-auto" onClick={() => onImageRemove(index)}>ลบ</button>
                                             </div>
