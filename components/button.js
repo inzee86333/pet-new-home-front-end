@@ -37,7 +37,7 @@ export function CardInfoPetOwnerButton({ id, photo, type, age, species, sex, int
                     <div className="px-4">
                         <div className="flex flex-row">
                             <div className="grid grid-cols-2">
-                                <h5 className="htax px-1 py-1 font-semibold">ลำดับที่</h5>
+                                <h5 className="htax px-1 py-1 font-semibold">ลำดับ</h5>
                                 <h5 className="htax px-1 py-1">{id}</h5>
                             </div>
                         </div>

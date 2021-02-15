@@ -39,10 +39,11 @@ const photoCat = [
 ]
 
 export const animalOwner = [
-    { photoPet: photoCat[0], id: '0001', type: 'แมว', age: '2', species: 'เปอร์เซีย', sex: 'ผู้', interested: 150, message : 3, province: "พะเยา", district: "เมือง"},
-    { photoPet: photoCat[1], id: '0002', type: 'หมา', age: '3', species: 'โกลเด้น รีทรีฟเวอร์', sex: 'ผู้', interested: 1006, message : 83, province: "เชียงใหม่", district: "แม่ริม"},
-    { photoPet: photoCat[2], id: '0003', type: 'หมา', age: '3', species: 'โกลเด้น รีทรีฟเวอร์', sex: 'ผู้', interested: 1006, message : 83, province: "เชียงใหม่", district: "แม่ริม"},
-    { photoPet: photoCat[3], id: '0004', type: 'หมา', age: '3', species: 'โกลเด้น รีทรีฟเวอร์', sex: 'ผู้', interested: 1006, message : 83, province: "เชียงใหม่", district: "แม่ริม"},
-    { photoPet: photoCat[4], id: '0005', type: 'หมา', age: '3', species: 'โกลเด้น รีทรีฟเวอร์', sex: 'ผู้', interested: 1006, message : 83, province: "เชียงใหม่", district: "แม่ริม"},
-    { photoPet: photoCat[5], id: '0006', type: 'หมา', age: '3', species: 'โกลเด้น รีทรีฟเวอร์', sex: 'ผู้', interested: 1006, message : 83, province: "เชียงใหม่", district: "แม่ริม"},
+    { photoPet: photoCat[0], id: '0001', type: 'แมว', age: '2', species: 'เปอร์เซีย', sex: 'ผู้', interested: Math.floor((Math.random() * 1500) + 1), message: Math.floor((Math.random() * 100) + 1), province: "พะเยา", district: "เมือง"},
+    { photoPet: photoCat[2], id: '0020', type: 'แมว', age: '4', species: 'ไม่ระบุ', sex: 'เมีย', interested: Math.floor((Math.random() * 1500) + 1), message : Math.floor((Math.random() * 100) + 1), province: "เชียงใหม่", district: "แม่ริม"},
+    { photoPet: photoCat[3], id: '0025', type: 'แมว', age: '3', species: 'ไม่ระบุ', sex: 'ผู้', interested: Math.floor((Math.random() * 1500) + 1), message : Math.floor((Math.random() * 100) + 1), province: "เชียงใหม่", district: "แม่ริม"},
+    { photoPet: photoCat[4], id: '0030', type: 'แมว', age: '9', species: 'ไม่ระบุ', sex: 'เมีย', interested: Math.floor((Math.random() * 1500) + 1), message : Math.floor((Math.random() * 100) + 1), province: "เชียงใหม่", district: "แม่ริม"},
+    { photoPet: photoCat[5], id: '0032', type: 'แมว', age: '5', species: 'ไม่ระบุ', sex: 'ผู้', interested: Math.floor((Math.random() * 1500) + 1), message : Math.floor((Math.random() * 100) + 1), province: "เชียงใหม่", district: "แม่ริม"},
+    { photoPet: photoCat[6], id: '0046', type: 'แมว', age: '5', species: 'ไม่ระบุ', sex: 'ผู้', interested: Math.floor((Math.random() * 1500) + 1), message: Math.floor((Math.random() * 100) + 1), province: "เชียงใหม่", district: "แม่ริม" },
+    { photoPet: photoCat[7], id: '0047', type: 'แมว', age: '5', species: 'ไม่ระบุ', sex: 'ผู้', interested: Math.floor((Math.random() * 1500) + 1), message: Math.floor((Math.random() * 100) + 1), province: "เชียงใหม่", district: "แม่ริม" },
 ];
