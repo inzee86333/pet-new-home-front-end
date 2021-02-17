@@ -1,10 +1,15 @@
 import { useState } from 'react'
+import { useRouter } from 'next/router'
 import ImageUploading from 'react-images-uploading';
 import { TextInput, TextAreaInput } from '../../components/input'
 import { PrimaryButton, SecondaryButton } from '../../components/button'
 import { required, requiredMatch } from '../../functions/validations'
+import { dataURLtoFile, dataURItoBlob } from '../../functions/converter'
+import { registerAPI } from '../../data/apis'
+import { urlLogin } from '../urls'
 
 export default function Register() {
+    const router = useRouter()
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
@@ -21,24 +26,40 @@ export default function Register() {
 
     const validation = () => {
         let validate;
-        validate = (required(email)&&
-        required(password)&&
-        required(confirmPassword)&&
-        required(firstName)&&
-        required(lastName)&&
-        required(phoneNumber)&&
-        requiredMatch(password,confirmPassword));
-        if(!requiredMatch(password,confirmPassword)){
+        validate = (required(email) &&
+            required(password) &&
+            required(confirmPassword) &&
+            required(firstName) &&
+            required(lastName) &&
+            required(phoneNumber) &&
+            requiredMatch(password, confirmPassword));
+        if (!requiredMatch(password, confirmPassword)) {
             alert("กรุณากรอกรหัสผ่านให้ตรงกัน")
         }
         return validate;
     }
-    
+
     const submit = async (e) => {
         e.preventDefault();
-        if(validation()){
-            console.log(email, password, firstName, lastName, phoneNumber, address);
-            console.log(images);
+        if (validation()) {
+            var formData = new FormData();
+            formData.append('email', email)
+            formData.append('password', password)
+            formData.append('first_name', firstName)
+            formData.append('last_name', lastName)
+            formData.append('phone_number', phoneNumber)
+            formData.append('address', address)
+            if (images[0]['data_url'] !== "/user.png"){
+                formData.append('photo_user', dataURLtoFile(images[0]['data_url'], `${firstName}-${lastName}.png`))
+            }
+            registerAPI(formData,(t) =>{
+                if(t){
+                    alert('สมัครสมาชิกสำเร็จ')
+                    router.push(urlLogin)
+                }else{
+                    alert('สมัครสมาชิกไม่สำเร็จ')
+                }
+            })
         }
     }
 
@@ -50,7 +71,7 @@ export default function Register() {
                         value={images}
                         onChange={onChangeImage}
                         maxNumber={maxImages}
-                        dataURLKey="data_url"
+                        dataURLKey='data_url'
                     >
                         {({
                             imageList,
