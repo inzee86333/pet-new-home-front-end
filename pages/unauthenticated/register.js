@@ -49,7 +49,9 @@ export default function Register() {
             formData.append('last_name', lastName)
             formData.append('phone_number', phoneNumber)
             formData.append('address', address)
-            formData.append('photo_user', dataURLtoFile(images[0]['data_url'], `${firstName}-${lastName}.png`))
+            if (images[0]['data_url'] !== "/user.png"){
+                formData.append('photo_user', dataURLtoFile(images[0]['data_url'], `${firstName}-${lastName}.png`))
+            }
             registerAPI(formData,(t) =>{
                 if(t){
                     alert('สมัครสมาชิกสำเร็จ')
