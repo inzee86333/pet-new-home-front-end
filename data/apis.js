@@ -1,22 +1,20 @@
 import axios from 'axios';
 const host = '127.0.0.1:8000'
 
-export const registerAPI = (formData) => {
-    axios.post('http://127.0.0.1:8000/appapi/user_post/', formData,{
+export async function registerAPI(formData, callBack) {
+    const response = await axios.post(`http://${host}/appapi/user_post/`, formData,{
         'Content-Type': 'application/x-www-form-urlencoded'
-    })
-        .then(function (response) { 
-            console.log(response);
-            return true
+    }).then((response) => { 
+            //console.log(response);
+        callBack(response['statusText'] =="Created")
         })
-        .catch(function (error) {
-            if (error.response) {
-                console.log(error.response)
-            } else if (error.request) {
-                console.log(error.request)
-            } else if (error.message) {
-                console.log(error.message)
-            }
-            return false
+        .catch((error) => {
+            // if (error.response) {
+            //     console.log(error.response)
+            // } else if (error.request) {
+            //     console.log(error.request)
+            // } else if (error.message) {
+            //     console.log(error.message)
+            // }
         })
 }

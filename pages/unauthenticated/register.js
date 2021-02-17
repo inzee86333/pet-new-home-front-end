@@ -9,6 +9,7 @@ import { registerAPI } from '../../data/apis'
 import { urlLogin } from '../urls'
 
 export default function Register() {
+    const router = useRouter()
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
@@ -48,16 +49,15 @@ export default function Register() {
             formData.append('last_name', lastName)
             formData.append('phone_number', phoneNumber)
             formData.append('address', address)
-            formData.append('photo_user', dataURLtoFile(images[0]['data_url'], `${firstName}.png`))
-            if (registerAPI(formData)){
-                alert('สมัครสมาชิกสำเร็จ')
-                router.push(urlLogin)
-            }else{
-                alert('สมัครสมาชิกไม่สำเร็จ')
-            }
-            for (var value of formData.values()) {
-                console.log(value);
-            }
+            formData.append('photo_user', dataURLtoFile(images[0]['data_url'], `${firstName}-${lastName}.png`))
+            registerAPI(formData,(t) =>{
+                if(t){
+                    alert('สมัครสมาชิกสำเร็จ')
+                    router.push(urlLogin)
+                }else{
+                    alert('สมัครสมาชิกไม่สำเร็จ')
+                }
+            })
         }
     }
 
