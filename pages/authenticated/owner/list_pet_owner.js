@@ -1,17 +1,10 @@
-import { useRouter } from 'next/router'
 import { contrinerCard, contrinerMain } from '../../../components/tailwindClass'
-import { SecondaryButton, CardInfoPetOwnerButton } from '../../../components/button'
+import { TextButton, CardInfoPetOwnerButton } from '../../../components/button'
 import { urlAddPet } from '../../urls'
 import { animalOwner } from '../../../data/direct'
 import { Nav } from '../../../components/navbar'
 
 export default function list_pet_owner() {
-    const router = useRouter()
-
-    const addPet = async (e) => {
-        e.preventDefault()
-        router.push(urlAddPet)
-    }
 
     return (
         <div>
@@ -19,7 +12,7 @@ export default function list_pet_owner() {
             <div className={contrinerMain}>
                 <div className="flex justify-between">
                     <h1 className="py-1">รายการหาบ้านของฉัน</h1>
-                    <SecondaryButton onClick={addPet} type="button" label="เพิ่มสัตว์เลี้ยง" />
+                    <TextButton className="my-auto" href={urlAddPet} type="button" label="เพิ่มสัตว์เลี้ยง" />
                 </div>
                 <div className={contrinerCard}>
                     <div className="flex flex-col">

@@ -16,9 +16,9 @@ export function SecondaryButton({ label, onClick, type, className }) {
     )
 }
 
-export function TextButton({ label, href, type }) {
+export function TextButton({ label, href, type, className}) {
     return (
-        <a className="text-green-500 font-bold hover:text-green-800" href={href} type={type}>{label}</a>
+        <a className={ `text-green-500 font-bold hover:text-green-800 ${className}` } href={href} type={type}>{label}</a>
     );
 }
 
