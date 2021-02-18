@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useRouter } from 'next/router'
+import jsCookie from 'js-cookie';
 import { TextInput } from '../../components/input'
 import { PrimaryButton, TextButton } from '../../components/button'
 import { urlRegister, urlForgetPassword, urlSelectUserType } from '../urls'
@@ -20,8 +21,11 @@ export default function Login() {
     const submit = async (e) => {
         e.preventDefault() // prevents page reload
         if(validation()){
-            alert("เข้าสู่ระบบ")
-            router.push(urlSelectUserType)
+            if (result.status === 200) {
+                alert("เข้าสู่ระบบสำเร็จ")
+                jsCookie.set('token', result.token);
+                router.push(urlSelectUserType)
+            }
         }
     }
 
