@@ -24,10 +24,10 @@ export default function Login() {
             var formData = new FormData();
             formData.append('email', email)
             formData.append('password', password)
-            loginAPI(formData,(t, text)=>{
-                alert(text)
+            loginAPI(formData,(t, data)=>{
+                alert(data['message'])
                 if (t) {
-                    router.push(urlSelectUserType)
+                    // router.push(urlSelectUserType)
                 }
             })      
         }
