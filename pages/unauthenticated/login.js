@@ -46,7 +46,7 @@ export default function Login() {
             loginAPI(formData,(t, data)=>{
                 alert(data['message'])
                 if (t) {
-                    cookie.set('token', data['id'])
+                    cookie.set('token', data['email'])
                     console.log(cookie.get('token'))
                     toRolePart()
                 }
