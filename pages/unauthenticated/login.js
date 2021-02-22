@@ -1,15 +1,34 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import { TextInput } from '../../components/input'
 import { PrimaryButton, TextButton } from '../../components/button'
-import { urlRegister, urlForgetPassword, urlSelectUserType } from '../urls'
+import { urlRegister, urlForgetPassword, urlSelectUserType, urlListPetOwner, urlListPetFinder } from '../urls'
 import { required } from '../../functions/validations'
-import { loginAPI } from '../../data/apis';
+import { loginAPI, checkTypeUserAPI } from '../../data/apis';
+import cookie from 'js-cookie'
 
 export default function Login() {
     const router = useRouter()
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+
+    useEffect(() => {
+        if (cookie.get('token') !== undefined){
+            toRolePart()
+        }
+    })
+
+    const toRolePart = () => {
+        checkTypeUserAPI((t) => {
+            if (t.data['user_type'] === 'ow') {
+                router.replace(urlListPetOwner)
+            } else if (t.data['user_type'] === 'fi') {
+                router.replace(urlListPetFinder)
+            } else if (t.data['user_type'] === null) {
+                router.replace(urlSelectUserType)
+            }
+        })
+    }
 
     const validation = () => {
         let validate;
@@ -27,7 +46,9 @@ export default function Login() {
             loginAPI(formData,(t, data)=>{
                 alert(data['message'])
                 if (t) {
-                    // router.push(urlSelectUserType)
+                    cookie.set('token', data['id'])
+                    console.log(cookie.get('token'))
+                    toRolePart()
                 }
             })      
         }

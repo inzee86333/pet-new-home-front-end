@@ -1,7 +1,9 @@
 import axios from 'axios';
+import cookie from 'js-cookie';
 const host = '127.0.0.1:8000'
 const userPostURL = `http://${host}/appapi/user_post/`
 const loginURL = `http://${host}/appapi/login/`
+const checkTypeUserURL = `http://${host}/appapi/check_user_type/`
 
 export async function registerAPI(formData, callBack) {
     await axios.post(userPostURL, formData, {
@@ -37,6 +39,26 @@ export async function loginAPI(formData, callBack) {
                 console.log(error.message)
             }
         })
+}
+
+export async function checkTypeUserAPI(callBack) {
+    await axios.post(checkTypeUserURL, new FormData(), {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        headers:{
+            'authorization': cookie.get('token')
+        }
+    }).then((response) => {
+        callBack(response)
+    })
+        // .catch((error) => {
+        //     if (error.response) {
+        //         console.log(error.response)
+        //     } else if (error.request) {
+        //         console.log(error.request)
+        //     } else if (error.message) {
+        //         console.log(error.message)
+        //     }
+        // })
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////
