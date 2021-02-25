@@ -1,18 +1,56 @@
+import { useEffect } from 'react'
 import { useRouter } from 'next/router'
+import { userEditAPI, checkTypeUserAPI } from '../../data/apis'
 import { PrimaryButton } from '../../components/button'
-import { urlAddPet, urlListPetFinder } from '../urls'
+import { urlListPetOwner, urlListPetFinder, urlLogin } from '../urls'
+import { isLogin } from '../../functions/validations'
 
 export default function SelectUserType() {
     const router = useRouter()
 
+    useEffect(() => {
+        if (isLogin) {
+            toRolePart()
+        }else{
+            toLogin()
+        }
+    })
+
+    const toLogin = () => {
+        router.replace(urlLogin)
+    }
+
+    const toRolePart = () => {
+        checkTypeUserAPI((t) => {
+            if (t.data['user_type'] === 'ow') {
+                router.replace(urlListPetOwner)
+            } else if (t.data['user_type'] === 'fi') {
+                router.replace(urlListPetFinder)
+            }
+        })
+    }
+
+    const selectType = (v, url) => {
+        var formData = new FormData();
+        formData.append('user_type', v)
+        userEditAPI(formData, (t) => {
+            if (t) {
+                alert('สำเร็จ')
+                router.replace(url)
+            } else {
+                alert('ไม่สำเร็จ')
+            }
+        })
+    }
+
     const selectOwner = async (e) => {
         e.preventDefault()
-        router.push(urlAddPet)
+        selectType('ow', urlListPetOwner)
     }
 
     const selectFinder = async (e) => {
         e.preventDefault()
-        router.push(urlListPetFinder)
+        selectType('fi', urlListPetFinder)
     }
 
     return (

@@ -1,13 +1,15 @@
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 import { TextMenuButton } from '../components/button'
-import { urlListPetOwner, urlEditUser } from '../pages/urls'
+import { urlListPetOwner, urlEditUser, urlLogin } from '../pages/urls'
 import { checkIdUserAPI } from '../data/apis'
 import cookie from 'js-cookie'
 
 export function Nav() {
-
+  const router = useRouter()
   const logout = async (e) => {
     cookie.remove('token')
+    router.replace(urlLogin)
     alert("Logout")
   }
 

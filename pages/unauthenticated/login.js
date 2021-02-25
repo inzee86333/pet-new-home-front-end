@@ -3,7 +3,7 @@ import { useRouter } from 'next/router'
 import { TextInput } from '../../components/input'
 import { PrimaryButton, TextButton } from '../../components/button'
 import { urlRegister, urlForgetPassword, urlSelectUserType, urlListPetOwner, urlListPetFinder } from '../urls'
-import { required } from '../../functions/validations'
+import { required, isLogin } from '../../functions/validations'
 import { loginAPI, checkTypeUserAPI } from '../../data/apis';
 import cookie from 'js-cookie'
 
@@ -13,7 +13,7 @@ export default function Login() {
     const [password, setPassword] = useState('')
 
     useEffect(() => {
-        if (cookie.get('token') !== undefined){
+        if (isLogin){
             toRolePart()
         }
     })
