@@ -10,12 +10,14 @@
   "dependencies": {
     "autoprefixer": "^10.1.0",
     "axios": "^0.21.1",
+    "js-cookie": "^2.2.1",
     "next": "^10.0.7",
     "postcss": "^8.2.1",
     "react": "17.0.1",
     "react-dom": "16.13.1",
     "react-images-uploading": "^3.1.2",
     "react-select": "^4.0.2",
+    "swr": "^0.4.2",
     "tailwindcss": "^2.0.2"
   }
 }

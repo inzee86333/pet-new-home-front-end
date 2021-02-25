@@ -1,14 +1,34 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import { TextInput } from '../../components/input'
 import { PrimaryButton, TextButton } from '../../components/button'
-import { urlRegister, urlForgetPassword, urlSelectUserType } from '../urls'
-import { required } from '../../functions/validations'
+import { urlRegister, urlForgetPassword, urlSelectUserType, urlListPetOwner, urlListPetFinder } from '../urls'
+import { required, isLogin } from '../../functions/validations'
+import { loginAPI, checkTypeUserAPI } from '../../data/apis';
+import cookie from 'js-cookie'
 
 export default function Login() {
     const router = useRouter()
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+
+    useEffect(() => {
+        if (isLogin){
+            toRolePart()
+        }
+    })
+
+    const toRolePart = () => {
+        checkTypeUserAPI((t) => {
+            if (t.data['user_type'] === 'ow') {
+                router.replace(urlListPetOwner)
+            } else if (t.data['user_type'] === 'fi') {
+                router.replace(urlListPetFinder)
+            } else if (t.data['user_type'] === null) {
+                router.replace(urlSelectUserType)
+            }
+        })
+    }
 
     const validation = () => {
         let validate;
@@ -20,8 +40,17 @@ export default function Login() {
     const submit = async (e) => {
         e.preventDefault() // prevents page reload
         if(validation()){
-            alert("เข้าสู่ระบบ")
-            router.push(urlSelectUserType)
+            var formData = new FormData();
+            formData.append('email', email)
+            formData.append('password', password)
+            loginAPI(formData,(t, data)=>{
+                alert(data['message'])
+                if (t) {
+                    cookie.set('token', data['email'])
+                    console.log(cookie.get('token'))
+                    toRolePart()
+                }
+            })      
         }
     }
 
