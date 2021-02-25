@@ -1,17 +1,36 @@
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { TextMenuButton } from '../components/button'
 import { urlListPetOwner, urlEditUser, urlLogin } from '../pages/urls'
-import { checkIdUserAPI } from '../data/apis'
+import { userGetDetailAPI } from '../data/apis'
 import cookie from 'js-cookie'
 
 export function Nav() {
   const router = useRouter()
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [images, setImages] = useState([{ data_url: "/user.png" }]);
   const logout = async (e) => {
     cookie.remove('token')
     router.replace(urlLogin)
     alert("Logout")
   }
+
+  useEffect(()=>{
+    userGetDetailAPI((data) => {
+      setData(data)
+    })
+  },[userGetDetailAPI])
+
+  const setData = (data) => {
+    if (data['photo_user'] != null) {
+      setImages([{ data_url: `http://127.0.0.1:8000${data['photo_user']}` }])
+    }
+    setFirstName(data['first_name'])
+    setLastName(data['last_name'])
+  }
+
 
   return (
     <nav className="flex items-center justify-between flex-wrap bg-green-500 p-2 px-14">
@@ -27,8 +46,8 @@ export function Nav() {
         <div>
           <div className="dropdown inline-block relative">
             <button className="bg-white font-semibold py-2 px-4 rounded inline-flex items-center">
-              <img src={"/usertest.jpg"} alt="" className="rounded-full object-cover h-8 w-8 shadow border mr-2" />
-              <span className="mr-1">Supamit Padtip</span>
+              <img src={images[0]['data_url']} alt="" className="rounded-full object-cover h-8 w-8 shadow border mr-2" />
+              <span className="mr-1">{firstName} {lastName}</span>
               <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" /> </svg>
             </button>
             <ul className="dropdown-menu absolute hidden text-gray-700 pt-1">
