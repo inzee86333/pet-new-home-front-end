@@ -92,18 +92,18 @@ export default function AddPet() {
                     <h3 className="mb-2">ข้อมูลสัตว์เลี้ยง</h3>
                     <div className="mx-3 md:flex">
                         <div className="md:w-1/2 px-3 mb-6 md:mb-0">
-                            <TextSelectInput id="animal_type" label="ประเภท" options={animalTypeList} value={animalType} onChange={e => setAnimalType(e)} placeholder="เลือกประเภท" required={true}></TextSelectInput>
+                            <TextInput id="animal_type" label="ประเภท" onChange={e => setAnimalType(e)} placeholder="เลือกประเภท" required={true}></TextInput>
                         </div>
                         <div className="md:w-1/2 px-3 mb-6 md:mb-0">
-                            <TextSelectInput id="species" label="สายพันธุ์" options={speciesList} value={species} onChange={e => setSpecies(e)} placeholder="เลือกสายพันธุ์"></TextSelectInput>
+                            <TextInput id="species" label="สายพันธุ์" onChange={e => setSpecies(e)} placeholder="เลือกสายพันธุ์"></TextInput>
                         </div>
                     </div>
                     <div className="mx-3 md:flex">
                         <div className="md:w-1/2 px-3 mb-6 md:mb-0">
-                            <TextSelectInput id="birth_year" label="ปีเกิด" className="w-1/2" options={birthYearList} value={birthYear} onChange={e => setBirthYear(e)} placeholder="เลือกปีเกิด"></TextSelectInput>
+                            <TextSelectInput id="birth_year" label="ปีเกิด" className="w-1/2" onChange={e => setBirthYear(e)} placeholder="เลือกปีเกิด"></TextSelectInput>
                         </div>
                         <div className="md:w-1/2 px-3 mb-6 md:mb-0">
-                            <TextSelectInput id="sex" label="เพศ" className="w-1/2" options={animalSexList} value={animalSex} onChange={e => setAnimalSex(e)} placeholder="เลือกเพศ"></TextSelectInput>
+                            <TextInput id="sex" label="เพศ" className="w-1/2" onChange={e => setAnimalSex(e)} placeholder="เลือกเพศ"></TextInput>
                         </div>
                     </div>
                     <div className="mx-3 md:flex">
