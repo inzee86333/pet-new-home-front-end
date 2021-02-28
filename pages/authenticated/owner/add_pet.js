@@ -43,7 +43,9 @@ export default function AddPet() {
 
     const validation = () => {
         let validate;
-        validate = (required(animalType))
+        validate = (required(animalType)&&
+        required(province)&&
+        required(district))
         return validate;
     }
 
@@ -58,6 +60,8 @@ export default function AddPet() {
             formData.append('birth_year', birthYear['value'])
             formData.append('sex', animalSex)
             formData.append('disease', disease)
+            formData.append('province', province['province_code'])
+            formData.append('district', district['district_code'])
             petCreateAPI(formData,(t) => {
                 if(t){
                     alert('เพิ่มสัตว์เลี้ยงสำเร็จ')
