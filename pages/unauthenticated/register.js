@@ -1,12 +1,13 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import ImageUploading from 'react-images-uploading';
 import { TextInput, TextAreaInput } from '../../components/input'
 import { PrimaryButton, SecondaryButton } from '../../components/button'
-import { required, requiredMatch } from '../../functions/validations'
+import { required, requiredMatch, isLogin } from '../../functions/validations'
 import { dataURLtoFile, dataURItoBlob } from '../../functions/converter'
 import { registerAPI } from '../../data/apis'
 import { urlLogin } from '../urls'
+import { checkTypeUserAPI } from '../../data/apis';
 
 export default function Register() {
     const router = useRouter()
@@ -19,6 +20,24 @@ export default function Register() {
     const [address, setAddress] = useState('');
     const [images, setImages] = useState([{ data_url: "/user.png" }]);
     const maxImages = 1;
+
+    useEffect(() => {
+        if (isLogin) {
+            toRolePart()
+        }
+    })
+
+    const toRolePart = () => {
+        checkTypeUserAPI((t) => {
+            if (t.data['user_type'] === 'ow') {
+                router.replace(urlListPetOwner)
+            } else if (t.data['user_type'] === 'fi') {
+                router.replace(urlListPetFinder)
+            } else if (t.data['user_type'] === null) {
+                router.replace(urlSelectUserType)
+            }
+        })
+    }
 
     const onChangeImage = (imageList, addUpdateIndex) => {
         setImages(imageList);
@@ -52,6 +71,7 @@ export default function Register() {
             if (images[0]['data_url'] !== "/user.png"){
                 formData.append('photo_user', dataURLtoFile(images[0]['data_url'], `${firstName}-${lastName}.png`))
             }
+            //แก้
             registerAPI(formData,(t) =>{
                 if(t){
                     alert('สมัครสมาชิกสำเร็จ')

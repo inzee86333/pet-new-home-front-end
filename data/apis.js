@@ -1,10 +1,14 @@
 import axios from 'axios';
 import cookie from 'js-cookie';
 const host = '127.0.0.1:8000'
+//user
 const loginURL = `http://${host}/appapi/login/`
-const userPostURL = `http://${host}/appapi/user_post/`
+const userCreateURL = `http://${host}/appapi/user_create/`
 const userURL = `http://${host}/appapi/user_detail/`
 const checkTypeUserURL = `http://${host}/appapi/check_user_type/`
+//pet
+const petCreateURL = `http://${host}/appapi/pet_create/`
+
 
 export async function loginAPI(formData, callBack) {
     await axios.post(loginURL, formData, {
@@ -25,7 +29,7 @@ export async function loginAPI(formData, callBack) {
 }
 
 export async function registerAPI(formData, callBack) {
-    await axios.post(userPostURL, formData, {
+    await axios.post(userCreateURL, formData, {
         'Content-Type': 'application/x-www-form-urlencoded'
     }).then((response) => {
         // console.log(response);
@@ -67,28 +71,24 @@ export async function checkTypeUserAPI(callBack) {
     })
 }
 
+export async function petCreateAPI(formData, callBack) {
+    await axios.post(petCreateURL, formData, {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        headers: {
+            'authorization': cookie.get('token')
+        }
+    }).then((response) => {
+        // console.log(response);
+        callBack(response['statusText'] == "Created")
+    }) 
+    .catch((error) => {
+            if (error.response) {
+                console.log(error.response)
+            } else if (error.request) {
+                console.log(error.request)
+            } else if (error.message) {
+                console.log(error.message)
+            }
+        })
+}
 
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////
-//
-// const host = '127.0.0.1:8000'
-// const userPostURL = `http://${host}/api/user/create`
-// const loginURL = `http://${host}/appapi/login/`
-
-// export async function registerAPI(formData, callBack) {
-//     await axios.post(userPostURL, formData, {
-//         'Content-Type': 'application/x-www-form-urlencoded'
-//     }).then((response) => {
-//         console.log(response);
-//         callBack(response['statusText'] == "Created")
-//     })
-//         .catch((error) => {
-//             if (error.response) {
-//                 console.log(error.response)
-//             } else if (error.request) {
-//                 console.log(error.request)
-//             } else if (error.message) {
-//                 console.log(error.message)
-//             }
-//         })
-// }

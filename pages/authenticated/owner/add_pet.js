@@ -7,6 +7,8 @@ import { provinceList, districtList, birthYearList } from '../../../data/direct'
 import { contrinerCard, contrinerMain } from '../../../components/tailwindClass'
 import { urlListPetOwner } from '../../urls'
 import { Nav } from '../../../components/navbar'
+import { petCreateAPI } from '../../../data/apis'
+import { required } from '../../../functions/validations'
 
 export default function AddPet() {
     const router = useRouter()
@@ -53,9 +55,17 @@ export default function AddPet() {
             formData.append('owner_id', 'id')
             formData.append('animal_type', animalType)
             formData.append('species', species)
-            formData.append('birth_year', birthYear)
+            formData.append('birth_year', birthYear['value'])
             formData.append('sex', animalSex)
             formData.append('disease', disease)
+            petCreateAPI(formData,(t) => {
+                if(t){
+                    alert('เพิ่มสัตว์เลี้ยงสำเร็จ')
+                    router.push(urlListPetOwner)
+                }else{
+                    alert('เพิ่มสัตว์เลี้ยงไม่สำเร็จ')
+                }
+            })
         }
     }
 
@@ -131,10 +141,10 @@ export default function AddPet() {
                     <h3 className="mb-2">ข้อมูลสัตว์เลี้ยง</h3>
                     <div className="mx-3 md:flex">
                         <div className="md:w-1/2 px-3 mb-6 md:mb-0">
-                            <TextInput id="animal_type" label="ประเภท" onChange={e => setAnimalType(e)} placeholder="เลือกประเภท" required={true}></TextInput>
+                            <TextInput id="animal_type" label="ประเภท" onChange={e => setAnimalType(e.target.value)} placeholder="ประเภท" value={animalType} required={true}></TextInput>
                         </div>
                         <div className="md:w-1/2 px-3 mb-6 md:mb-0">
-                            <TextInput id="species" label="สายพันธุ์" onChange={e => setSpecies(e)} placeholder="เลือกสายพันธุ์"></TextInput>
+                            <TextInput id="species" label="สายพันธุ์" onChange={e => setSpecies(e.target.value)} placeholder="สายพันธุ์" value={species}></TextInput>
                         </div>
                     </div>
                     <div className="mx-3 md:flex">
@@ -142,7 +152,7 @@ export default function AddPet() {
                             <TextSelectInput id="birth_year" label="ปีเกิด" className="w-1/2" options={birthYearList} onChange={e => setBirthYear(e)} placeholder="เลือกปีเกิด"></TextSelectInput>
                         </div>
                         <div className="md:w-1/2 px-3 mb-6 md:mb-0">
-                            <TextInput id="sex" label="เพศ" className="w-1/2" onChange={e => setAnimalSex(e)} placeholder="เลือกเพศ"></TextInput>
+                            <TextInput id="sex" label="เพศ" className="w-1/2" onChange={e => setAnimalSex(e.target.value)} placeholder="เพศ" value={animalSex}></TextInput>
                         </div>
                     </div>
                     <div className="mx-3 md:flex">
