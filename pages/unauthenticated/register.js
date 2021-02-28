@@ -42,7 +42,7 @@ export default function Register() {
     const submit = async (e) => {
         e.preventDefault();
         if (validation()) {
-            var formData = new FormData();
+            let formData = new FormData();
             formData.append('email', email)
             formData.append('password', password)
             formData.append('first_name', firstName)
