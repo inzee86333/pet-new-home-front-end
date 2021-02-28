@@ -1,4 +1,4 @@
-import { contrinerCard, contrinerMain } from '../../../components/tailwindClass'
+import { containerCard, containerMain } from '../../../components/tailwindClass'
 import { PrimaryButton, CardInfoPetFinderButton ,CardInfoPetOwnerButton} from '../../../components/button'
 import { animalOwner } from '../../../data/direct'
 import { Nav } from '../../../components/navbar'
@@ -8,14 +8,14 @@ export default function pet_finder_detail() {
     return(
         <div>
             <Nav / >
-            <div className={contrinerMain}>
+            <div className={containerMain}>
                 <div className="flex justify-between">
                     <div className="flex">
                         <h1 className="p-1 pr-4">รายละเอียดสัตว์เลี้ยง</h1>
                         {/* <PrimaryButton label="สนใจ" /> */}
                     </div>
                 </div>
-                <div className={contrinerCard}>
+                <div className={containerCard}>
                     <div className=""> 
                         {/* {animalOwner.map(JSON => (
                             <CardInfoPetOwnerButton key={JSON.id}
