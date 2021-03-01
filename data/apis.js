@@ -8,6 +8,7 @@ const userURL = `http://${host}/appapi/user_detail/`
 const checkTypeUserURL = `http://${host}/appapi/check_user_type/`
 //pet
 const petCreateURL = `http://${host}/appapi/pet_create/`
+const petImageURL = `http://${host}/appapi/pet_image/`
 
 
 export async function loginAPI(formData, callBack) {
@@ -32,8 +33,7 @@ export async function registerAPI(formData, callBack) {
     await axios.post(userCreateURL, formData, {
         'Content-Type': 'application/x-www-form-urlencoded'
     }).then((response) => {
-        // console.log(response);
-        callBack(response['statusText'] == "Created")
+        callBack(response)
     })
 }
 
@@ -55,7 +55,6 @@ export async function userGetDetailAPI(callBack) {
             'authorization': cookie.get('token')
         }
     }).then((response) => {
-        // console.log(response)
         callBack(response.data)
     })
 }
@@ -78,9 +77,19 @@ export async function petCreateAPI(formData, callBack) {
             'authorization': cookie.get('token')
         }
     }).then((response) => {
-        // console.log(response);
-        callBack(response['statusText'] == "Created")
+        callBack(response)
     }) 
+}
+
+export async function petCreateImageAPI(formData, callBack) {
+    await axios.post(petImageURL, formData, {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        headers: {
+            'authorization': cookie.get('token')
+        }
+    }).then((response) => {
+        callBack(response)
+    })
     .catch((error) => {
             if (error.response) {
                 console.log(error.response)

@@ -7,8 +7,9 @@ import { provinceList, districtList, birthYearList } from '../../../data/direct'
 import { containerCard, containerMain } from '../../../components/tailwindClass'
 import { urlListPetOwner } from '../../urls'
 import { Nav } from '../../../components/navbar'
-import { petCreateAPI } from '../../../data/apis'
-import { required, requiredSelect } from '../../../functions/validations'
+import { petCreateAPI, petCreateImageAPI } from '../../../data/apis'
+import { required } from '../../../functions/validations'
+import { dataURLtoFile } from '../../../functions/converter'
 
 export default function AddPet() {
     const router = useRouter()
@@ -44,8 +45,8 @@ export default function AddPet() {
     const validation = () => {
         let validate;
         validate = (required(animalType)&&
-        requiredSelect(province)&&
-        requiredSelect(district))
+        required(province)&&
+        required(district))
         return validate;
     }
 
@@ -57,13 +58,19 @@ export default function AddPet() {
             formData.append('owner_id', 'id')
             formData.append('animal_type', animalType)
             formData.append('species', species)
-            formData.append('birth_year', birthYear['value'])
+            birthYear!==null&&formData.append('birth_year', birthYear['value'])
             formData.append('sex', animalSex)
             formData.append('disease', disease)
             formData.append('province', province['province_code'])
             formData.append('district', district['district_code'])
             petCreateAPI(formData,(t) => {
-                if(t){
+                if (t['statusText'] == "Created"){
+                    for(let i=0; i<images.length;i++){
+                        let formDataImage = new FormData();
+                        formDataImage.append('pet_id', t['data']['pet_id'])
+                        formDataImage.append('pet_image', dataURLtoFile(images[i]['data_url'], `petId${t['data']['pet_id']}-${i}.png`))
+                        petCreateImageAPI(formDataImage,(t)=>{})
+                    }
                     alert('เพิ่มสัตว์เลี้ยงสำเร็จ')
                     router.push(urlListPetOwner)
                 }else{
