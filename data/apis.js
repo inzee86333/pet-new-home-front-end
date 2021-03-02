@@ -99,16 +99,27 @@ export async function petOwnerGetAPI(callBack) {
             'authorization': cookie.get('token')
         }
     }).then((response) => {
+        callBack(response)
+    })    
+}
+
+export async function petImagesGetAPI(pk, callBack) {
+    await axios.get(`${petImageURL}${pk}`, {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        headers: {
+            'authorization': cookie.get('token')
+        }
+    }).then((response) => {
         //console.log(response)
         callBack(response)
     })
-        .catch((error) => {
-            if (error.response) {
-                console.log(error.response)
-            } else if (error.request) {
-                console.log(error.request)
-            } else if (error.message) {
-                console.log(error.message)
-            }
-        })
+    .catch((error) => {
+        if (error.response) {
+            console.log(error.response)
+        } else if (error.request) {
+            console.log(error.request)
+        } else if (error.message) {
+            console.log(error.message)
+        }
+    })
 }

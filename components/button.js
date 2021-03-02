@@ -1,3 +1,6 @@
+import { useState, useEffect } from 'react'
+import { petImagesGetAPI } from '../data/apis'
+
 export function PrimaryButton({ label, onClick, type, className }) {
     return (
         <button className={`px-4 py-2 my-1 bg-green-500 text-white font-semibold rounded-lg shadow-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-75 ${className}`}
@@ -28,12 +31,21 @@ export function TextMenuButton({ label, href, type, className }) {
     );
 }
 
-export function CardInfoPetOwnerButton({ id, image, type, age, species, sex, disease, interested, message }) {
+export function CardInfoPetOwnerButton({ id, type, age, species, sex}) {
+    const [images, setImages] = useState([]);
+
+    useEffect(() => {
+        petImagesGetAPI(id, t => {
+            setImages(t.data)
+        })
+    }, [petImagesGetAPI])
+
     return (
         <button className="w-full bg-white rounded-xl shadow border mb-2">
             <div className="flex flex-row py-3 px-4 justify-between">
                 <div className="flex flex-row">
-                    <img src={image} alt="" className="rounded-xl object-cover h-24 w-24 shadow border" />
+                    {images[0] !== undefined && <img src={`http://127.0.0.1:8000${images[0]['pet_image']}`} alt="" className="rounded-xl object-cover h-24 w-24 shadow border" />}
+                    {images[0] === undefined && <img src={'/pet_image_default.png'} alt="" className="rounded-xl object-cover h-24 w-24 shadow border" />}
                     <div className="px-4">
                         <div className="flex flex-row">
                             <div className="grid grid-cols-2">
@@ -66,8 +78,8 @@ export function CardInfoPetOwnerButton({ id, image, type, age, species, sex, dis
                     </div>
                 </div>
                 <div className="grid grid-cols-1">
-                    <h5 className="ptax py-1 font-semibold text-green-500 font-bold">{interested} คนกำลังสนใจ</h5>
-                    <h5 className="ptax py-1 font-semibold text-green-500 font-bold">{message} ข้อความ</h5>
+                    <h5 className="ptax py-1 font-semibold text-green-500 font-bold">test คนกำลังสนใจ</h5>
+                    <h5 className="ptax py-1 font-semibold text-green-500 font-bold">test ข้อความ</h5>
                     <div>&nbsp;</div>
                 </div>
             </div>

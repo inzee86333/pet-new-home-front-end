@@ -3,7 +3,7 @@ import { containerCard, containerMain } from '../../../components/tailwindClass'
 import { TextButton, CardInfoPetOwnerButton } from '../../../components/button'
 import { urlAddPet } from '../../urls'
 import { Nav } from '../../../components/navbar'
-import { petOwnerGetAPI } from '../../../data/apis'
+import { petOwnerGetAPI, petImagesGetAPI } from '../../../data/apis'
 
 export default function list_pet_owner() {
     const [list, setList] = useState([]);
@@ -27,13 +27,10 @@ export default function list_pet_owner() {
                         {list.map(i => (
                             <CardInfoPetOwnerButton key={i.pet_id}
                                 id={i.pet_id}
-                                image={'/5.jfif'}
                                 type={i.animal_type}
                                 age={i.birth_year}
                                 species={i.species}
                                 sex={i.sex}
-                                interested={'รอ api'}
-                                message={'รอ api'}
                             />
                         ))}
                     </div>
