@@ -28,12 +28,12 @@ export function TextMenuButton({ label, href, type, className }) {
     );
 }
 
-export function CardInfoPetOwnerButton({ id, photo, type, age, species, sex, interested, message }) {
+export function CardInfoPetOwnerButton({ id, image, type, age, species, sex, disease, interested, message }) {
     return (
         <button className="w-full bg-white rounded-xl shadow border mb-2">
             <div className="flex flex-row py-3 px-4 justify-between">
                 <div className="flex flex-row">
-                    <img src={photo} alt="" className="rounded-xl object-cover h-24 w-24 shadow border" />
+                    <img src={image} alt="" className="rounded-xl object-cover h-24 w-24 shadow border" />
                     <div className="px-4">
                         <div className="flex flex-row">
                             <div className="grid grid-cols-2">

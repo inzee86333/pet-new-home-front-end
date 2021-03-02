@@ -24,11 +24,6 @@ export default function AddPet() {
     const [districtOnProvince, setDistrictOnProvince] = useState([]);
     const maxNumber = 5;
 
-    useEffect(()=>{
-        
-    })
-
-
     const onChange = (imageList, addUpdateIndex) => {
         // data for submit
         setImages(imageList);
