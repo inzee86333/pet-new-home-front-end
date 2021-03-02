@@ -17,7 +17,7 @@ export default function list_pet_finder() {
                 </div>
                 <div className={containerCard}>
                     <div className="grid md:grid-cols-5  grid-cols-3">
-                        {animalOwner.map(json => (
+                        {/* {animalOwner.map(json => (
                             <CardInfoPetFinderButton key={json.id}
                                 id={json.id}
                                 photo={json.photoPet}
@@ -30,8 +30,7 @@ export default function list_pet_finder() {
                                 province={json.province}
                                 district={json.district}
                             />
-                        ))}
-
+                        ))} */}
                     </div>
                 </div>
             </div>
