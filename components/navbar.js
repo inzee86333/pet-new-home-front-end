@@ -17,11 +17,13 @@ export function Nav() {
     alert("Logout")
   }
 
-  useEffect(()=>{
-    userGetDetailAPI((data) => {
-      setData(data)
-    })
-  },[userGetDetailAPI])
+  if(cookie.get('token')!==undefined){
+    useEffect(() => {
+      userGetDetailAPI((data) => {
+        setData(data)
+      })
+    }, [userGetDetailAPI])
+  }
 
   const setData = (data) => {
     if (data['user_image'] != null) {
@@ -43,6 +45,7 @@ export function Nav() {
         <TextMenuButton className="px-2" label="ข้อความ" />
       </div>
       <div className="w-max flex items-center">
+        {cookie.get('token') !== undefined && 
         <div>
           <div className="dropdown inline-block relative">
             <button className="bg-white font-semibold py-2 px-4 rounded inline-flex items-center">
@@ -55,7 +58,15 @@ export function Nav() {
               <li className=""><a className="rounded-b bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap" onClick={logout}>ออกจากระบบ</a></li>
             </ul>
           </div>
-        </div>
+        </div>}
+        {cookie.get('token') === undefined && 
+          <div>
+            <div className="dropdown inline-block relative">
+              <a className="bg-white font-semibold py-2 px-4 rounded inline-flex items-center" href="/">
+              <span className="mr-1">เข้าสู้ระบบ</span>
+              </a>
+            </div>
+          </div>}
       </div>
     </nav>
   )

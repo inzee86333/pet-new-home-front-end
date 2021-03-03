@@ -3,7 +3,7 @@ import { containerCard, containerMain } from '../../../components/tailwindClass'
 import { TextButton, CardInfoPetOwnerButton } from '../../../components/button'
 import { urlAddPet } from '../../urls'
 import { Nav } from '../../../components/navbar'
-import { petOwnerGetAPI, petImagesGetAPI } from '../../../data/apis'
+import { petOwnerGetAPI } from '../../../data/apis'
 
 export default function list_pet_owner() {
     const [list, setList] = useState([]);

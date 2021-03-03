@@ -1,10 +1,19 @@
+import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import { containerCard, containerMain } from '../../../components/tailwindClass'
 import { PrimaryButton, CardInfoPetFinderButton } from '../../../components/button'
-import { animalOwner } from '../../../data/direct'
 import { Nav } from '../../../components/navbar'
+import { petGetAllAPI } from '../../../data/apis'
 
 export default function list_pet_finder() {
+    const [list, setList] = useState([]);
+
+    useEffect(() => {
+        petGetAllAPI(t => {
+            setList(t.data)
+        })
+    }, [petGetAllAPI])
+
     return (
         <div>
             <Nav />
@@ -17,20 +26,15 @@ export default function list_pet_finder() {
                 </div>
                 <div className={containerCard}>
                     <div className="grid md:grid-cols-5  grid-cols-3">
-                        {/* {animalOwner.map(json => (
-                            <CardInfoPetFinderButton key={json.id}
-                                id={json.id}
-                                photo={json.photoPet}
-                                type={json.type}
-                                age={json.age}
-                                species={json.species}
-                                sex={json.sex}
-                                interested={json.interested}
-                                message={json.message}
-                                province={json.province}
-                                district={json.district}
+                        {list.map(i => (
+                            <CardInfoPetFinderButton key={i.pet_id}
+                                id={i.pet_id}
+                                type={i.animal_type}
+                                age={i.birth_year}
+                                species={i.species}
+                                sex={i.sex}
                             />
-                        ))} */}
+                        ))}
                     </div>
                 </div>
             </div>
