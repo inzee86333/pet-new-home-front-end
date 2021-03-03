@@ -47,7 +47,6 @@ export default function AddPet() {
 
     const addPet = async (e) => {
         e.preventDefault() // prevents page reload
-        //router.push(urlListPetOwner)
         if (validation()) {
             let formData = new FormData();
             formData.append('owner_id', 'id')
@@ -155,7 +154,7 @@ export default function AddPet() {
                     </div>
                     <div className="mx-3 md:flex">
                         <div className="md:w-1/2 px-3 mb-6 md:mb-0">
-                            <TextSelectInput id="birth_year" label="ปีเกิด" className="w-1/2" options={birthYearList} onChange={e => setBirthYear(e)} placeholder="เลือกปีเกิด"></TextSelectInput>
+                            <TextSelectInput id="birth_year" label="ปีเกิด (ค.ศ)" className="w-1/2" options={birthYearList} onChange={e => setBirthYear(e)} placeholder="เลือกปีเกิด"></TextSelectInput>
                         </div>
                         <div className="md:w-1/2 px-3 mb-6 md:mb-0">
                             <TextInput id="sex" label="เพศ" className="w-1/2" onChange={e => setAnimalSex(e.target.value)} placeholder="เพศ" value={animalSex}></TextInput>

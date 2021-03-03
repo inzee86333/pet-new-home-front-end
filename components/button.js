@@ -31,7 +31,7 @@ export function TextMenuButton({ label, href, type, className }) {
     );
 }
 
-export function CardInfoPetOwnerButton({ id, type, age, species, sex}) {
+export function CardInfoPetOwnerButton({ id, type, age, species, sex }) {
     const [images, setImages] = useState([]);
 
     useEffect(() => {
@@ -87,16 +87,25 @@ export function CardInfoPetOwnerButton({ id, type, age, species, sex}) {
     );
 }
 
-export function CardInfoPetFinderButton({ id, photo, type, age, species, sex, interested, province, district }) {
+export function CardInfoPetFinderButton({ id, type, age, species, sex }) {
+    const [images, setImages] = useState([]);
+
+    useEffect(() => {
+        petImagesGetAPI(id, t => {
+            setImages(t.data)
+        })
+    }, [petImagesGetAPI])
+    
     return (
         <button className="w-max bg-white rounded-xl shadow border p-2 m-1">
             <div className="flex flex-col mx-auto w-max">
-                <img src={photo} alt="" className="rounded-xl object-cover h-36 w-36 shadow border" />
+                {images[0] !== undefined && <img src={`http://127.0.0.1:8000${images[0]['pet_image']}`} alt="" className="rounded-xl object-cover h-36 w-36 shadow border" />}
+                {images[0] === undefined && <img src={'/pet_image_default.png'} alt="" className="rounded-xl object-cover h-36 w-36 shadow border" />}
                 <div>
                     <p className="ptax px-1 font-semibold">{type}</p>
                     <p className="ptax px-1 font-semibold">{species}</p>
-                    <p className="ptax px-1 font-semibold">อายุ{age}ปี</p>
-                    <p className="ptax px-1 font-semibold text-green-500 font-bold">{province} {district}</p>
+                    <p className="ptax px-1 font-semibold">ปีเกิด {age}</p>
+                    {/* <p className="ptax px-1 font-semibold text-green-500 font-bold">{province} {district}</p> */}
                 </div>
             </div>
         </button>
