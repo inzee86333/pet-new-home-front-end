@@ -4,11 +4,12 @@ import ImageUploading from 'react-images-uploading';
 import { TextInput, TextSelectInput } from '../../../components/input'
 import { PrimaryButton } from '../../../components/button'
 import { provinceList, districtList, birthYearList } from '../../../data/direct'
-import { contrinerCard, contrinerMain } from '../../../components/tailwindClass'
+import { containerCard, containerMain } from '../../../components/tailwindClass'
 import { urlListPetOwner } from '../../urls'
 import { Nav } from '../../../components/navbar'
-import { petCreateAPI } from '../../../data/apis'
+import { petCreateAPI, petCreateImageAPI } from '../../../data/apis'
 import { required } from '../../../functions/validations'
+import { dataURLtoFile } from '../../../functions/converter'
 
 export default function AddPet() {
     const router = useRouter()
@@ -22,11 +23,6 @@ export default function AddPet() {
     const [district, setDistrict] = useState(null);
     const [districtOnProvince, setDistrictOnProvince] = useState([]);
     const maxNumber = 5;
-
-    useEffect(()=>{
-        
-    })
-
 
     const onChange = (imageList, addUpdateIndex) => {
         // data for submit
@@ -57,13 +53,19 @@ export default function AddPet() {
             formData.append('owner_id', 'id')
             formData.append('animal_type', animalType)
             formData.append('species', species)
-            formData.append('birth_year', birthYear['value'])
+            birthYear!==null&&formData.append('birth_year', birthYear['value'])
             formData.append('sex', animalSex)
             formData.append('disease', disease)
             formData.append('province', province['province_code'])
             formData.append('district', district['district_code'])
             petCreateAPI(formData,(t) => {
-                if(t){
+                if (t['statusText'] == "Created"){
+                    for(let i=0; i<images.length;i++){
+                        let formDataImage = new FormData();
+                        formDataImage.append('pet_id', t['data']['pet_id'])
+                        formDataImage.append('pet_image', dataURLtoFile(images[i]['data_url'], `petId${t['data']['pet_id']}-${i}.png`))
+                        petCreateImageAPI(formDataImage,(t)=>{})
+                    }
                     alert('เพิ่มสัตว์เลี้ยงสำเร็จ')
                     router.push(urlListPetOwner)
                 }else{
@@ -76,9 +78,9 @@ export default function AddPet() {
     return (
         <div>
             <Nav/>
-            <div className={ contrinerMain }>
+            <div className={ containerMain }>
                 <h1>รายละเอียดสัตว์เลี้ยง</h1>
-                <div className={`mb-3 ${contrinerCard}`}>
+                <div className={`mb-3 ${containerCard}`}>
                     <ImageUploading
                         multiple
                         value={images}
@@ -130,7 +132,7 @@ export default function AddPet() {
                         )}
                     </ImageUploading>
                 </div>
-                <div className={contrinerCard}>
+                <div className={containerCard}>
                     <h3 className="mb-2">ที่อยู่สัตวเลี้ยง</h3>
                     <div className="mx-3 md:flex">
                         <div className="md:w-1/2 px-3 mb-6 md:mb-0">
@@ -141,7 +143,7 @@ export default function AddPet() {
                         </div>
                     </div>
                 </div>
-                <div className={contrinerCard}>
+                <div className={containerCard}>
                     <h3 className="mb-2">ข้อมูลสัตว์เลี้ยง</h3>
                     <div className="mx-3 md:flex">
                         <div className="md:w-1/2 px-3 mb-6 md:mb-0">

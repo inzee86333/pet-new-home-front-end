@@ -69,11 +69,11 @@ export default function Register() {
             formData.append('phone_number', phoneNumber)
             formData.append('address', address)
             if (images[0]['data_url'] !== "/user.png"){
-                formData.append('photo_user', dataURLtoFile(images[0]['data_url'], `${firstName}-${lastName}.png`))
+                formData.append('user_image', dataURLtoFile(images[0]['data_url'], `${firstName}-${lastName}.png`))
             }
             //แก้
             registerAPI(formData,(t) =>{
-                if(t){
+                if (t['statusText'] == "Created"){
                     alert('สมัครสมาชิกสำเร็จ')
                     router.push(urlLogin)
                 }else{

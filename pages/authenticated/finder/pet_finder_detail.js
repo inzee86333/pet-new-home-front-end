@@ -1,4 +1,4 @@
-import { contrinerCard, contrinerMain } from '../../../components/tailwindClass'
+import { containerCard, containerMain } from '../../../components/tailwindClass'
 import { PrimaryButton, CardInfoPetFinderButton ,CardInfoPetOwnerButton} from '../../../components/button'
 import { animalOwner } from '../../../data/direct'
 import { Nav } from '../../../components/navbar'
@@ -42,7 +42,7 @@ export default function pet_finder_detail() {
     return(
         <div>
             <Nav / >
-            <div className={contrinerMain}>
+            <div className={containerMain}>
                 <div className="flex justify-between">
                     <div className="flex">
                         <h1 className="p-1 pr-4">รายละเอียดสัตว์เลี้ยง</h1>
@@ -50,12 +50,12 @@ export default function pet_finder_detail() {
                         <h1 className="p-1 pr-4  font-semibold text-gray-500">อำเภอ : {district}</h1>
                     </div>
                 </div>
-                <div className={contrinerCard}>
+                <div className={containerCard}>
                     {Slideshow}
                 </div>
-                <div className={contrinerCard}>
+                <div className={containerCard}>
                     <div className="grid md:grid-cols-1 grid-cols-3"> 
-                        <h1 className="p-1 pr-4">ข้อมูลสัตว์เลี้ยง</h1>
+                        <h1 className="p-1 pr-4">ข้อมูลสัตว์เลี้ยง </h1>
                         <h3 className="p-5 pr-4">ประเภท : {category}</h3>
                         <h3 className="p-5 pr-4">สายพันธุ์ : {species} </h3>
                         <h3 className="p-5 pr-4">เพศ : {sex}</h3>

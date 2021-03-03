@@ -35,10 +35,7 @@ export default function SelectUserType() {
         formData.append('user_type', v)
         userEditAPI(formData, (t) => {
             if (t) {
-                alert('สำเร็จ')
                 router.replace(url)
-            } else {
-                alert('ไม่สำเร็จ')
             }
         })
     }
