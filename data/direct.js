@@ -47,3 +47,8 @@ export const animalOwner = [
     { photoPet: photoCat[6], id: '0046', type: 'แมว', age: '5', species: 'ไม่ระบุ', sex: 'ผู้', interested: Math.floor((Math.random() * 1500) + 1), message: Math.floor((Math.random() * 100) + 1), province: "เชียงใหม่", district: "แม่ริม" },
     { photoPet: photoCat[7], id: '0047', type: 'แมว', age: '5', species: 'ไม่ระบุ', sex: 'ผู้', interested: Math.floor((Math.random() * 1500) + 1), message: Math.floor((Math.random() * 100) + 1), province: "เชียงใหม่", district: "แม่ริม" },
 ];
+
+export const reportUser = [
+    {reportID:'001', photo_userowner: photoCat[1], photo_newowner: photoCat[2], pet_id:'003', idOwner: '001', idNewOwner: '005', OwnerFirstName: 'พรชัย ', OwnerLastName:'มหาโชค', NewOwnerFirstName: 'ครีอานู', NewOwnerLastName: 'ลีฟ', message: 'คนรับเลี้ยงเอาสัตว์ไปขาย'},
+    {reportID:'002', photo_userowner: photoCat[3], photo_newowner: photoCat[4], pet_id:'005', idOwner: '008', idNewOwner: '004', OwnerFirstName: 'พรโชค', OwnerLastName:'มหาชัย', NewOwnerFirstName: 'ครีอีฟ', NewOwnerLastName: 'นูลา', message: 'คนรับเลี้ยงเอาสัตว์ไปขาย แล้วก็เอาไปกิน'},
+]

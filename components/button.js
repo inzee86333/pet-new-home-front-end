@@ -90,3 +90,27 @@ export function CardInfoPetFinderButton({ id, photo, type, age, species, sex, in
         </button>
     );
 }
+
+// export function CardInfoReportButton({photo_userowner, OwnerFirstName, OwnerLastName, message}) {
+//     return (
+//         <button className="w-full bg-white rounded-xl shadow border mb-2">
+//             <div className="flex flex-row py-3 px-4 justify-between">
+//                 <div className="flex flex-row">
+//                     <img src={photo_userowner} alt="" className="rounded-xl object-cover h-24 w-24 shadow border" />
+//                     <div className="px-4">                        
+//                         <div className="flex flex-row">
+//                             <div className="flex flex-col">
+//                                 <div className="grid grid-cols-2">
+//                                     <p className="ptax px-1 py-1">คุณ: {OwnerFirstName} {OwnerLastName}</p>
+//                                 </div>
+//                                 <div className="grid grid-cols-2">
+//                                     <p className="ptax px-1 py-1">{message}</p>
+//                                 </div>                                
+//                             </div>                                                       
+//                         </div>
+//                     </div>
+//                 </div>                
+//             </div>
+//         </button>
+//     )
+// }

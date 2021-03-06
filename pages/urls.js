@@ -8,3 +8,5 @@ export const urlAddPet = "/authenticated/owner/add_pet"
 export const urlListPetOwner = "/authenticated/owner/list_pet_owner"
 // finder
 export const urlListPetFinder = "/authenticated/finder/list_pet_finder"
+//admin 
+export const urlReport = "/admin/report"
