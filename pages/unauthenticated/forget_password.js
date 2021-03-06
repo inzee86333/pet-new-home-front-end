@@ -1,9 +1,29 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { TextInput, PasswordInput } from '../../components/input'
+import { required, isLogin } from '../../functions/validations'
 import { PrimaryButton, TextButton } from '../../components/button'
+import { checkTypeUserAPI } from '../../data/apis';
 
 export default function ForgetPassword() {
-    const [inputForgetPassword, setinputForgetPassword] = useState('')
+    const [inputForgetPassword, setInputForgetPassword] = useState('')
+
+    useEffect(() => {
+        if (isLogin) {
+            toRolePart()
+        }
+    })
+
+    const toRolePart = () => {
+        checkTypeUserAPI((t) => {
+            if (t.data['user_type'] === 'ow') {
+                router.replace(urlListPetOwner)
+            } else if (t.data['user_type'] === 'fi') {
+                router.replace(urlListPetFinder)
+            } else if (t.data['user_type'] === null) {
+                router.replace(urlSelectUserType)
+            }
+        })
+    }
 
     const submit = async (e) => {
         e.preventDefault() // prevents page reload

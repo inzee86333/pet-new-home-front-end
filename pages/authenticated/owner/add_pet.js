@@ -1,42 +1,85 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import ImageUploading from 'react-images-uploading';
 import { TextInput, TextSelectInput } from '../../../components/input'
 import { PrimaryButton } from '../../../components/button'
-import { provinceList, animalTypeList, speciesList, birthYearList, animalSexList } from '../../../data/direct'
-import { contrinerCard, contrinerMain } from '../../../components/tailwindClass'
+import { provinceList, districtList, birthYearList } from '../../../data/direct'
+import { containerCard, containerMain } from '../../../components/tailwindClass'
 import { urlListPetOwner } from '../../urls'
 import { Nav } from '../../../components/navbar'
+import { petCreateAPI, petCreateImageAPI } from '../../../data/apis'
+import { required } from '../../../functions/validations'
+import { dataURLtoFile } from '../../../functions/converter'
 
 export default function AddPet() {
     const router = useRouter()
     const [images, setImages] = useState([]);
-    const [animalType, setAnimalType] = useState(null);
-    const [species, setSpecies] = useState(null);
+    const [animalType, setAnimalType] = useState('');
+    const [species, setSpecies] = useState('');
     const [birthYear, setBirthYear] = useState(null);
-    const [animalSex, setAnimalSex] = useState(null);
+    const [animalSex, setAnimalSex] = useState('');
     const [disease, setDisease] = useState('');
     const [province, setProvince] = useState(null);
     const [district, setDistrict] = useState(null);
+    const [districtOnProvince, setDistrictOnProvince] = useState([]);
     const maxNumber = 5;
 
     const onChange = (imageList, addUpdateIndex) => {
         // data for submit
-        console.log(imageList, addUpdateIndex);
         setImages(imageList);
     };
 
+    const onChangeProvince = (e) => {
+        setProvince(e)
+        let disList = districtList.filter(j => j['province_code'] == e['province_code'])
+        disList.unshift({ 'district_code': e['province_code'], 'district': 'อำเภอเมือง'})
+        setDistrictOnProvince(disList)
+        setDistrict(null)
+    }
+
+    const validation = () => {
+        let validate;
+        validate = (required(animalType)&&
+        required(province)&&
+        required(district))
+        return validate;
+    }
+
     const addPet = async (e) => {
         e.preventDefault() // prevents page reload
-        router.push(urlListPetOwner)
+        if (validation()) {
+            let formData = new FormData();
+            formData.append('owner_id', 'id')
+            formData.append('animal_type', animalType)
+            formData.append('species', species)
+            birthYear!==null&&formData.append('birth_year', birthYear['value'])
+            formData.append('sex', animalSex)
+            formData.append('disease', disease)
+            formData.append('province', province['province_code'])
+            formData.append('district', district['district_code'])
+            petCreateAPI(formData,(t) => {
+                if (t['statusText'] == "Created"){
+                    for(let i=0; i<images.length;i++){
+                        let formDataImage = new FormData();
+                        formDataImage.append('pet_id', t['data']['pet_id'])
+                        formDataImage.append('pet_image', dataURLtoFile(images[i]['data_url'], `petId${t['data']['pet_id']}-${i}.png`))
+                        petCreateImageAPI(formDataImage,(t)=>{})
+                    }
+                    alert('เพิ่มสัตว์เลี้ยงสำเร็จ')
+                    router.push(urlListPetOwner)
+                }else{
+                    alert('เพิ่มสัตว์เลี้ยงไม่สำเร็จ')
+                }
+            })
+        }
     }
 
     return (
         <div>
             <Nav/>
-            <div className={ contrinerMain }>
+            <div className={ containerMain }>
                 <h1>รายละเอียดสัตว์เลี้ยง</h1>
-                <div className={contrinerCard}>
+                <div className={`mb-3 ${containerCard}`}>
                     <ImageUploading
                         multiple
                         value={images}
@@ -88,38 +131,38 @@ export default function AddPet() {
                         )}
                     </ImageUploading>
                 </div>
-                <div className={contrinerCard}>
+                <div className={containerCard}>
+                    <h3 className="mb-2">ที่อยู่สัตวเลี้ยง</h3>
+                    <div className="mx-3 md:flex">
+                        <div className="md:w-1/2 px-3 mb-6 md:mb-0">
+                            <TextSelectInput id="province" label="จังหวัด" options={provinceList} labelName={'province'} valueName={'province_code'} value={province} onChange={onChangeProvince} placeholder="เลือกจังหวัด" required={true}></TextSelectInput>
+                        </div>
+                        <div className="md:w-1/2 px-3 mb-6 md:mb-0">
+                            <TextSelectInput id="district" label="อำเภอ" options={districtOnProvince} labelName={'district'} valueName={'district_code'} value={district} onChange={e => setDistrict(e)} placeholder="เลือกอำเภอ" required={true}></TextSelectInput>
+                        </div>
+                    </div>
+                </div>
+                <div className={containerCard}>
                     <h3 className="mb-2">ข้อมูลสัตว์เลี้ยง</h3>
                     <div className="mx-3 md:flex">
                         <div className="md:w-1/2 px-3 mb-6 md:mb-0">
-                            <TextSelectInput id="animal_type" label="ประเภท" options={animalTypeList} value={animalType} onChange={e => setAnimalType(e)} placeholder="เลือกประเภท" required={true}></TextSelectInput>
+                            <TextInput id="animal_type" label="ประเภท" onChange={e => setAnimalType(e.target.value)} placeholder="ประเภท" value={animalType} required={true}></TextInput>
                         </div>
                         <div className="md:w-1/2 px-3 mb-6 md:mb-0">
-                            <TextSelectInput id="species" label="สายพันธุ์" options={speciesList} value={species} onChange={e => setSpecies(e)} placeholder="เลือกสายพันธุ์"></TextSelectInput>
+                            <TextInput id="species" label="สายพันธุ์" onChange={e => setSpecies(e.target.value)} placeholder="สายพันธุ์" value={species}></TextInput>
                         </div>
                     </div>
                     <div className="mx-3 md:flex">
                         <div className="md:w-1/2 px-3 mb-6 md:mb-0">
-                            <TextSelectInput id="birth_year" label="ปีเกิด" className="w-1/2" options={birthYearList} value={birthYear} onChange={e => setBirthYear(e)} placeholder="เลือกปีเกิด"></TextSelectInput>
+                            <TextSelectInput id="birth_year" label="ปีเกิด (ค.ศ)" className="w-1/2" options={birthYearList} onChange={e => setBirthYear(e)} placeholder="เลือกปีเกิด"></TextSelectInput>
                         </div>
                         <div className="md:w-1/2 px-3 mb-6 md:mb-0">
-                            <TextSelectInput id="sex" label="เพศ" className="w-1/2" options={animalSexList} value={animalSex} onChange={e => setAnimalSex(e)} placeholder="เลือกเพศ"></TextSelectInput>
+                            <TextInput id="sex" label="เพศ" className="w-1/2" onChange={e => setAnimalSex(e.target.value)} placeholder="เพศ" value={animalSex}></TextInput>
                         </div>
                     </div>
                     <div className="mx-3 md:flex">
                         <div className="md:w-1/2 px-3 mb-6 md:mb-0">
                             <TextInput id="disease" placeholder="โรคประจำตัวของสัตว์เลี้ยง" value={disease} onChange={e => setDisease(e.target.value)} label="โรคประจำตัว"></TextInput>
-                        </div>
-                    </div>
-                </div>
-                <div className={contrinerCard}>
-                    <h3 className="mb-2">ที่อยู่สัตวเลี้ยง</h3>
-                    <div className="mx-3 md:flex">
-                        <div className="md:w-1/2 px-3 mb-6 md:mb-0">
-                            <TextSelectInput id="province" label="จังหวัด" options={provinceList} value={province} onChange={e => setProvince(e)} placeholder="เลือกจังหวัด" required={true}></TextSelectInput>
-                        </div>
-                        <div className="md:w-1/2 px-3 mb-6 md:mb-0">
-                            <TextSelectInput id="district" label="อำเภอ" options={provinceList} value={district} onChange={e => setDistrict(e)} placeholder="เลือกอำเภอ" required={true}></TextSelectInput>
                         </div>
                     </div>
                 </div>

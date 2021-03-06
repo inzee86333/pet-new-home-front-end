@@ -1,3 +1,6 @@
+import { useState, useEffect } from 'react'
+import { petImagesGetAPI } from '../data/apis'
+
 export function PrimaryButton({ label, onClick, type, className }) {
     return (
         <button className={`px-4 py-2 my-1 bg-green-500 text-white font-semibold rounded-lg shadow-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-75 ${className}`}
@@ -16,24 +19,33 @@ export function SecondaryButton({ label, onClick, type, className }) {
     )
 }
 
-export function TextButton({ label, href, type, className}) {
+export function TextButton({ label, href, type, className }) {
     return (
-        <a className={ `text-green-500 font-bold hover:text-green-800 ${className}` } href={href} type={type}>{label}</a>
+        <a className={`text-green-500 font-bold hover:text-green-800 ${className}`} href={href} type={type}>{label}</a>
     );
 }
 
 export function TextMenuButton({ label, href, type, className }) {
     return (
-        <a style={{fontSize: 18}} className={`text-white font-black hover:text-gray-200 ${className}`} href={href} type={type}>{label}</a>
+        <a style={{ fontSize: 18 }} className={`text-white font-black hover:text-gray-200 ${className}`} href={href} type={type}>{label}</a>
     );
 }
 
-export function CardInfoPetOwnerButton({ id, photo, type, age, species, sex, interested, message }) {
+export function CardInfoPetOwnerButton({ id, type, age, species, sex }) {
+    const [images, setImages] = useState([]);
+
+    useEffect(() => {
+        petImagesGetAPI(id, t => {
+            setImages(t.data)
+        })
+    }, [petImagesGetAPI])
+
     return (
         <button className="w-full bg-white rounded-xl shadow border mb-2">
             <div className="flex flex-row py-3 px-4 justify-between">
                 <div className="flex flex-row">
-                    <img src={photo} alt="" className="rounded-xl object-cover h-24 w-24 shadow border" />
+                    {images[0] !== undefined && <img src={`http://127.0.0.1:8000${images[0]['pet_image']}`} alt="" className="rounded-xl object-cover h-24 w-24 shadow border" />}
+                    {images[0] === undefined && <img src={'/pet_image_default.png'} alt="" className="rounded-xl object-cover h-24 w-24 shadow border" />}
                     <div className="px-4">
                         <div className="flex flex-row">
                             <div className="grid grid-cols-2">
@@ -66,8 +78,8 @@ export function CardInfoPetOwnerButton({ id, photo, type, age, species, sex, int
                     </div>
                 </div>
                 <div className="grid grid-cols-1">
-                    <h5 className="ptax py-1 font-semibold text-green-500 font-bold">{interested} คนกำลังสนใจ</h5>
-                    <h5 className="ptax py-1 font-semibold text-green-500 font-bold">{message} ข้อความ</h5>
+                    <h5 className="ptax py-1 font-semibold text-green-500 font-bold">test คนกำลังสนใจ</h5>
+                    <h5 className="ptax py-1 font-semibold text-green-500 font-bold">test ข้อความ</h5>
                     <div>&nbsp;</div>
                 </div>
             </div>
@@ -75,15 +87,25 @@ export function CardInfoPetOwnerButton({ id, photo, type, age, species, sex, int
     );
 }
 
-export function CardInfoPetFinderButton({ id, photo, type, age, species, sex, interested, province, district }) {
+export function CardInfoPetFinderButton({ id, type, age, species, sex, province, district }) {
+    const [images, setImages] = useState([]);
+
+    useEffect(() => {
+        petImagesGetAPI(id, t => {
+            setImages(t.data)
+        })
+    }, [petImagesGetAPI])
+
     return (
         <button className="w-max bg-white rounded-xl shadow border p-2 m-1">
             <div className="flex flex-col mx-auto w-max">
-                <img src={photo} alt="" className="rounded-xl object-cover h-36 w-36 shadow border" />
+                {images[0] !== undefined && <img src={`http://127.0.0.1:8000${images[0]['pet_image']}`} alt="" className="rounded-xl object-cover h-40 w-40 shadow border" />}
+                {images[0] === undefined && <img src={'/pet_image_default.png'} alt="" className="rounded-xl object-cover h-40 w-40 shadow border" />}
                 <div>
-                    <p className="ptax px-1 font-semibold">{type}</p>
-                    <p className="ptax px-1 font-semibold">{species}</p>
-                    <p className="ptax px-1 font-semibold">อายุ{age}ปี</p>
+                    <p className="ptax px-1 font-semibold">ลำดับ {id}</p>
+                    <p className="ptax px-1 font-semibold">:{type}</p>
+                    <p className="ptax px-1 font-semibold">:{species}</p>
+                    <p className="ptax px-1 font-semibold">ปีเกิด {age}</p>
                     <p className="ptax px-1 font-semibold text-green-500 font-bold">{province} {district}</p>
                 </div>
             </div>

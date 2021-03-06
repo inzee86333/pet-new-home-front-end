@@ -1,13 +1,5 @@
-export const provinceList = [
-    { value: 'p01', label: 'นครราชสีมา' },
-    { value: 'p02', label: 'เชียงใหม่' },
-    { value: 'p03', label: 'กาญจนบุรี' },
-];
-
-export const animalTypeList = [
-    { value: 'dog', label: 'หมา' },
-    { value: 'cat', label: 'แมว' },
-];
+export const provinceList = require('./province.json');
+export const districtList = require('./raw_database.json');
 
 export const birthYearList = [
     { value: '2021', label: '2021' },

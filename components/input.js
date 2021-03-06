@@ -32,10 +32,14 @@ export function TextInputDisable({ id, label, placeholder, value, onChange, type
     )
 }
 
-export function TextSelectInput({ id, label, placeholder, value, onChange, options, required, className }) {
+export function TextSelectInput({ id, label, placeholder, value, onChange, options, required, className, labelName, valueName }) {
     let alert = '';
     if (required) {
         alert = (value === null) ? '*ต้องการ' : '';
+    }
+    if(labelName===undefined&&valueName===undefined){
+        labelName = 'label'
+        valueName = 'value'
     }
     return (
         <div className="mt-2">
@@ -46,6 +50,8 @@ export function TextSelectInput({ id, label, placeholder, value, onChange, optio
                 className={className}
                 instanceId={id}
                 options={options}
+                getOptionLabel={(option) => option[labelName]}
+                getOptionValue={(option) => option[valueName]}
                 onChange={onChange}
                 value={value}
                 placeholder={placeholder}

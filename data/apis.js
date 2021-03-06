@@ -1,11 +1,19 @@
 import axios from 'axios';
 import cookie from 'js-cookie';
 const host = '127.0.0.1:8000'
+//user
 const loginURL = `http://${host}/appapi/login/`
-const userPostURL = `http://${host}/appapi/user_post/`
-const userURL = `http://${host}/appapi/user_detail/`
+const userCreateURL = `http://${host}/appapi/user_create/`
+const userDetailURL = `http://${host}/appapi/user_detail/`
 const checkTypeUserURL = `http://${host}/appapi/check_user_type/`
+//pet
+const petCreateURL = `http://${host}/appapi/pet_create/`
+const petDetailURL = `http://${host}/appapi/pet_detail/`
+const petImageURL = `http://${host}/appapi/pet_image/`
+const petGetAllURL = `http://${host}/appapi/pet_get_all/`
+const petOwnerGetURL = `http://${host}/appapi/pet_owner_get/`
 
+//user
 export async function loginAPI(formData, callBack) {
     await axios.post(loginURL, formData, {
         'Content-Type': 'application/x-www-form-urlencoded'
@@ -25,16 +33,24 @@ export async function loginAPI(formData, callBack) {
 }
 
 export async function registerAPI(formData, callBack) {
-    await axios.post(userPostURL, formData, {
+    await axios.post(userCreateURL, formData, {
         'Content-Type': 'application/x-www-form-urlencoded'
     }).then((response) => {
-        // console.log(response);
-        callBack(response['statusText'] == "Created")
+        callBack(response)
     })
+      .catch((error) => {
+            if (error.response) {
+                console.log(error.response)
+            } else if (error.request) {
+                console.log(error.request)
+            } else if (error.message) {
+                console.log(error.message)
+            }
+        })
 }
 
 export async function userEditAPI(formData, callBack) {
-    await axios.patch(userURL, formData, {
+    await axios.patch(userDetailURL, formData, {
         'Content-Type': 'application/x-www-form-urlencoded',
         headers: {
             'authorization': cookie.get('token')
@@ -45,13 +61,12 @@ export async function userEditAPI(formData, callBack) {
 }
 
 export async function userGetDetailAPI(callBack) {
-    await axios.post(userURL, new FormData(), {
+    await axios.post(userDetailURL, new FormData(), {
         'Content-Type': 'application/x-www-form-urlencoded',
         headers: {
             'authorization': cookie.get('token')
         }
     }).then((response) => {
-        // console.log(response)
         callBack(response.data)
     })
 }
@@ -67,28 +82,67 @@ export async function checkTypeUserAPI(callBack) {
     })
 }
 
+//pet
+export async function petCreateAPI(formData, callBack) {
+    await axios.post(petCreateURL, formData, {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        headers: {
+            'authorization': cookie.get('token')
+        }
+    }).then((response) => {
+        callBack(response)
+    }) 
+}
 
+export async function petGetDetailAPI(formData, callBack) {
+    await axios.patch(petDetailURL, formData, {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        headers: {
+            'authorization': cookie.get('token')
+        }
+    }).then((response) => {
+        callBack(response)
+    })
+}
 
-//////////////////////////////////////////////////////////////////////////////////////////////////////
-//
-// const host = '127.0.0.1:8000'
-// const userPostURL = `http://${host}/api/user/create`
-// const loginURL = `http://${host}/appapi/login/`
+export async function petOwnerGetAPI(callBack) {
+    await axios.post(petOwnerGetURL, new FormData(), {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        headers: {
+            'authorization': cookie.get('token')
+        }
+    }).then((response) => {
+        callBack(response)
+    })
+}
 
-// export async function registerAPI(formData, callBack) {
-//     await axios.post(userPostURL, formData, {
-//         'Content-Type': 'application/x-www-form-urlencoded'
-//     }).then((response) => {
-//         console.log(response);
-//         callBack(response['statusText'] == "Created")
-//     })
-//         .catch((error) => {
-//             if (error.response) {
-//                 console.log(error.response)
-//             } else if (error.request) {
-//                 console.log(error.request)
-//             } else if (error.message) {
-//                 console.log(error.message)
-//             }
-//         })
-// }
+export async function petGetAllAPI(callBack) {
+    await axios.get(petGetAllURL, new FormData(), {
+        'Content-Type': 'application/x-www-form-urlencoded'
+    }).then((response) => {
+        callBack(response)
+    })
+}
+
+//petImage
+export async function petCreateImageAPI(formData, callBack) {
+    await axios.post(petImageURL, formData, {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        headers: {
+            'authorization': cookie.get('token')
+        }
+    }).then((response) => {
+        callBack(response)
+    })
+}
+
+export async function petImagesGetAPI(pk, callBack) {
+    await axios.get(`${petImageURL}${pk}`, {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        headers: {
+            'authorization': cookie.get('token')
+        }
+    }).then((response) => {
+        callBack(response)
+    })
+}

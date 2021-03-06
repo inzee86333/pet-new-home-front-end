@@ -1,11 +1,11 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import ImageUploading from 'react-images-uploading';
 import { TextInput, TextAreaInput } from '../../components/input'
 import { PrimaryButton, SecondaryButton } from '../../components/button'
-import { required, requiredMatch } from '../../functions/validations'
-import { dataURLtoFile, dataURItoBlob } from '../../functions/converter'
-import { registerAPI } from '../../data/apis'
+import { required, requiredMatch, isLogin } from '../../functions/validations'
+import { dataURLtoFile } from '../../functions/converter'
+import { registerAPI, checkTypeUserAPI } from '../../data/apis'
 import { urlLogin } from '../urls'
 
 export default function Register() {
@@ -19,6 +19,24 @@ export default function Register() {
     const [address, setAddress] = useState('');
     const [images, setImages] = useState([{ data_url: "/user.png" }]);
     const maxImages = 1;
+
+    useEffect(() => {
+        if (isLogin) {
+            toRolePart()
+        }
+    })
+
+    const toRolePart = () => {
+        checkTypeUserAPI((t) => {
+            if (t.data['user_type'] === 'ow') {
+                router.replace(urlListPetOwner)
+            } else if (t.data['user_type'] === 'fi') {
+                router.replace(urlListPetFinder)
+            } else if (t.data['user_type'] === null) {
+                router.replace(urlSelectUserType)
+            }
+        })
+    }
 
     const onChangeImage = (imageList, addUpdateIndex) => {
         setImages(imageList);
@@ -42,7 +60,7 @@ export default function Register() {
     const submit = async (e) => {
         e.preventDefault();
         if (validation()) {
-            var formData = new FormData();
+            let formData = new FormData();
             formData.append('email', email)
             formData.append('password', password)
             formData.append('first_name', firstName)
@@ -50,10 +68,11 @@ export default function Register() {
             formData.append('phone_number', phoneNumber)
             formData.append('address', address)
             if (images[0]['data_url'] !== "/user.png"){
-                formData.append('photo_user', dataURLtoFile(images[0]['data_url'], `${firstName}-${lastName}.png`))
+                formData.append('user_image', dataURLtoFile(images[0]['data_url'], `${firstName}-${lastName}.png`))
             }
+            //แก้
             registerAPI(formData,(t) =>{
-                if(t){
+                if (t['statusText'] == "Created"){
                     alert('สมัครสมาชิกสำเร็จ')
                     router.push(urlLogin)
                 }else{
