@@ -33,6 +33,8 @@ export default function list_pet_finder() {
                                 age={i.birth_year}
                                 species={i.species}
                                 sex={i.sex}
+                                province={i.province}
+                                district={i.district}
                             />
                         ))}
                     </div>

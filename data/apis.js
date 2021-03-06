@@ -4,10 +4,11 @@ const host = '127.0.0.1:8000'
 //user
 const loginURL = `http://${host}/appapi/login/`
 const userCreateURL = `http://${host}/appapi/user_create/`
-const userURL = `http://${host}/appapi/user_detail/`
+const userDetailURL = `http://${host}/appapi/user_detail/`
 const checkTypeUserURL = `http://${host}/appapi/check_user_type/`
 //pet
 const petCreateURL = `http://${host}/appapi/pet_create/`
+const petDetailURL = `http://${host}/appapi/pet_detail/`
 const petImageURL = `http://${host}/appapi/pet_image/`
 const petGetAllURL = `http://${host}/appapi/pet_get_all/`
 const petOwnerGetURL = `http://${host}/appapi/pet_owner_get/`
@@ -40,7 +41,7 @@ export async function registerAPI(formData, callBack) {
 }
 
 export async function userEditAPI(formData, callBack) {
-    await axios.patch(userURL, formData, {
+    await axios.patch(userDetailURL, formData, {
         'Content-Type': 'application/x-www-form-urlencoded',
         headers: {
             'authorization': cookie.get('token')
@@ -51,7 +52,7 @@ export async function userEditAPI(formData, callBack) {
 }
 
 export async function userGetDetailAPI(callBack) {
-    await axios.post(userURL, new FormData(), {
+    await axios.post(userDetailURL, new FormData(), {
         'Content-Type': 'application/x-www-form-urlencoded',
         headers: {
             'authorization': cookie.get('token')
@@ -82,6 +83,17 @@ export async function petCreateAPI(formData, callBack) {
     }).then((response) => {
         callBack(response)
     }) 
+}
+
+export async function petGetDetailAPI(formData, callBack) {
+    await axios.patch(petDetailURL, formData, {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        headers: {
+            'authorization': cookie.get('token')
+        }
+    }).then((response) => {
+        callBack(response)
+    })
 }
 
 export async function petOwnerGetAPI(callBack) {

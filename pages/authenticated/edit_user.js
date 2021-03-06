@@ -7,6 +7,7 @@ import { required, requiredNotMatch } from '../../functions/validations'
 import { dataURLtoFile } from '../../functions/converter'
 import { userGetDetailAPI, userEditAPI } from '../../data/apis'
 import { urlLogin } from '../urls'
+import { Nav } from '../../components/navbar'
 
 export default function EditUser() {
     const router = useRouter()
@@ -26,8 +27,8 @@ export default function EditUser() {
     }, [userGetDetailAPI])
 
     const setData = (data) =>{
-        if (data['photo_user'] != null) {
-            setImages([{ data_url: `http://127.0.0.1:8000${data['photo_user']}` }])
+        if (data['user_image'] != null) {
+            setImages([{ data_url: `http://127.0.0.1:8000${data['user_image']}` }])
         }
         setEmail(data['email'])
         setFirstName(data['first_name'])
@@ -73,75 +74,78 @@ export default function EditUser() {
     }
 
     return (
-        <div className="flex h-max bganimal">
-            <div className="box-content w-auto min-w-max max-w-max m-auto p-8 shadow-2xl my-8 bg-gray-50">
-                <div>
-                    <ImageUploading
-                        value={images}
-                        onChange={onChangeImage}
-                        maxNumber={maxImages}
-                        dataURLKey='data_url'
-                    >
-                        {({
-                            imageList,
-                            onImageUpload,
-                            onImageUpdate,
-                            isDragging,
-                            dragProps,
-                            errors,
-                        }) => (
-                            // write your building UI
-                            <div className="upload__image-wrapper min-w-max max-w-max mx-auto ">
-                                &nbsp;
-                                {imageList.map((image, index) => (
-                                    <div key={index} className="image-item">
-                                        <img src={image['data_url']} alt="" className="rounded-full object-cover h-48 w-48 shadow border-2 border-green-300" />
-                                        <div className="image-item__btn-wrapper flex">
-                                            <SecondaryButton className="mx-auto" onClick={() => onImageUpdate(index)} label="เพิ่มรูปประจำตัว"></SecondaryButton>
+        <div>
+            <Nav />
+            <div className="flex h-max bganimal">
+                <div className="box-content w-auto min-w-max max-w-max m-auto p-8 shadow-2xl my-8 bg-gray-50">
+                    <div>
+                        <ImageUploading
+                            value={images}
+                            onChange={onChangeImage}
+                            maxNumber={maxImages}
+                            dataURLKey='data_url'
+                        >
+                            {({
+                                imageList,
+                                onImageUpload,
+                                onImageUpdate,
+                                isDragging,
+                                dragProps,
+                                errors,
+                            }) => (
+                                // write your building UI
+                                <div className="upload__image-wrapper min-w-max max-w-max mx-auto ">
+                                    &nbsp;
+                                    {imageList.map((image, index) => (
+                                        <div key={index} className="image-item">
+                                            <img src={image['data_url']} alt="" className="rounded-full object-cover h-48 w-48 shadow border-2 border-green-300" />
+                                            <div className="image-item__btn-wrapper flex">
+                                                <SecondaryButton className="mx-auto" onClick={() => onImageUpdate(index)} label="เปลี่ยนรูปประจำตัว"></SecondaryButton>
+                                            </div>
                                         </div>
-                                    </div>
-                                ))}
-                                {errors && <div>
-                                    {/* {errors.maxNumber && alert("Number of selected images exceed maxNumber")} */}
-                                    {errors.acceptType && alert("Your selected file type is not allow")}
-                                    {errors.maxFileSize && alert("Selected file size exceed maxFileSize")}
-                                    {errors.resolution && alert("Selected file is not match your desired resolution")}
-                                </div>}
-                            </div>
-                        )}
+                                    ))}
+                                    {errors && <div>
+                                        {/* {errors.maxNumber && alert("Number of selected images exceed maxNumber")} */}
+                                        {errors.acceptType && alert("Your selected file type is not allow")}
+                                        {errors.maxFileSize && alert("Selected file size exceed maxFileSize")}
+                                        {errors.resolution && alert("Selected file is not match your desired resolution")}
+                                    </div>}
+                                </div>
+                            )}
 
-                    </ImageUploading>
-                    <form>
-                        <div className="mx-3 md:flex">
-                            <div className="md:w-1/2 px-3 mb-6 md:mb-0">
-                                <TextInputDisable id="email" label="อีเมล" placeholder="อีเมลของท่าน" value={email} type="email"
-                                    onChange={e => setEmail(e.target.value)} required={true}  />
+                        </ImageUploading>
+                        <form>
+                            <div className="mx-3 md:flex">
+                                <div className="md:w-1/2 px-3 mb-6 md:mb-0">
+                                    <TextInputDisable id="email" label="อีเมล" placeholder="อีเมลของท่าน" value={email} type="email"
+                                        onChange={e => setEmail(e.target.value)} required={true} />
+                                </div>
                             </div>
-                        </div>
-                        <div className="mx-3 md:flex">
-                            <div className="md:w-1/2 px-3 mb-6 md:mb-0">
-                                <TextInput id="first-name" label="ชื่อจริง" placeholder="ชื่อจริงของท่าน" value={firstName}
-                                    onChange={e => setFirstName(e.target.value)} required={true} />
+                            <div className="mx-3 md:flex">
+                                <div className="md:w-1/2 px-3 mb-6 md:mb-0">
+                                    <TextInput id="first-name" label="ชื่อจริง" placeholder="ชื่อจริงของท่าน" value={firstName}
+                                        onChange={e => setFirstName(e.target.value)} required={true} />
+                                </div>
+                                <div className="md:w-1/2 px-3 mb-6 md:mb-0">
+                                    <TextInput id="last-name" label="นามสกุล" placeholder="นามสกุลของท่าน" value={lastName}
+                                        onChange={e => setLastName(e.target.value)} required={true} />
+                                </div>
                             </div>
-                            <div className="md:w-1/2 px-3 mb-6 md:mb-0">
-                                <TextInput id="last-name" label="นามสกุล" placeholder="นามสกุลของท่าน" value={lastName}
-                                    onChange={e => setLastName(e.target.value)} required={true} />
+                            <div className="mx-3 md:flex">
+                                <div className="md:w-1/2 px-3 mb-6 md:mb-0">
+                                    <TextInput id="phone-number" label="หมายเลขโทรศัพท์" placeholder="หมายเลขโทรศัพท์ของท่าน" value={phoneNumber}
+                                        maxLength="10" onChange={e => setPhoneNumber(e.target.value)} required={true} />
+                                </div>
                             </div>
-                        </div>
-                        <div className="mx-3 md:flex">
-                            <div className="md:w-1/2 px-3 mb-6 md:mb-0">
-                                <TextInput id="phone-number" label="หมายเลขโทรศัพท์" placeholder="หมายเลขโทรศัพท์ของท่าน" value={phoneNumber}
-                                    maxLength="10" onChange={e => setPhoneNumber(e.target.value)} required={true} />
+                            <div className="mx-3 md:flex">
+                                <TextAreaInput id="address" label="ที่อยู่ปัจจุบัน" placeholder="ที่อยู่ปัจจุบันของท่าน เช่น 95/1 หมู่1 ตำบลแม่กา อำเภอเมือง จังหวัดพะเยา" value={address}
+                                    onChange={e => setAddress(e.target.value)}></TextAreaInput>
                             </div>
-                        </div>
-                        <div className="mx-3 md:flex">
-                            <TextAreaInput id="address" label="ที่อยู่ปัจจุบัน" placeholder="ที่อยู่ปัจจุบันของท่าน เช่น 95/1 หมู่1 ตำบลแม่กา อำเภอเมือง จังหวัดพะเยา" value={address}
-                                onChange={e => setAddress(e.target.value)}></TextAreaInput>
-                        </div>
-                        <div className="mx-3 flex py-2">
-                            <PrimaryButton className="mx-auto" label="แก้ไขสมาชิก" type="submit" onClick={submit}></PrimaryButton>
-                        </div>
-                    </form>
+                            <div className="mx-3 flex py-2">
+                                <PrimaryButton className="mx-auto" label="แก้ไขสมาชิก" type="submit" onClick={submit}></PrimaryButton>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>

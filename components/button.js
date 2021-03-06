@@ -19,15 +19,15 @@ export function SecondaryButton({ label, onClick, type, className }) {
     )
 }
 
-export function TextButton({ label, href, type, className}) {
+export function TextButton({ label, href, type, className }) {
     return (
-        <a className={ `text-green-500 font-bold hover:text-green-800 ${className}` } href={href} type={type}>{label}</a>
+        <a className={`text-green-500 font-bold hover:text-green-800 ${className}`} href={href} type={type}>{label}</a>
     );
 }
 
 export function TextMenuButton({ label, href, type, className }) {
     return (
-        <a style={{fontSize: 18}} className={`text-white font-black hover:text-gray-200 ${className}`} href={href} type={type}>{label}</a>
+        <a style={{ fontSize: 18 }} className={`text-white font-black hover:text-gray-200 ${className}`} href={href} type={type}>{label}</a>
     );
 }
 
@@ -87,7 +87,7 @@ export function CardInfoPetOwnerButton({ id, type, age, species, sex }) {
     );
 }
 
-export function CardInfoPetFinderButton({ id, type, age, species, sex }) {
+export function CardInfoPetFinderButton({ id, type, age, species, sex, province, district }) {
     const [images, setImages] = useState([]);
 
     useEffect(() => {
@@ -95,17 +95,18 @@ export function CardInfoPetFinderButton({ id, type, age, species, sex }) {
             setImages(t.data)
         })
     }, [petImagesGetAPI])
-    
+
     return (
         <button className="w-max bg-white rounded-xl shadow border p-2 m-1">
             <div className="flex flex-col mx-auto w-max">
-                {images[0] !== undefined && <img src={`http://127.0.0.1:8000${images[0]['pet_image']}`} alt="" className="rounded-xl object-cover h-36 w-36 shadow border" />}
-                {images[0] === undefined && <img src={'/pet_image_default.png'} alt="" className="rounded-xl object-cover h-36 w-36 shadow border" />}
+                {images[0] !== undefined && <img src={`http://127.0.0.1:8000${images[0]['pet_image']}`} alt="" className="rounded-xl object-cover h-40 w-40 shadow border" />}
+                {images[0] === undefined && <img src={'/pet_image_default.png'} alt="" className="rounded-xl object-cover h-40 w-40 shadow border" />}
                 <div>
-                    <p className="ptax px-1 font-semibold">{type}</p>
-                    <p className="ptax px-1 font-semibold">{species}</p>
+                    <p className="ptax px-1 font-semibold">ลำดับ {id}</p>
+                    <p className="ptax px-1 font-semibold">:{type}</p>
+                    <p className="ptax px-1 font-semibold">:{species}</p>
                     <p className="ptax px-1 font-semibold">ปีเกิด {age}</p>
-                    {/* <p className="ptax px-1 font-semibold text-green-500 font-bold">{province} {district}</p> */}
+                    <p className="ptax px-1 font-semibold text-green-500 font-bold">{province} {district}</p>
                 </div>
             </div>
         </button>

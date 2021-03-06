@@ -4,10 +4,9 @@ import ImageUploading from 'react-images-uploading';
 import { TextInput, TextAreaInput } from '../../components/input'
 import { PrimaryButton, SecondaryButton } from '../../components/button'
 import { required, requiredMatch, isLogin } from '../../functions/validations'
-import { dataURLtoFile, dataURItoBlob } from '../../functions/converter'
-import { registerAPI } from '../../data/apis'
+import { dataURLtoFile } from '../../functions/converter'
+import { registerAPI, checkTypeUserAPI } from '../../data/apis'
 import { urlLogin } from '../urls'
-import { checkTypeUserAPI } from '../../data/apis';
 
 export default function Register() {
     const router = useRouter()
