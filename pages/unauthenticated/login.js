@@ -47,7 +47,6 @@ export default function Login() {
                 alert(data['message'])
                 if (t) {
                     cookie.set('token', data['email'])
-                    console.log(cookie.get('token'))
                     toRolePart()
                 }
             })      

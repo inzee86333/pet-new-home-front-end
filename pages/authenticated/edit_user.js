@@ -21,9 +21,7 @@ export default function EditUser() {
     const maxImages = 1;
 
     useEffect(() =>{
-        userGetDetailAPI( (data) => {
-            setData(data)
-        })
+        userGetDetailAPI(setData)
     }, [userGetDetailAPI])
 
     const setData = (data) =>{

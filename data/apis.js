@@ -94,17 +94,6 @@ export async function petCreateAPI(formData, callBack) {
     }) 
 }
 
-export async function petGetDetailAPI(formData, callBack) {
-    await axios.patch(petDetailURL, formData, {
-        'Content-Type': 'application/x-www-form-urlencoded',
-        headers: {
-            'authorization': cookie.get('token')
-        }
-    }).then((response) => {
-        callBack(response)
-    })
-}
-
 export async function petOwnerGetAPI(callBack) {
     await axios.post(petOwnerGetURL, new FormData(), {
         'Content-Type': 'application/x-www-form-urlencoded',
@@ -119,6 +108,30 @@ export async function petOwnerGetAPI(callBack) {
 export async function petGetAllAPI(callBack) {
     await axios.get(petGetAllURL, new FormData(), {
         'Content-Type': 'application/x-www-form-urlencoded'
+    }).then((response) => {
+        callBack(response)
+    })
+}
+
+export async function petGetDetailAPI(pk, callBack) {
+    if(pk!==undefined){
+        await axios.get(`${petDetailURL}${pk}`, {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            headers: {
+                'authorization': cookie.get('token')
+            }
+        }).then((response) => {
+            callBack(response.data)
+        })
+    }
+}
+
+export async function petEditAPI(formData, callBack) {
+    await axios.patch(petDetailURL, formData, {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        headers: {
+            'authorization': cookie.get('token')
+        }
     }).then((response) => {
         callBack(response)
     })
