@@ -6,7 +6,7 @@ import { provinceList, districtList, birthYearList } from '../../../../data/dire
 import { containerCard, containerMain } from '../../../../components/tailwindClass'
 import { urlListPetOwner } from '../../../urls'
 import { Nav } from '../../../../components/navbar'
-import { petCreateAPI, petCreateImageAPI, petGetDetailAPI } from '../../../../data/apis'
+import { petCreateAPI, petCreateImageAPI, petGetDetailAPI, petImagesGetAPI } from '../../../../data/apis'
 import { required } from '../../../../functions/validations'
 import { dataURLtoFile } from '../../../../functions/converter'
 
@@ -21,10 +21,12 @@ export default function EditPet({ petId }) {
     const [district, setDistrict] = useState(null);
     const [districtOnProvince, setDistrictOnProvince] = useState([]);
     const [dataOld, setDataOld] = useState({});
+    const [imagesOld, setImagesOld] = useState([]);
     const maxNumber = 5;
 
     useEffect(()=>{
         petGetDetailAPI(petId, setData)
+        petImagesGetAPI(petId, setDataImages)
     }, [petGetDetailAPI])
 
     const setData = (data) => {
@@ -37,11 +39,16 @@ export default function EditPet({ petId }) {
         setProvince(pro)
         onChangeProvince(pro)
         if (data['province'] !== data['district']){
-            setDistrict(districtOnProvince.find(t => t['district_code'] == data['district']))
+            setDistrict(districtList.find(t => t['district_code'] == data['district']))
         }else{
             setDistrict({ 'district_code': data['province'], 'district': 'อำเภอเมือง' })
         }
         setDataOld(data)
+    }
+
+    const setDataImages = (data) => {
+        setImages(data.data)
+        setImagesOld(data.data)
     }
 
     const onChange = (imageList, addUpdateIndex) => {
@@ -140,7 +147,7 @@ export default function EditPet({ petId }) {
                                 <div className="flex">
                                     {imageList.map((image, index) => (
                                         <div key={index} className="image-item">
-                                            <img src={image['data_url']} alt="" className="object-cover ml-1 h-28 w-28 shadow rounded-md border-2" />
+                                            <img src={`http://127.0.0.1:8000${image['pet_image']}`} alt="" className="object-cover ml-1 h-28 w-28 shadow rounded-md border-2" />
                                             <div className="image-item__btn-wrapper flex">
                                                 <button className="mx-auto" onClick={() => onImageRemove(index)}>ลบ</button>
                                             </div>
@@ -174,7 +181,7 @@ export default function EditPet({ petId }) {
                     </div>
                     <div className="mx-3 md:flex">
                         <div className="md:w-1/2 px-3 mb-6 md:mb-0">
-                            <TextSelectInput id="birth_year" label="ปีเกิด (ค.ศ)" className="w-1/2" options={birthYearList} onChange={e => setBirthYear(e)} placeholder="เลือกปีเกิด" value={birthYear}></TextSelectInput>
+                            <TextSelectInput id="birth_year" label="ปีเกิด (ค.ศ)" className="lg:w-1/2" options={birthYearList} onChange={e => setBirthYear(e)} placeholder="เลือกปีเกิด" value={birthYear}></TextSelectInput>
                         </div>
                         <div className="md:w-1/2 px-3 mb-6 md:mb-0">
                             <TextInput id="sex" label="เพศ" className="w-1/2" onChange={e => setAnimalSex(e.target.value)} placeholder="เพศ" value={animalSex}></TextInput>

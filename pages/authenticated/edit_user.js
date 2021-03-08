@@ -6,7 +6,7 @@ import { PrimaryButton, SecondaryButton } from '../../components/button'
 import { required, requiredNotMatch } from '../../functions/validations'
 import { dataURLtoFile } from '../../functions/converter'
 import { userGetDetailAPI, userEditAPI } from '../../data/apis'
-import { urlLogin } from '../urls'
+import { urlListPetOwner, urlListPetFinder, urlSelectUserType } from '../urls'
 import { Nav } from '../../components/navbar'
 
 export default function EditUser() {
@@ -57,13 +57,19 @@ export default function EditUser() {
             requiredNotMatch(lastName, dataOld['last_name'])&&formData.append('last_name', lastName);
             requiredNotMatch(phoneNumber, dataOld['phone_number'])&&formData.append('phone_number', phoneNumber);
             requiredNotMatch(address, dataOld['address'])&&formData.append('address', address);
-            if (images[0]['data_url'] !== "/user.png" && images[0]['data_url'] !== `http://127.0.0.1:8000${dataOld['photo_user']}`) {
-                formData.append('photo_user', dataURLtoFile(images[0]['data_url'], `${firstName}-${lastName}.png`))
+            if (images[0]['data_url'] !== "/user.png" && images[0]['data_url'] !== `http://127.0.0.1:8000${dataOld['user_image']}`) {
+                formData.append('user_image', dataURLtoFile(images[0]['data_url'], `${firstName}-${lastName}.png`))
             }
             userEditAPI(formData, (t) => {
                 if (t) {
                     alert('แก้ไขสมาชิกสำเร็จ')
-                    router.push(urlLogin)
+                    if (t.data['user_type'] === 'ow') {
+                        router.replace(urlListPetOwner)
+                    } else if (t.data['user_type'] === 'fi') {
+                        router.replace(urlListPetFinder)
+                    } else if (t.data['user_type'] === null) {
+                        router.replace(urlSelectUserType)
+                    }
                 } else {
                     alert('แก้ไขสมาชิกไม่สำเร็จ')
                 }
