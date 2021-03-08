@@ -12,6 +12,8 @@ const petDetailURL = `http://${host}/appapi/pet_detail/`
 const petImageURL = `http://${host}/appapi/pet_image/`
 const petGetAllURL = `http://${host}/appapi/pet_get_all/`
 const petOwnerGetURL = `http://${host}/appapi/pet_owner_get/`
+//report
+const reportGetAllURL = `http://${host}/appapi/report/`
 
 //user
 export async function loginAPI(formData, callBack) {
@@ -142,6 +144,15 @@ export async function petImagesGetAPI(pk, callBack) {
         headers: {
             'authorization': cookie.get('token')
         }
+    }).then((response) => {
+        callBack(response)
+    })
+}
+
+//report
+export async function reportGetAllAPI(callBack) {
+    await axios.get(reportGetAllURL, new FormData(), {
+        'Content-Type': 'application/x-www-form-urlencoded'
     }).then((response) => {
         callBack(response)
     })

@@ -1,5 +1,5 @@
 import { Nav } from '../../../components/navbar'
-import { contrinerMain, contrinerCard } from '../../../components/tailwindClass'
+import { containerCard, containerMain } from '../../../components/tailwindClass'
 import { useRouter } from 'next/router'
 
 export default function ReportDetail() {
@@ -9,7 +9,7 @@ export default function ReportDetail() {
     return (
         <div>
             <Nav />
-            <div className={contrinerMain}>
+            <div className={containerMain}>
                 <div class="items-center grid grid-cols-6" >
                     <div class="col-start-1 col-end-3">
                         <h1>รายงาน</h1>
@@ -22,7 +22,7 @@ export default function ReportDetail() {
                     </div>
                 </div>
                 <div class='mt-4'>
-                    <div className={contrinerCard}>
+                    <div className={containerCard}>
                         <div className="flex flex-col">
                             {/* {report.map(json => ( */}
                             {/* // <Link as={`/admin/reportdetail/${json.user_id}`} href="/admin/reportdetail/[reportdetail]"> */}
