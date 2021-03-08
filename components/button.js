@@ -31,7 +31,7 @@ export function TextMenuButton({ label, href, type, className }) {
     );
 }
 
-export function CardInfoPetOwnerButton({ id, type, age, species, sex }) {
+export function CardInfoPetOwnerButton({ id, type, age, species, sex, href }) {
     const [images, setImages] = useState([]);
 
     useEffect(() => {
@@ -41,7 +41,7 @@ export function CardInfoPetOwnerButton({ id, type, age, species, sex }) {
     }, [petImagesGetAPI])
 
     return (
-        <button className="w-full bg-white rounded-xl shadow border mb-2">
+        <a className="w-full bg-white rounded-xl shadow border mb-2" href={href}>
             <div className="flex flex-row py-3 px-4 justify-between">
                 <div className="flex flex-row">
                     {images[0] !== undefined && <img src={`http://127.0.0.1:8000${images[0]['pet_image']}`} alt="" className="rounded-xl object-cover h-24 w-24 shadow border" />}
@@ -83,7 +83,7 @@ export function CardInfoPetOwnerButton({ id, type, age, species, sex }) {
                     <div>&nbsp;</div>
                 </div>
             </div>
-        </button>
+        </a>
     );
 }
 
