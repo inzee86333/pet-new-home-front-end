@@ -6,7 +6,7 @@ import { PrimaryButton, SecondaryButton } from '../../components/button'
 import { required, requiredNotMatch } from '../../functions/validations'
 import { dataURLtoFile } from '../../functions/converter'
 import { userGetDetailAPI, userEditAPI } from '../../data/apis'
-import { urlListPetOwner, urlListPetFinder, urlSelectUserType } from '../urls'
+import { urlListPetOwner, urlListPetFinder, urlSelectUserType, urlRolePart } from '../urls'
 import { Nav } from '../../components/navbar'
 
 export default function EditUser() {
@@ -26,7 +26,7 @@ export default function EditUser() {
 
     const setData = (data) =>{
         if (data['user_image'] != null) {
-            setImages([{ data_url: `http://127.0.0.1:8000${data['user_image']}` }])
+            setImages([{ data_url: data['user_image'] }])
         }
         setEmail(data['email'])
         setFirstName(data['first_name'])
@@ -57,19 +57,13 @@ export default function EditUser() {
             requiredNotMatch(lastName, dataOld['last_name'])&&formData.append('last_name', lastName);
             requiredNotMatch(phoneNumber, dataOld['phone_number'])&&formData.append('phone_number', phoneNumber);
             requiredNotMatch(address, dataOld['address'])&&formData.append('address', address);
-            if (images[0]['data_url'] !== "/user.png" && images[0]['data_url'] !== `http://127.0.0.1:8000${dataOld['user_image']}`) {
+            if (images[0]['data_url'] !== "/user.png" && images[0]['data_url'] !== dataOld['user_image']) {
                 formData.append('user_image', dataURLtoFile(images[0]['data_url'], `${firstName}-${lastName}.png`))
             }
             userEditAPI(formData, (t) => {
-                if (t) {
+                if (t['statusText'] === 'OK') {
                     alert('แก้ไขสมาชิกสำเร็จ')
-                    if (t.data['user_type'] === 'ow') {
-                        router.replace(urlListPetOwner)
-                    } else if (t.data['user_type'] === 'fi') {
-                        router.replace(urlListPetFinder)
-                    } else if (t.data['user_type'] === null) {
-                        router.replace(urlSelectUserType)
-                    }
+                    router.push(urlRolePart(t.data['user_type']))
                 } else {
                     alert('แก้ไขสมาชิกไม่สำเร็จ')
                 }

@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { useRouter } from 'next/router'
 import ImageUploading from 'react-images-uploading';
 import { TextInput, TextSelectInput } from '../../../../components/input'
 import { PrimaryButton } from '../../../../components/button'
@@ -6,11 +7,12 @@ import { provinceList, districtList, birthYearList } from '../../../../data/dire
 import { containerCard, containerMain } from '../../../../components/tailwindClass'
 import { urlListPetOwner } from '../../../urls'
 import { Nav } from '../../../../components/navbar'
-import { petCreateAPI, petCreateImageAPI, petGetDetailAPI, petImagesGetAPI } from '../../../../data/apis'
-import { required } from '../../../../functions/validations'
+import { petCreateAPI, petCreateImageAPI, petGetDetailAPI, petImagesGetAPI, petEditAPI } from '../../../../data/apis'
+import { required, requiredNotMatch } from '../../../../functions/validations'
 import { dataURLtoFile } from '../../../../functions/converter'
 
 export default function EditPet({ petId }) {
+    const router = useRouter()
     const [images, setImages] = useState([]);
     const [animalType, setAnimalType] = useState('');
     const [species, setSpecies] = useState('');
@@ -74,31 +76,24 @@ export default function EditPet({ petId }) {
 
     const addPet = async (e) => {
         e.preventDefault() // prevents page reload
-        // if (validation()) {
-        //     let formData = new FormData();
-        //     formData.append('owner_id', 'id')
-        //     formData.append('animal_type', animalType)
-        //     formData.append('species', species)
-        //     birthYear !== null && formData.append('birth_year', birthYear['value'])
-        //     formData.append('sex', animalSex)
-        //     formData.append('disease', disease)
-        //     formData.append('province', province['province_code'])
-        //     formData.append('district', district['district_code'])
-        //     petCreateAPI(formData, (t) => {
-        //         if (t['statusText'] == "Created") {
-        //             for (let i = 0; i < images.length; i++) {
-        //                 let formDataImage = new FormData();
-        //                 formDataImage.append('pet_id', t['data']['pet_id'])
-        //                 formDataImage.append('pet_image', dataURLtoFile(images[i]['data_url'], `petId${t['data']['pet_id']}-${i}.png`))
-        //                 petCreateImageAPI(formDataImage, (t) => { })
-        //             }
-        //             alert('เพิ่มสัตว์เลี้ยงสำเร็จ')
-        //             router.push(urlListPetOwner)
-        //         } else {
-        //             alert('เพิ่มสัตว์เลี้ยงไม่สำเร็จ')
-        //         }
-        //     })
-        // }
+        if (validation()) {
+            let formData = new FormData();
+            requiredNotMatch(animalType, dataOld['animal_type']) && formData.append('animal_type', animalType)
+            requiredNotMatch(species, dataOld['species']) && formData.append('species', species)
+            requiredNotMatch(birthYear, dataOld['birthYear']) && formData.append('birth_year', birthYear['value'])
+            requiredNotMatch(animalSex, dataOld['sex']) && formData.append('sex', animalSex)
+            requiredNotMatch(disease, dataOld['disease']) && formData.append('disease', disease)
+            requiredNotMatch(province['province_code'], dataOld['province_code']) &&formData.append('province', province['province_code'])
+            requiredNotMatch(district['district_code'], dataOld['district_code']) &&formData.append('district', district['district_code'])
+            petEditAPI(petId ,formData, (t) => {
+                if (t['statusText'] === 'OK') {
+                    alert('แก้ไขสัตว์เลี้ยงสำเร็จ')
+                    router.push(urlListPetOwner)
+                } else {
+                    alert('แก้ไขสัตว์เลี้ยงไม่สำเร็จ')
+                }
+            })
+        }
     }
 
     return (
@@ -147,7 +142,7 @@ export default function EditPet({ petId }) {
                                 <div className="flex">
                                     {imageList.map((image, index) => (
                                         <div key={index} className="image-item">
-                                            <img src={`http://127.0.0.1:8000${image['pet_image']}`} alt="" className="object-cover ml-1 h-28 w-28 shadow rounded-md border-2" />
+                                            <img src={image['data_url']} alt="" className="object-cover ml-1 h-28 w-28 shadow rounded-md border-2" />
                                             <div className="image-item__btn-wrapper flex">
                                                 <button className="mx-auto" onClick={() => onImageRemove(index)}>ลบ</button>
                                             </div>
