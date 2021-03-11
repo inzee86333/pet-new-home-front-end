@@ -21,8 +21,7 @@ export async function loginAPI(formData, callBack) {
     await axios.post(loginURL, formData, {
         'Content-Type': 'application/x-www-form-urlencoded'
     }).then((response) => {
-        // console.log(response);
-        callBack(response['status'] == 202, response['data'])
+        callBack(response)
     })
         // .catch((error) => {
         //     if (error.response) {
@@ -41,15 +40,6 @@ export async function registerAPI(formData, callBack) {
     }).then((response) => {
         callBack(response)
     })
-      .catch((error) => {
-            if (error.response) {
-                console.log(error.response)
-            } else if (error.request) {
-                console.log(error.request)
-            } else if (error.message) {
-                console.log(error.message)
-            }
-        })
 }
 
 export async function userEditAPI(formData, callBack) {
@@ -70,7 +60,7 @@ export async function userGetDetailAPI(callBack) {
             'authorization': cookie.get('token')
         }
     }).then((response) => {
-        callBack(response.data)
+        callBack(response)
     })
 }
 
@@ -127,9 +117,21 @@ export async function petGetAllAPI(callBack) {
     })
 }
 
-//petImage
-export async function petCreateImageAPI(formData, callBack) {
-    await axios.post(petImageURL, formData, {
+export async function petGetDetailAPI(pk, callBack) {
+    if(pk!==undefined){
+        await axios.get(`${petDetailURL}${pk}`, {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            headers: {
+                'authorization': cookie.get('token')
+            }
+        }).then((response) => {
+            callBack(response)
+        })
+    }
+}
+
+export async function petEditAPI(pk ,formData, callBack) {
+    await axios.patch(`${petDetailURL}${pk}`, formData, {
         'Content-Type': 'application/x-www-form-urlencoded',
         headers: {
             'authorization': cookie.get('token')
@@ -137,6 +139,15 @@ export async function petCreateImageAPI(formData, callBack) {
     }).then((response) => {
         callBack(response)
     })
+    .catch((error) => {
+            if (error.response) {
+                console.log(error.response)
+            } else if (error.request) {
+                console.log(error.request)
+            } else if (error.message) {
+                console.log(error.message)
+            }
+        })
 }
 
 export async function petImagesGetAPI(pk, callBack) {
