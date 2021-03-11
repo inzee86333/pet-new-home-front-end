@@ -6,7 +6,7 @@ import { provinceList, districtList, birthYearList } from '../../../../data/dire
 import { containerCard, containerMain } from '../../../../components/tailwindClass'
 import { urlListPetOwner } from '../../../urls'
 import { Nav } from '../../../../components/navbar'
-import { petCreateImageAPI, petGetDetailAPI, petImagesGetAPI, petEditAPI, petImageDelete } from '../../../../data/apis'
+import { petCreateImageAPI, petGetDetailAPI, petImagesGetAPI, petEditAPI, petImageDelete, petDeleteAPI } from '../../../../data/apis'
 import { required, requiredNotMatch } from '../../../../functions/validations'
 import { dataURLtoFile } from '../../../../functions/converter'
 
@@ -70,7 +70,7 @@ export default function EditPet({ petId }) {
         return validate;
     }
 
-    const addPet = async (e) => {
+    const editPet = async (e) => {
         e.preventDefault() // prevents page reload
         if (validation()) {
             let formData = new FormData();
@@ -84,11 +84,11 @@ export default function EditPet({ petId }) {
             petEditAPI(petId, formData, (t) => {
                 if (t['statusText'] === 'OK') {
                     for (let i = 0; i < images.length; i++) {
-                        if (images[i]['pet_image_id'] === undefined){
+                        if (images[i]['pet_image_id'] === undefined) {
                             let formDataImage = new FormData();
                             formDataImage.append('pet_id', t['data']['pet_id'])
                             formDataImage.append('pet_image', dataURLtoFile(images[i]['pet_image'], `petId${t['data']['pet_id']}-${i}.png`))
-                            petCreateImageAPI(formDataImage, (t) => {})
+                            petCreateImageAPI(formDataImage, (t) => { })
                         }
                     }
                     router.push(urlListPetOwner)
@@ -100,11 +100,23 @@ export default function EditPet({ petId }) {
         }
     }
 
+    const deletePet = () => {
+        let isDeletePet = confirm('ยืนยันลบข้อมูลสัตว์เลี้ยง')
+        if (isDeletePet){
+            petDeleteAPI(petId,t =>{
+                if(t['statusText'] === 'No Content'){
+                    alert('ลบข้อมูลสัตว์เลี้ยงสำเร็จ')
+                    router.push(urlListPetOwner)
+                }
+            })
+        }
+    } 
+
     const deleteImage = (index, func) => {
-        let isDelete = confirm('ยืนยันที่จะลบรูปภาพสัตว์เลี้ยง')
-        if (isDelete) {
-            if (images[index]['pet_image_id'] !== undefined){
-                petImageDelete(images[index]['pet_image_id'], t => {})
+        let isDeleteImage = confirm('ยืนยันที่จะลบรูปภาพสัตว์เลี้ยง')
+        if (isDeleteImage) {
+            if (images[index]['pet_image_id'] !== undefined) {
+                petImageDelete(images[index]['pet_image_id'], t => { })
             }
             func(index)
         }
@@ -114,8 +126,10 @@ export default function EditPet({ petId }) {
         <div>
             <Nav />
             <div className={containerMain}>
-                <h1>รายละเอียดสัตว์เลี้ยง</h1>
-                <NegativePrimaryButton></NegativePrimaryButton>
+                <div className="flex flex-row justify-between">
+                    <h1 className='my-auto'>รายละเอียดสัตว์เลี้ยง</h1>
+                    <NegativePrimaryButton label="ลบสัตว์เลี้ยง" onClick={deletePet}></NegativePrimaryButton>
+                </div>
                 <div className={`mb-3 ${containerCard}`}>
                     <ImageUploading
                         multiple
@@ -201,7 +215,7 @@ export default function EditPet({ petId }) {
                     </div>
                 </div>
                 <div className="mx-3 flex py-2">
-                    <PrimaryButton className="mx-auto" label="แก้ไขสัตว์เลี้ยง" onClick={addPet}></PrimaryButton>
+                    <PrimaryButton className="mx-auto" label="แก้ไขสัตว์เลี้ยง" onClick={editPet}></PrimaryButton>
                 </div>
             </div>
         </div>
