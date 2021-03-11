@@ -37,12 +37,12 @@ export function Nav() {
     }, [userGetDetailAPI])
   }
 
-  const setData = (t) => {
-    if (t.data['user_image'] != null) {
-      setImages([{ data_url: t.data['user_image'] }])
+  const setData = (data) => {
+    if (data['user_image'] != null) {
+      setImages([{ data_url: `http://127.0.0.1:8000${data['user_image']}` }])
     }
-    setFirstName(t.data['first_name'])
-    setLastName(t.data['last_name'])
+    setFirstName(data['first_name'])
+    setLastName(data['last_name'])
   }
 
 

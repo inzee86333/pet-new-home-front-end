@@ -49,9 +49,10 @@ export default function AddPet() {
         e.preventDefault() // prevents page reload
         if (validation()) {
             let formData = new FormData();
+            formData.append('owner_id', 'id')
             formData.append('animal_type', animalType)
             formData.append('species', species)
-            formData.append('birth_year', birthYear['value'])
+            birthYear!==null&&formData.append('birth_year', birthYear['value'])
             formData.append('sex', animalSex)
             formData.append('disease', disease)
             formData.append('province', province['province_code'])
