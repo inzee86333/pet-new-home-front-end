@@ -10,6 +10,15 @@ export function PrimaryButton({ label, onClick, type, className }) {
     )
 }
 
+export function NegativePrimaryButton({ label, onClick, type, className }) {
+    return (
+        <button className={`px-4 py-2 my-1 bg-red-500 text-white font-semibold rounded-lg shadow-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-opacity-75 ${className}`}
+            type={type} onClick={onClick}>
+            {label}
+        </button>
+    )
+}
+
 export function SecondaryButton({ label, onClick, type, className }) {
     return (
         <button className={`px-4 py-2 my-1 rounded-full border border-green-600 text-green-600 max-w-max shadow-sm hover:bg-green-600 hover:text-white ${className}`}

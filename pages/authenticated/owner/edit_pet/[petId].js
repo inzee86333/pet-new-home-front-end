@@ -2,12 +2,12 @@ import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import ImageUploading from 'react-images-uploading';
 import { TextInput, TextSelectInput } from '../../../../components/input'
-import { PrimaryButton } from '../../../../components/button'
+import { PrimaryButton, NegativePrimaryButton } from '../../../../components/button'
 import { provinceList, districtList, birthYearList } from '../../../../data/direct'
 import { containerCard, containerMain } from '../../../../components/tailwindClass'
 import { urlListPetOwner } from '../../../urls'
 import { Nav } from '../../../../components/navbar'
-import { petCreateAPI, petCreateImageAPI, petGetDetailAPI, petImagesGetAPI, petEditAPI } from '../../../../data/apis'
+import { petCreateImageAPI, petGetDetailAPI, petImagesGetAPI, petEditAPI, petImageDelete } from '../../../../data/apis'
 import { required, requiredNotMatch } from '../../../../functions/validations'
 import { dataURLtoFile } from '../../../../functions/converter'
 
@@ -23,34 +23,32 @@ export default function EditPet({ petId }) {
     const [district, setDistrict] = useState(null);
     const [districtOnProvince, setDistrictOnProvince] = useState([]);
     const [dataOld, setDataOld] = useState({});
-    const [imagesOld, setImagesOld] = useState([]);
     const maxNumber = 5;
 
-    useEffect(()=>{
+    useEffect(() => {
         petGetDetailAPI(petId, setData)
         petImagesGetAPI(petId, setDataImages)
     }, [petGetDetailAPI])
 
-    const setData = (data) => {
-        setAnimalType(data['animal_type'])
-        data['species'] !== null && setSpecies(data['species'])
-        data['birth_year'] !== null && setBirthYear(birthYearList.find(t => t['value'] == data['birth_year']))
-        data['sex'] !== null && setAnimalSex(data['sex'])
-        data['disease'] !== null && setDisease(data['disease'])
-        let pro = provinceList.find(t => t['province_code'] == data['province'])
+    const setData = (t) => {
+        setAnimalType(t.data['animal_type'])
+        t.data['species'] !== null && setSpecies(t.data['species'])
+        t.data['birth_year'] !== null && setBirthYear(birthYearList.find(y => y['value'] == t.data['birth_year']))
+        t.data['sex'] !== null && setAnimalSex(t.data['sex'])
+        t.data['disease'] !== null && setDisease(t.data['disease'])
+        let pro = provinceList.find(y => y['province_code'] == t.data['province_code'])
         setProvince(pro)
         onChangeProvince(pro)
-        if (data['province'] !== data['district']){
-            setDistrict(districtList.find(t => t['district_code'] == data['district']))
-        }else{
-            setDistrict({ 'district_code': data['province'], 'district': 'อำเภอเมือง' })
+        if (t.data['province'] !== t.data['district_code']) {
+            setDistrict(districtList.find(y => y['district_code'] == t.data['district_code']))
+        } else {
+            setDistrict({ 'district_code': t.data['province'], 'district': 'อำเภอเมือง' })
         }
-        setDataOld(data)
+        setDataOld(t.data)
     }
 
-    const setDataImages = (data) => {
-        setImages(data.data)
-        setImagesOld(data.data)
+    const setDataImages = (t) => {
+        setImages(t.data)
     }
 
     const onChange = (imageList, addUpdateIndex) => {
@@ -83,16 +81,34 @@ export default function EditPet({ petId }) {
             requiredNotMatch(birthYear, dataOld['birthYear']) && formData.append('birth_year', birthYear['value'])
             requiredNotMatch(animalSex, dataOld['sex']) && formData.append('sex', animalSex)
             requiredNotMatch(disease, dataOld['disease']) && formData.append('disease', disease)
-            requiredNotMatch(province['province_code'], dataOld['province_code']) &&formData.append('province', province['province_code'])
-            requiredNotMatch(district['district_code'], dataOld['district_code']) &&formData.append('district', district['district_code'])
-            petEditAPI(petId ,formData, (t) => {
+            requiredNotMatch(province['province_code'], dataOld['province_code']) && formData.append('province', province['province_code'])
+            requiredNotMatch(district['district_code'], dataOld['district_code']) && formData.append('district', district['district_code'])
+            petEditAPI(petId, formData, (t) => {
                 if (t['statusText'] === 'OK') {
-                    alert('แก้ไขสัตว์เลี้ยงสำเร็จ')
+                    for (let i = 0; i < images.length; i++) {
+                        if (images[i]['pet_image_id'] === undefined){
+                            let formDataImage = new FormData();
+                            formDataImage.append('pet_id', t['data']['pet_id'])
+                            formDataImage.append('pet_image', dataURLtoFile(images[i]['pet_image'], `petId${t['data']['pet_id']}-${i}.png`))
+                            petCreateImageAPI(formDataImage, (t) => {})
+                        }
+                    }
                     router.push(urlListPetOwner)
+                    alert('กดตกลงเพื่อแก้ไขสัตว์เลี้ยงสำเร็จ')
                 } else {
                     alert('แก้ไขสัตว์เลี้ยงไม่สำเร็จ')
                 }
             })
+        }
+    }
+
+    const deleteImage = (index, func) => {
+        let isDelete = confirm('ยืนยันที่จะลบรูปภาพสัตว์เลี้ยง')
+        if (isDelete) {
+            if (images[index]['pet_image_id'] !== undefined){
+                petImageDelete(images[index]['pet_image_id'], t => {})
+            }
+            func(index)
         }
     }
 
@@ -101,18 +117,18 @@ export default function EditPet({ petId }) {
             <Nav />
             <div className={containerMain}>
                 <h1>รายละเอียดสัตว์เลี้ยง</h1>
+                <NegativePrimaryButton></NegativePrimaryButton>
                 <div className={`mb-3 ${containerCard}`}>
                     <ImageUploading
                         multiple
                         value={images}
                         onChange={onChange}
                         maxNumber={maxNumber}
-                        dataURLKey="data_url"
+                        dataURLKey="pet_image"
                     >
                         {({
                             imageList,
                             onImageUpload,
-                            onImageRemoveAll,
                             onImageRemove,
                             isDragging,
                             dragProps,
@@ -129,8 +145,6 @@ export default function EditPet({ petId }) {
                                         เพิ่ม หรือ วางรูปตรงนี้
                             </button>
                             &nbsp;
-                            <button onClick={onImageRemoveAll}>ลบรูปทั้งหมด</button>
-                            &nbsp;
                                 {errors && <div>
                                         {errors.maxNumber && <span> ใส่รูปไม่เกิน {maxNumber} รูป</span>}
                                         {errors.acceptType && <span>คุณเลือกประเภทไฟล์ไม่ถูกต้อง</span>}
@@ -138,13 +152,13 @@ export default function EditPet({ petId }) {
                                         {errors.resolution && <span>Selected file is not match your desired resolution</span>}
                                     </div>}
                                 </div>
-                         &nbsp;
+                            &nbsp;
                                 <div className="flex">
                                     {imageList.map((image, index) => (
                                         <div key={index} className="image-item">
-                                            <img src={image['data_url']} alt="" className="object-cover ml-1 h-28 w-28 shadow rounded-md border-2" />
+                                            <img src={image['pet_image']} alt="" className="object-cover ml-1 h-28 w-28 shadow rounded-md border-2" />
                                             <div className="image-item__btn-wrapper flex">
-                                                <button className="mx-auto" onClick={() => onImageRemove(index)}>ลบ</button>
+                                                <button className="mx-auto" onClick={() => { deleteImage(index, onImageRemove) }}>ลบ</button>
                                             </div>
                                         </div>
                                     ))}
@@ -189,12 +203,12 @@ export default function EditPet({ petId }) {
                     </div>
                 </div>
                 <div className="mx-3 flex py-2">
-                    <PrimaryButton className="mx-auto" label="เพิ่มสัตว์เลี้ยง" onClick={addPet}></PrimaryButton>
+                    <PrimaryButton className="mx-auto" label="แก้ไขสัตว์เลี้ยง" onClick={addPet}></PrimaryButton>
                 </div>
             </div>
         </div>
     );
-}   
+}
 
 EditPet.getInitialProps = (appContext) => {
     return { petId: appContext.query.petId }

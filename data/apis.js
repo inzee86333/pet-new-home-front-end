@@ -9,9 +9,10 @@ const checkTypeUserURL = `http://${host}/appapi/check_user_type/`
 //pet
 const petCreateURL = `http://${host}/appapi/pet_create/`
 const petDetailURL = `http://${host}/appapi/pet_detail/`
-const petImageURL = `http://${host}/appapi/pet_image/`
 const petGetAllURL = `http://${host}/appapi/pet_get_all/`
 const petOwnerGetURL = `http://${host}/appapi/pet_owner_get/`
+//petImage
+const petImageURL = `http://${host}/appapi/pet_image/`
 
 //user
 export async function loginAPI(formData, callBack) {
@@ -20,15 +21,15 @@ export async function loginAPI(formData, callBack) {
     }).then((response) => {
         callBack(response)
     })
-        // .catch((error) => {
-        //     if (error.response) {
-        //         console.log(error.response)
-        //     } else if (error.request) {
-        //         console.log(error.request)
-        //     } else if (error.message) {
-        //         console.log(error.message)
-        //     }
-        // })
+    // .catch((error) => {
+    //     if (error.response) {
+    //         console.log(error.response)
+    //     } else if (error.request) {
+    //         console.log(error.request)
+    //     } else if (error.message) {
+    //         console.log(error.message)
+    //     }
+    // })
 }
 
 export async function registerAPI(formData, callBack) {
@@ -64,7 +65,7 @@ export async function userGetDetailAPI(callBack) {
 export async function checkTypeUserAPI(callBack) {
     await axios.post(checkTypeUserURL, new FormData(), {
         'Content-Type': 'application/x-www-form-urlencoded',
-        headers:{
+        headers: {
             'authorization': cookie.get('token')
         }
     }).then((response) => {
@@ -81,7 +82,7 @@ export async function petCreateAPI(formData, callBack) {
         }
     }).then((response) => {
         callBack(response)
-    }) 
+    })
 }
 
 export async function petOwnerGetAPI(callBack) {
@@ -104,19 +105,17 @@ export async function petGetAllAPI(callBack) {
 }
 
 export async function petGetDetailAPI(pk, callBack) {
-    if(pk!==undefined){
-        await axios.get(`${petDetailURL}${pk}`, {
-            'Content-Type': 'application/x-www-form-urlencoded',
-            headers: {
-                'authorization': cookie.get('token')
-            }
-        }).then((response) => {
-            callBack(response)
-        })
-    }
+    await axios.get(`${petDetailURL}${pk}`, {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        headers: {
+            'authorization': cookie.get('token')
+        }
+    }).then((response) => {
+        callBack(response)
+    })
 }
 
-export async function petEditAPI(pk ,formData, callBack) {
+export async function petEditAPI(pk, formData, callBack) {
     await axios.patch(`${petDetailURL}${pk}`, formData, {
         'Content-Type': 'application/x-www-form-urlencoded',
         headers: {
@@ -125,7 +124,7 @@ export async function petEditAPI(pk ,formData, callBack) {
     }).then((response) => {
         callBack(response)
     })
-    .catch((error) => {
+        .catch((error) => {
             if (error.response) {
                 console.log(error.response)
             } else if (error.request) {
@@ -150,6 +149,17 @@ export async function petCreateImageAPI(formData, callBack) {
 
 export async function petImagesGetAPI(pk, callBack) {
     await axios.get(`${petImageURL}${pk}`, {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        headers: {
+            'authorization': cookie.get('token')
+        }
+    }).then((response) => {
+        callBack(response)
+    })
+}
+
+export async function petImageDelete(pk, callBack) {
+    await axios.delete(`${petImageURL}${pk}`, {
         'Content-Type': 'application/x-www-form-urlencoded',
         headers: {
             'authorization': cookie.get('token')

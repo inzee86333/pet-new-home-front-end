@@ -54,17 +54,17 @@ export default function AddPet() {
             formData.append('birth_year', birthYear['value'])
             formData.append('sex', animalSex)
             formData.append('disease', disease)
-            formData.append('province', province['province_code'])
-            formData.append('district', district['district_code'])
+            formData.append('province_code', province['province_code'])
+            formData.append('district_code', district['district_code'])
             petCreateAPI(formData,(t) => {
                 if (t['statusText'] == "Created"){
                     for(let i=0; i<images.length;i++){
                         let formDataImage = new FormData();
                         formDataImage.append('pet_id', t['data']['pet_id'])
-                        formDataImage.append('pet_image', dataURLtoFile(images[i]['data_url'], `petId${t['data']['pet_id']}-${i}.png`))
+                        formDataImage.append('pet_image', dataURLtoFile(images[i]['pet_image'], `petId${t['data']['pet_id']}-${i}.png`))
                         petCreateImageAPI(formDataImage,(t)=>{})
                     }
-                    alert('เพิ่มสัตว์เลี้ยงสำเร็จ')
+                    alert('กดตกลงเพื่อเพิ่มสัตว์เลี้ยงสำเร็จ')
                     router.push(urlListPetOwner)
                 }else{
                     alert('เพิ่มสัตว์เลี้ยงไม่สำเร็จ')
@@ -84,7 +84,7 @@ export default function AddPet() {
                         value={images}
                         onChange={onChange}
                         maxNumber={maxNumber}
-                        dataURLKey="data_url"
+                        dataURLKey="pet_image"
                     >
                         {({
                             imageList,
@@ -119,7 +119,7 @@ export default function AddPet() {
                                 <div className="flex">
                                     {imageList.map((image, index) => (
                                         <div key={index} className="image-item">
-                                            <img src={image['data_url']} alt="" className="object-cover ml-1 h-28 w-28 shadow rounded-md border-2" />
+                                            <img src={image['pet_image']} alt="" className="object-cover ml-1 h-28 w-28 shadow rounded-md border-2" />
                                             <div className="image-item__btn-wrapper flex">
                                                 <button className="mx-auto" onClick={() => onImageRemove(index)}>ลบ</button>
                                             </div>
