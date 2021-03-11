@@ -14,6 +14,7 @@ const petGetAllURL = `http://${host}/appapi/pet_get_all/`
 const petOwnerGetURL = `http://${host}/appapi/pet_owner_get/`
 //report
 const reportGetAllURL = `http://${host}/appapi/report/`
+const reportGetDetailURL = `http://${host}/appapi/report/detail/`
 
 //user
 export async function loginAPI(formData, callBack) {
@@ -96,6 +97,17 @@ export async function petCreateAPI(formData, callBack) {
     }) 
 }
 
+export async function petGetDetailAPI(formData, callBack) {
+    await axios.patch(petDetailURL, formData, {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        headers: {
+            'authorization': cookie.get('token')
+        }
+    }).then((response) => {
+        callBack(response)
+    })
+}
+
 export async function petOwnerGetAPI(callBack) {
     await axios.post(petOwnerGetURL, new FormData(), {
         'Content-Type': 'application/x-www-form-urlencoded',
@@ -110,30 +122,6 @@ export async function petOwnerGetAPI(callBack) {
 export async function petGetAllAPI(callBack) {
     await axios.get(petGetAllURL, new FormData(), {
         'Content-Type': 'application/x-www-form-urlencoded'
-    }).then((response) => {
-        callBack(response)
-    })
-}
-
-export async function petGetDetailAPI(pk, callBack) {
-    if(pk!==undefined){
-        await axios.get(`${petDetailURL}${pk}`, {
-            'Content-Type': 'application/x-www-form-urlencoded',
-            headers: {
-                'authorization': cookie.get('token')
-            }
-        }).then((response) => {
-            callBack(response.data)
-        })
-    }
-}
-
-export async function petEditAPI(formData, callBack) {
-    await axios.patch(petDetailURL, formData, {
-        'Content-Type': 'application/x-www-form-urlencoded',
-        headers: {
-            'authorization': cookie.get('token')
-        }
     }).then((response) => {
         callBack(response)
     })
@@ -166,6 +154,17 @@ export async function petImagesGetAPI(pk, callBack) {
 export async function reportGetAllAPI(callBack) {
     await axios.get(reportGetAllURL, new FormData(), {
         'Content-Type': 'application/x-www-form-urlencoded'
+    }).then((response) => {
+        callBack(response)
+    })
+}
+
+export async function reportGetDetailAPI(reportID,callBack) {
+    await axios.get(`${reportGetDetailURL}${reportID}`, new FormData(), {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        headers: {
+            'authorization': cookie.get('token')
+        }
     }).then((response) => {
         callBack(response)
     })

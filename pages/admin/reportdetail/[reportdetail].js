@@ -1,11 +1,23 @@
 import { Nav } from '../../../components/navbar'
 import { containerCard, containerMain } from '../../../components/tailwindClass'
 import { useRouter } from 'next/router'
+import { useEffect, useState } from 'react'
+import { reportGetDetailAPI } from '../../../data/apis'
+
 
 export default function ReportDetail() {
     const router = useRouter();
-    const querydata = router.query
-    const reportID = querydata.reportdetail
+    const {reportdetail} = router.query
+    const reportID = reportdetail
+
+    const [report, setReport] = useState([]);
+    const image_url = `http://127.0.0.1:8000`
+
+    useEffect(()=>{
+        reportGetDetailAPI(reportID, (res)=>{setReport(res)})
+        console.log(report)
+    }, [reportGetDetailAPI])    
+    
     return (
         <div>
             <Nav />
