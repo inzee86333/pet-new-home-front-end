@@ -24,16 +24,16 @@ export default function EditUser() {
         userGetDetailAPI(setData)
     }, [userGetDetailAPI])
 
-    const setData = (data) =>{
-        if (data['user_image'] != null) {
-            setImages([{ data_url: `http://127.0.0.1:8000${data['user_image']}` }])
+    const setData = (t) =>{
+        if (t.data['user_image'] != null) {
+            setImages([{ data_url: data['user_image'] }])
         }
-        setEmail(data['email'])
-        setFirstName(data['first_name'])
-        setLastName(data['last_name'])
-        setPhoneNumber(data['phone_number'])
-        setAddress(data['address'])
-        setDataOld(data)
+        setEmail(t.data['email'])
+        setFirstName(t.data['first_name'])
+        setLastName(t.data['last_name'])
+        setPhoneNumber(t.data['phone_number'])
+        setAddress(t.data['address'])
+        setDataOld(t.data)
     }
 
     const onChangeImage = (imageList, addUpdateIndex) => {
