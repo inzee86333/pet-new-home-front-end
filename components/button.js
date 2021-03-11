@@ -53,7 +53,7 @@ export function CardInfoPetOwnerButton({ id, type, age, species, sex, href }) {
         <a className="w-full bg-white rounded-xl shadow border mb-2" href={href}>
             <div className="flex flex-row py-3 px-4 justify-between">
                 <div className="flex flex-row">
-                    {images[0] !== undefined && <img src={`http://127.0.0.1:8000${images[0]['pet_image']}`} alt="" className="rounded-xl object-cover h-24 w-24 shadow border" />}
+                    {images[0] !== undefined && <img src={images[0]['pet_image']} alt="" className="rounded-xl object-cover h-24 w-24 shadow border" />}
                     {images[0] === undefined && <img src={'/pet_image_default.png'} alt="" className="rounded-xl object-cover h-24 w-24 shadow border" />}
                     <div className="px-4">
                         <div className="flex flex-row">

@@ -98,17 +98,6 @@ export async function petCreateAPI(formData, callBack) {
     })
 }
 
-export async function petGetDetailAPI(formData, callBack) {
-    await axios.patch(petDetailURL, formData, {
-        'Content-Type': 'application/x-www-form-urlencoded',
-        headers: {
-            'authorization': cookie.get('token')
-        }
-    }).then((response) => {
-        callBack(response)
-    })
-}
-
 export async function petOwnerGetAPI(callBack) {
     await axios.post(petOwnerGetURL, new FormData(), {
         'Content-Type': 'application/x-www-form-urlencoded',
