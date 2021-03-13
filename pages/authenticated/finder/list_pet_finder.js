@@ -30,11 +30,9 @@ export default function list_pet_finder() {
                             <CardInfoPetFinderButton key={i.pet_id}
                                 id={i.pet_id}
                                 type={i.animal_type}
-                                age={i.birth_year}
                                 species={i.species}
-                                sex={i.sex}
-                                province={i.province}
-                                district={i.district}
+                                province={i.province_code}
+                                district={i.district_code}
                             />
                         ))}
                     </div>

@@ -3,7 +3,7 @@ import { useRouter } from 'next/router'
 import ImageUploading from 'react-images-uploading';
 import { TextInput, TextSelectInput } from '../../../../components/input'
 import { PrimaryButton, NegativePrimaryButton } from '../../../../components/button'
-import { provinceList, districtList, birthYearList } from '../../../../data/direct'
+import { provinceList, amphoeList, birthYearList } from '../../../../data/direct'
 import { containerCard, containerMain } from '../../../../components/tailwindClass'
 import { urlListPetOwner } from '../../../urls'
 import { Nav } from '../../../../components/navbar'
@@ -20,10 +20,11 @@ export default function EditPet({ petId }) {
     const [animalSex, setAnimalSex] = useState('');
     const [disease, setDisease] = useState('');
     const [province, setProvince] = useState(null);
-    const [district, setDistrict] = useState(null);
-    const [districtOnProvince, setDistrictOnProvince] = useState([]);
+    const [amphoe, setAmphoe] = useState(null);
+    const [amphoeOnProvince, setAmphoeOnProvince] = useState([]);
     const [dataOld, setDataOld] = useState({});
     const maxNumber = 5;
+    var _ = require('lodash');
 
     useEffect(() => {
         petGetDetailAPI(petId, setData)
@@ -39,11 +40,7 @@ export default function EditPet({ petId }) {
         let pro = provinceList.find(y => y['province_code'] == t.data['province_code'])
         setProvince(pro)
         onChangeProvince(pro)
-        if (t.data['province'] !== t.data['district_code']) {
-            setDistrict(districtList.find(y => y['district_code'] == t.data['district_code']))
-        } else {
-            setDistrict({ 'district_code': t.data['province'], 'district': 'อำเภอเมือง' })
-        }
+        setAmphoe(amphoeList.find(y => y['amphoe_code'] == t.data['amphoe_code']))
         setDataOld(t.data)
     }
 
@@ -58,17 +55,16 @@ export default function EditPet({ petId }) {
 
     const onChangeProvince = (e) => {
         setProvince(e)
-        let disList = districtList.filter(j => j['province_code'] == e['province_code'])
-        disList.unshift({ 'district_code': e['province_code'], 'district': 'อำเภอเมือง' })
-        setDistrictOnProvince(disList)
-        setDistrict(null)
+        let ampList = amphoeList.filter(j => j['province_code'] == e['province_code'])
+        setAmphoeOnProvince(_.uniqBy(ampList, 'amphoe'))
+        setAmphoe(null)
     }
 
     const validation = () => {
         let validate;
         validate = (required(animalType) &&
             required(province) &&
-            required(district))
+            required(amphoe))
         return validate;
     }
 
@@ -81,8 +77,8 @@ export default function EditPet({ petId }) {
             requiredNotMatch(birthYear, dataOld['birthYear']) && birthYear !== null && formData.append('birth_year', birthYear['value'])
             requiredNotMatch(animalSex, dataOld['sex']) && formData.append('sex', animalSex)
             requiredNotMatch(disease, dataOld['disease']) && formData.append('disease', disease)
-            requiredNotMatch(province['province_code'], dataOld['province_code']) && formData.append('province', province['province_code'])
-            requiredNotMatch(district['district_code'], dataOld['district_code']) && formData.append('district', district['district_code'])
+            requiredNotMatch(province['province_code'], dataOld['province_code']) && formData.append('province_code', province['province_code'])
+            requiredNotMatch(amphoe['amphoe_code'], dataOld['amphoe_code']) && formData.append('amphoe_code', amphoe['amphoe_code'])
             petEditAPI(petId, formData, (t) => {
                 if (t['statusText'] === 'OK') {
                     for (let i = 0; i < images.length; i++) {
@@ -188,7 +184,7 @@ export default function EditPet({ petId }) {
                             <TextSelectInput id="province" label="จังหวัด" options={provinceList} labelName={'province'} valueName={'province_code'} value={province} onChange={onChangeProvince} placeholder="เลือกจังหวัด" required={true}></TextSelectInput>
                         </div>
                         <div className="md:w-1/2 px-3 mb-6 md:mb-0">
-                            <TextSelectInput id="district" label="อำเภอ" options={districtOnProvince} labelName={'district'} valueName={'district_code'} value={district} onChange={e => setDistrict(e)} placeholder="เลือกอำเภอ" required={true}></TextSelectInput>
+                            <TextSelectInput id="amphoe" label="อำเภอ" options={amphoeOnProvince} labelName={'amphoe'} valueName={'amphoe_code'} value={amphoe} onChange={e => setAmphoe(e)} placeholder="เลือกอำเภอ" required={true}></TextSelectInput>
                         </div>
                     </div>
                 </div>

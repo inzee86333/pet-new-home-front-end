@@ -1,8 +1,8 @@
-import { containerCard, containerMain } from '../../../components/tailwindClass'
-import { PrimaryButton, CardInfoPetFinderButton ,CardInfoPetOwnerButton} from '../../../components/button'
-import { animalOwner } from '../../../data/direct'
-import { Nav } from '../../../components/navbar'
-
+import { containerCard, containerMain } from '../../../../components/tailwindClass'
+import { PrimaryButton, CardInfoPetFinderButton ,CardInfoPetOwnerButton} from '../../../../components/button'
+import { animalOwner } from '../../../../data/direct'
+import { Nav } from '../../../../components/navbar'
+import { petGetDetailAPI } from '../../../../data/apis' 
 
 import { useState, useEffect } from 'react'
 import { Zoom } from 'react-slideshow-image';
@@ -10,7 +10,7 @@ import React from 'react';
 import { Slide } from 'react-slideshow-image';
 import 'react-slideshow-image/dist/styles.css'
 
-export default function pet_finder_detail() {
+export default function PetFinderDetail({ petId }) {
     //part http://localhost:3000/authenticated/finder/pet_finder_detail
     const [province, setProvince] = useState('พะเยา')
     const [district, setDistrict] = useState('แม่กา')
@@ -25,6 +25,10 @@ export default function pet_finder_detail() {
     //         photo={json.photoPet}
     //     />
     // ))};
+
+    useEffect(() =>{
+        console.log(petId)
+    })
       
     const Slideshow = () => {
         return (
@@ -70,4 +74,8 @@ export default function pet_finder_detail() {
             </div>
         </div>
     )
+}
+
+PetFinderDetail.getInitialProps = (appContext) => {
+    return { petId: appContext.query.petId }
 }

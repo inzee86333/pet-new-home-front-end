@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { containerCard, containerMain } from '../../../components/tailwindClass'
 import { TextButton, CardInfoPetOwnerButton } from '../../../components/button'
-import { urlAddPet, urlDetailPet } from '../../urls'
+import { urlAddPet, urlEditPet } from '../../urls'
 import { Nav } from '../../../components/navbar'
 import { petOwnerGetAPI } from '../../../data/apis'
 
@@ -31,7 +31,7 @@ export default function list_pet_owner() {
                                 age={i.birth_year}
                                 species={i.species}
                                 sex={i.sex}
-                                href={urlDetailPet(i.pet_id)}
+                                href={urlEditPet(i.pet_id)}
                             />
                         ))}
                     </div>

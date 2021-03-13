@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { petImagesGetAPI } from '../data/apis'
+import { provinceList, amphoeList, birthYearList } from '../data/direct'
 
 export function PrimaryButton({ label, onClick, type, className }) {
     return (
@@ -96,26 +97,26 @@ export function CardInfoPetOwnerButton({ id, type, age, species, sex, href }) {
     );
 }
 
-export function CardInfoPetFinderButton({ id, type, age, species, sex, province, district }) {
+export function CardInfoPetFinderButton({ id, type, species, province, district }) {
     const [images, setImages] = useState([]);
+    const [districtDetail, setDistrictDetail] = useState(districtList.find(y => y['district_code'] == district));
 
     useEffect(() => {
         petImagesGetAPI(id, t => {
             setImages(t.data)
         })
     }, [petImagesGetAPI])
-
+    console.log(districtDetail)
     return (
         <button className="w-max bg-white rounded-xl shadow border p-2 m-1">
             <div className="flex flex-col mx-auto w-max">
-                {images[0] !== undefined && <img src={`http://127.0.0.1:8000${images[0]['pet_image']}`} alt="" className="rounded-xl object-cover h-40 w-40 shadow border" />}
+                {images[0] !== undefined && <img src={images[0]['pet_image']} alt="" className="rounded-xl object-cover h-40 w-40 shadow border" />}
                 {images[0] === undefined && <img src={'/pet_image_default.png'} alt="" className="rounded-xl object-cover h-40 w-40 shadow border" />}
                 <div>
                     <p className="ptax px-1 font-semibold">ลำดับ {id}</p>
                     <p className="ptax px-1 font-semibold">:{type}</p>
                     <p className="ptax px-1 font-semibold">:{species}</p>
-                    <p className="ptax px-1 font-semibold">ปีเกิด {age}</p>
-                    <p className="ptax px-1 font-semibold text-green-500 font-bold">{province} {district}</p>
+                    {/* <p className="ptax px-1 font-semibold text-green-500 font-bold">{districtDetail['province']} {districtDetail['amphoe']}</p> */}
                 </div>
             </div>
         </button>
