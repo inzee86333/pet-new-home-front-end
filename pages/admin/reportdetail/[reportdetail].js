@@ -6,9 +6,7 @@ import { reportGetDetailAPI } from '../../../data/apis'
 
 export default function ReportDetail({ reportdetail }) {
 
-    const [report, setReport] = useState(['']);
-
-    const image_url = `http://127.0.0.1:8000`
+    const [report, setReport] = useState(['']);    
 
     useEffect(() => {
         reportGetDetailAPI(reportdetail, report => {
@@ -38,7 +36,7 @@ export default function ReportDetail({ reportdetail }) {
                                 <div className="w-full bg-white rounded-xl shadow border mb-2">
                                     <div className="flex flex-row py-3 px-4 justify-between">
                                         <div className="flex flex-row">
-                                            <img src={`${image_url}${report['reportToDetail']['user_image']}`} className="rounded-xl object-cover h-24 w-24 shadow border" />
+                                            <img src={report['reportToDetail']['user_image']} className="rounded-xl object-cover h-24 w-24 shadow border" />
                                             <div className="px-4">
                                                 <div className="flex flex-row">
                                                     <div className="flex flex-col">
@@ -62,7 +60,7 @@ export default function ReportDetail({ reportdetail }) {
                                 <div className="w-full bg-white rounded-xl shadow border mb-2">
                                     <div className="flex flex-row py-3 px-4 justify-between">
                                         <div className="flex flex-row w-full">
-                                            <img alt="" className="rounded-xl object-cover h-24 w-24 shadow border" />
+                                            <img src={report['reportPetImagesDetail']['pet_image']} className="rounded-xl object-cover h-24 w-24 shadow border" />
                                             <div className="px-4">
                                                 <div className="flex flex-row ">
                                                     <div className="flex flex-col">
