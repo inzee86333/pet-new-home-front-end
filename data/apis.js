@@ -140,6 +140,17 @@ export async function petEditAPI(pk, formData, callBack) {
     })
 }
 
+export async function petDeleteAPI(pk, callBack) {
+    await axios.delete(`${petDetailURL}${pk}`, {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        headers: {
+            'authorization': cookie.get('token')
+        }
+    }).then((response) => {
+        callBack(response)
+    })
+}
+
 //petImage
 export async function petCreateImageAPI(formData, callBack) {
     await axios.post(petImageURL, formData, {
