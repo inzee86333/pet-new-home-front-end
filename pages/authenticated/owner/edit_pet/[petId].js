@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { useRouter } from 'next/router'
 import ImageUploading from 'react-images-uploading';
 import { TextInput, TextSelectInput } from '../../../../components/input'
 import { PrimaryButton, NegativePrimaryButton } from '../../../../components/button'
@@ -11,6 +12,7 @@ import { required, requiredNotMatch } from '../../../../functions/validations'
 import { dataURLtoFile } from '../../../../functions/converter'
 
 export default function EditPet({ petId }) {
+    var router = useRouter()
     const [images, setImages] = useState([]);
     const [animalType, setAnimalType] = useState('');
     const [species, setSpecies] = useState('');
@@ -76,7 +78,7 @@ export default function EditPet({ petId }) {
             let formData = new FormData();
             requiredNotMatch(animalType, dataOld['animal_type']) && formData.append('animal_type', animalType)
             requiredNotMatch(species, dataOld['species']) && formData.append('species', species)
-            requiredNotMatch(birthYear, dataOld['birthYear']) && formData.append('birth_year', birthYear['value'])
+            requiredNotMatch(birthYear, dataOld['birthYear']) && birthYear !== null && formData.append('birth_year', birthYear['value'])
             requiredNotMatch(animalSex, dataOld['sex']) && formData.append('sex', animalSex)
             requiredNotMatch(disease, dataOld['disease']) && formData.append('disease', disease)
             requiredNotMatch(province['province_code'], dataOld['province_code']) && formData.append('province', province['province_code'])
