@@ -41,7 +41,7 @@ export default function ReportDetail({ reportdetail }) {
                                                 <div className="flex flex-row">
                                                     <div className="flex flex-col">
                                                         <div className="grid grid-cols-2">
-                                                            <p className="ptax px-1 py-1 font-bold">รายละผู้ขอรับเลี้ยง</p>
+                                                            <p className="ptax px-1 py-1 font-bold">รายละเอียดผู้ขอรับเลี้ยง</p>
                                                         </div>
                                                         <div className="grid grid-cols-2">
                                                             <p className="ptax px-1 py-1">คุณ: {report['reportToDetail']['first_name']} {report['reportToDetail']['last_name']} </p>
