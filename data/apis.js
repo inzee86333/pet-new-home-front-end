@@ -14,6 +14,7 @@ const petOwnerGetURL = `http://${host}/appapi/pet_owner_get/`
 //report
 const reportGetAllURL = `http://${host}/appapi/report/`
 const reportGetDetailURL = `http://${host}/appapi/report/detail/`
+const reportGetUserDetailURL = `http://${host}/appapi/report/detail/user/`
 //petImage
 const petImageURL = `http://${host}/appapi/pet_image/`
 
@@ -98,17 +99,6 @@ export async function petCreateAPI(formData, callBack) {
     })
 }
 
-export async function petGetDetailAPI(formData, callBack) {
-    await axios.patch(petDetailURL, formData, {
-        'Content-Type': 'application/x-www-form-urlencoded',
-        headers: {
-            'authorization': cookie.get('token')
-        }
-    }).then((response) => {
-        callBack(response)
-    })
-}
-
 export async function petOwnerGetAPI(callBack) {
     await axios.post(petOwnerGetURL, new FormData(), {
         'Content-Type': 'application/x-www-form-urlencoded',
@@ -184,6 +174,17 @@ export async function reportGetAllAPI(callBack) {
 
 export async function reportGetDetailAPI(reportID,callBack) {
     await axios.get(`${reportGetDetailURL}${reportID}`, new FormData(), {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        headers: {
+            'authorization': cookie.get('token')
+        }
+    }).then((response) => {
+        callBack(response)
+    })
+}
+
+export async function reportGetUserDetailAPI(finderID, callBack) {
+    await axios.get(`${reportGetUserDetailURL}${finderID}`, new FormData(), {
         'Content-Type': 'application/x-www-form-urlencoded',
         headers: {
             'authorization': cookie.get('token')
