@@ -26,7 +26,7 @@ export default function EditUser() {
 
     const setData = (t) =>{
         if (t.data['user_image'] != null) {
-            setImages([{ data_url: data['user_image'] }])
+            setImages([{ data_url: t.data['user_image'] }])
         }
         setEmail(t.data['email'])
         setFirstName(t.data['first_name'])
