@@ -72,7 +72,7 @@ export async function userGetDetailAPI(callBack) {
             'authorization': cookie.get('token')
         }
     }).then((response) => {
-        callBack(response.data)
+        callBack(response)
     })
 }
 

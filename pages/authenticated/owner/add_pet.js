@@ -3,7 +3,7 @@ import { useRouter } from 'next/router'
 import ImageUploading from 'react-images-uploading';
 import { TextInput, TextSelectInput } from '../../../components/input'
 import { PrimaryButton } from '../../../components/button'
-import { provinceList, districtList, birthYearList } from '../../../data/direct'
+import { provinceList, amphoeList, birthYearList } from '../../../data/direct'
 import { containerCard, containerMain } from '../../../components/tailwindClass'
 import { urlListPetOwner } from '../../urls'
 import { Nav } from '../../../components/navbar'
@@ -20,9 +20,10 @@ export default function AddPet() {
     const [animalSex, setAnimalSex] = useState('');
     const [disease, setDisease] = useState('');
     const [province, setProvince] = useState(null);
-    const [district, setDistrict] = useState(null);
-    const [districtOnProvince, setDistrictOnProvince] = useState([]);
+    const [amphoe, setAmphoe] = useState(null);
+    const [amphoeOnProvince, setAmphoeOnProvince] = useState([]);
     const maxNumber = 5;
+    var _ = require('lodash');
 
     const onChange = (imageList, addUpdateIndex) => {
         // data for submit
@@ -31,17 +32,16 @@ export default function AddPet() {
 
     const onChangeProvince = (e) => {
         setProvince(e)
-        let disList = districtList.filter(j => j['province_code'] == e['province_code'])
-        disList.unshift({ 'district_code': e['province_code'], 'district': 'อำเภอเมือง'})
-        setDistrictOnProvince(disList)
-        setDistrict(null)
+        let ampList = amphoeList.filter(j => j['province_code'] == e['province_code'])
+        setAmphoeOnProvince(_.uniqBy(ampList, 'amphoe'))
+        setAmphoe(null)
     }
 
     const validation = () => {
         let validate;
         validate = (required(animalType)&&
         required(province)&&
-        required(district))
+        required(amphoe))
         return validate;
     }
 
@@ -56,7 +56,7 @@ export default function AddPet() {
             formData.append('sex', animalSex)
             formData.append('disease', disease)
             formData.append('province_code', province['province_code'])
-            formData.append('district_code', district['district_code'])
+            formData.append('amphoe_code', amphoe['amphoe_code'])
             petCreateAPI(formData,(t) => {
                 if (t['statusText'] == "Created"){
                     for(let i=0; i<images.length;i++){
@@ -138,7 +138,7 @@ export default function AddPet() {
                             <TextSelectInput id="province" label="จังหวัด" options={provinceList} labelName={'province'} valueName={'province_code'} value={province} onChange={onChangeProvince} placeholder="เลือกจังหวัด" required={true}></TextSelectInput>
                         </div>
                         <div className="md:w-1/2 px-3 mb-6 md:mb-0">
-                            <TextSelectInput id="district" label="อำเภอ" options={districtOnProvince} labelName={'district'} valueName={'district_code'} value={district} onChange={e => setDistrict(e)} placeholder="เลือกอำเภอ" required={true}></TextSelectInput>
+                            <TextSelectInput id="district" label="อำเภอ" options={amphoeOnProvince} labelName={'amphoe'} valueName={'amphoe_code'} value={amphoe} onChange={e => setAmphoe(e)} placeholder="เลือกอำเภอ" required={true}></TextSelectInput>
                         </div>
                     </div>
                 </div>
